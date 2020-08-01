@@ -1,12 +1,12 @@
 <component name="ArtifactManager">
-  <artifact type="exploded-war" name="myanimes">
-    <output-path>$PROJECT_DIR$/out/artifacts/myanimes</output-path>
+  <artifact type="exploded-war" name="myanimes_staging">
+    <output-path>$PROJECT_DIR$/out/artifacts/myanimes_staging</output-path>
     <root id="root">
+      <element id="javaee-facet-resources" facet="my-animes.tk/web/Web" />
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
           <element id="module-output" name="my-animes.tk" />
         </element>
-        <element id="dir-copy" path="$PROJECT_DIR$/web" />
       </element>
     </root>
   </artifact>
