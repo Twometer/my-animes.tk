@@ -1,2 +1,5 @@
 # my-animes.tk
-Anime list site :3
+A simple and beautiful website to share your love for anime with the world :3 
+
+### Credits
+Icons by [Feather](https://feathericons.com)
