@@ -135,9 +135,15 @@ body {
     padding: 1px 0;
 }
 
+.button.inline {
+    vertical-align: top;
+    margin-top: 6px;
+}
+
 .button.primary {
     border: 1px solid var(--primary-color);
 }
+
 .button.primary.selected {
     color: white;
     background-color: var(--primary-color);;
@@ -178,6 +184,7 @@ body {
 .button.queued {
     border: 1px solid var(--queued-color);
 }
+
 .button.queued.selected {
     color: white;
     background-color: var(--queued-color);
@@ -185,4 +192,11 @@ body {
 
 .shadow {
     box-shadow: var(--common-shadow);
+}
+
+.icon {
+    vertical-align: center;
+    margin-top: -4px;
+    margin-right: 5px;
+    height: 20px;
 }
