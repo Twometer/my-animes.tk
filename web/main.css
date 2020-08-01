@@ -1,8 +1,18 @@
+* {
+    --primary-color: #876FFF;
+    --watching-color: #6FFFAD;
+    --watched-color: #87BBFF;
+    --paused-color: #FFCA6F;
+    --cancelled-color: #FF6F6F;
+    --queued-color: #B8B8B8;
+    --common-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2);
+}
+
 .navbar {
-    background-color: #876FFF;
+    background-color: var(--primary-color);
+    box-shadow: var(--common-shadow);
     padding-left: 10% !important;
     padding-right: 10% !important;
-    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2);
 }
 
 .navbar-brand {
@@ -10,9 +20,168 @@
     font-size: 30px;
     padding: 0;
     margin: 0;
+    user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+}
+
+h1, h2, h3 {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 300;
 }
 
 .nav-item {
-    font-family: Exo, sans-serif;
+    font-family: Exo, 'Open Sans', sans-serif;
     font-size: 18px;
+}
+
+.nav-link {
+    color: rgba(255, 255, 255, 0.75) !important;
+    transition-duration: .3s;
+}
+
+.nav-link:hover {
+    color: rgba(255, 255, 255, 1.0) !important;
+    transition-duration: .3s;
+}
+
+.profile-picture {
+    display: inline-block;
+    border-radius: 50%;
+    width: 160px;
+    height: 160px;
+    background: var(--primary-color) no-repeat 0 0;
+    background-size: cover;
+    box-shadow: var(--common-shadow);
+}
+
+.cover-picture {
+    display: inline-block;
+    width: 100px;
+    height: 140px;
+    background: var(--primary-color) no-repeat 0 0;
+    background-size: cover;
+}
+
+.main-content {
+    margin-left: 25% !important;
+    margin-right: 25% !important;
+}
+
+.button-bar {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+#favorite-anime {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    padding: 2px;
+    margin-right: 8px;
+    margin-top: -2px;
+    vertical-align: middle;
+}
+.dot.watching {
+    background-color: var(--watching-color);
+}
+.dot.watched {
+    background-color: var(--watched-color);
+}
+.dot.paused {
+    background-color: var(--paused-color);
+}
+.dot.cancelled {
+    background-color: var(--cancelled-color);
+}
+.dot.queued {
+    background-color: var(--queued-color);
+}
+
+.button {
+    font-family: Exo, sans-serif;
+    font-size: 16px;
+    border: 1px solid black;
+    border-radius: 10px;
+    box-shadow: var(--common-shadow);
+    background-color: white;
+    height: 30px;
+    padding: 1px 20px;
+    text-align: center;
+    transition-duration: 0.5s;
+    transition-property: box-shadow, background-color;
+}
+
+.button:hover {
+    box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.2);
+    transition-duration: 0.3s;
+}
+
+.button:active, .button:focus {
+    outline: 0;
+    -moz-outline-style: none;
+}
+
+.button.in-bar {
+    width: 110px;
+    padding: 1px 0;
+}
+
+.button.primary {
+    border: 1px solid var(--primary-color);
+}
+.button.primary.selected {
+    color: white;
+    background-color: var(--primary-color);;
+}
+
+.button.watching {
+    border: 1px solid var(--watching-color);
+}
+.button.watching.selected {
+    color: white;
+    background-color: var(--watching-color);
+}
+
+.button.watched {
+    border: 1px solid var(--watched-color);
+}
+.button.watched.selected {
+    color: white;
+    background-color: var(--watched-color);
+}
+
+.button.paused {
+    border: 1px solid var(--paused-color);
+}
+.button.paused.selected {
+    color: white;
+    background-color: var(--paused-color);
+}
+
+.button.cancelled {
+    border: 1px solid var(--cancelled-color);
+}
+.button.cancelled.selected {
+    color: white;
+    background-color: var(--cancelled-color);
+}
+
+.button.queued {
+    border: 1px solid var(--queued-color);
+}
+.button.queued.selected {
+    color: white;
+    background-color: var(--queued-color);
+}
+
+.shadow {
+    box-shadow: var(--common-shadow);
 }
