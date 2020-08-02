@@ -40,3 +40,22 @@ input:active, input:focus {
 .submit-ui {
     margin-top: 35px;
 }
+
+.backdrop-image {
+    z-index: -2;
+    background: url('../img/login-wallpaper.jpg');
+    background-size: cover;
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+}
+
+/* TODO: In the original design mockup, this overlay is diagonal */
+.backdrop-overlay {
+    z-index: -1;
+    position: absolute;
+    width: 40vw;
+    height: 100vh;
+    box-shadow: var(--common-shadow);
+    background: white;
+}
