@@ -50,6 +50,11 @@ input:active, input:focus {
     height: 100vh;
 }
 
+.password-error {
+    color: red;
+    font-size: 14px;
+}
+
 /* TODO: In the original design mockup, this overlay is diagonal */
 .backdrop-overlay {
     z-index: -1;

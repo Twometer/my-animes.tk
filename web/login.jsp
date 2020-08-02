@@ -1,5 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page trimDirectiveWhitespaces="true" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<jsp:useBean id="showLoginError" scope="request" type="java.lang.Boolean"/>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -33,6 +35,10 @@
         <p>
             <input placeholder="password" type="password">
         </p>
+
+        <c:if test="${showLoginError}">
+            <span class="password-error">Invalid credentials :c</span>
+        </c:if>
 
         <div class="submit-ui">
             <button class="button primary mr-4">Log in</button>
