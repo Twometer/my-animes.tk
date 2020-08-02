@@ -1,5 +1,6 @@
 package tk.myanimes.db;
 
+import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -24,7 +25,7 @@ public class DbUser {
     @DatabaseField
     private long favoriteAnimeId;
 
-    @DatabaseField
+    @DatabaseField(dataType = DataType.BYTE_ARRAY)
     private byte[] passwordHash;
 
     public long getId() {

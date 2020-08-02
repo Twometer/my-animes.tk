@@ -26,14 +26,14 @@
 <div class="backdrop-overlay"></div>
 
 <div class="login-container">
-    <div class="login-content">
+    <form class="login-content" method="post">
         <h1>myanimes</h1>
         <h2>Welcome back!</h2>
         <p>
-            <input placeholder="username" type="text">
+            <input name="username" placeholder="username" type="text">
         </p>
         <p>
-            <input placeholder="password" type="password">
+            <input name="password" placeholder="password" type="password">
         </p>
 
         <c:if test="${showLoginError}">
@@ -41,10 +41,10 @@
         </c:if>
 
         <div class="submit-ui">
-            <button class="button primary mr-4">Log in</button>
+            <button type="submit" class="button primary mr-4">Log in</button>
             <a>new here?</a>
         </div>
-    </div>
+    </form>
 </div>
 
 </body>

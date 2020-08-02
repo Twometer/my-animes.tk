@@ -1,12 +1,12 @@
 package tk.myanimes.crypto;
 
-public class Password {
+public class Credential {
 
     private final String password;
 
     private final String salt;
 
-    public Password(String password, String salt) {
+    public Credential(String password, String salt) {
         this.password = password;
         this.salt = salt;
     }

@@ -2,21 +2,19 @@ package tk.myanimes;
 
 import tk.myanimes.model.*;
 import tk.myanimes.text.Formatter;
+import tk.myanimes.text.Validator;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.time.Instant;
 import java.util.ArrayList;
 
 @WebServlet("/user/*")
-public class UserServlet extends HttpServlet {
+public class UserServlet extends BaseServlet {
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void httpGet(HttpServletRequest req, HttpServletResponse resp) throws Exception {
         var path = req.getPathInfo();
         if (path == null || path.isEmpty()) {
             resp.sendError(404);
@@ -24,7 +22,7 @@ public class UserServlet extends HttpServlet {
         }
 
         var username = path.substring(1);
-        if (!isValidUsername(username)) {
+        if (!Validator.isValidUsername(username)) {
             resp.sendError(404);
             return;
         }
@@ -40,7 +38,7 @@ public class UserServlet extends HttpServlet {
         favAnime.setEpisodeLength(24);
 
         var user = new UserInfo();
-        user.setName("Twometer");
+        user.setName(username);
         user.setBiography("Some text about yourself here");
         user.setLocation("Germany");
         user.setProfilePicture("https://i.pinimg.com/originals/92/f3/8b/92f38bfe1c3b5e3466908f57a3e27ca3.jpg");
@@ -61,11 +59,5 @@ public class UserServlet extends HttpServlet {
         req.getRequestDispatcher("/user.jsp").forward(req, resp);
     }
 
-    private boolean isValidUsername(String username) {
-        for (var c : username.toCharArray())
-            if (!Character.isLetterOrDigit(c))
-                return false;
-        return true;
-    }
 
 }

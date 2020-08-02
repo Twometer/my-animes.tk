@@ -6,10 +6,10 @@ import java.nio.charset.StandardCharsets;
 
 public class Hash {
 
-    public static byte[] passwordHash(Password password) {
+    public static byte[] passwordHash(Credential credential) {
         try {
-            var key = password.getPassword().toCharArray();
-            var salt = password.getSalt().getBytes(StandardCharsets.UTF_8);
+            var key = credential.getPassword().toCharArray();
+            var salt = credential.getSalt().getBytes(StandardCharsets.UTF_8);
 
             var spec = new PBEKeySpec(key, salt, 65536, 256);
             var factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
@@ -19,8 +19,8 @@ public class Hash {
         }
     }
 
-    public static boolean validateHash(Password password, byte[] reference) {
-        var hash = passwordHash(password);
+    public static boolean validateHash(Credential credential, byte[] reference) {
+        var hash = passwordHash(credential);
         if (hash.length != reference.length)
             return false;
 
