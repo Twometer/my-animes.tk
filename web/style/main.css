@@ -1,3 +1,4 @@
+/* Common styles */
 * {
     --primary-color: #876FFF;
     --watching-color: #6FFFAD;
@@ -8,6 +9,24 @@
     --common-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2);
 }
 
+body {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 300;
+    color: #707070;
+}
+
+.shadow {
+    box-shadow: var(--common-shadow);
+}
+
+.icon {
+    vertical-align: center;
+    margin-top: -4px;
+    margin-right: 5px;
+    height: 20px;
+}
+
+/* Navbar styles */
 .navbar {
     background-color: var(--primary-color);
     box-shadow: var(--common-shadow);
@@ -26,12 +45,6 @@
     -webkit-user-select: none;
 }
 
-body {
-    font-family: 'Open Sans', sans-serif;
-    font-weight: 300;
-    color: #707070;
-}
-
 .nav-item {
     font-family: Exo, 'Open Sans', sans-serif;
     font-size: 18px;
@@ -47,65 +60,7 @@ body {
     transition-duration: .3s;
 }
 
-.profile-picture {
-    display: inline-block;
-    border-radius: 50%;
-    width: 160px;
-    height: 160px;
-    background: var(--primary-color) no-repeat 0 0;
-    background-size: cover;
-    box-shadow: var(--common-shadow);
-}
-
-.cover-picture {
-    display: inline-block;
-    width: 100px;
-    height: 140px;
-    background: var(--primary-color) no-repeat 0 0;
-    background-size: cover;
-}
-
-.main-content {
-    margin-left: 25% !important;
-    margin-right: 25% !important;
-}
-
-.button-bar {
-    display: flex;
-    justify-content: space-evenly;
-}
-
-#favorite-anime {
-    background-color: var(--primary-color);
-    color: white;
-}
-
-.dot {
-    display: inline-block;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    padding: 2px;
-    margin-right: 8px;
-    margin-top: -2px;
-    vertical-align: middle;
-}
-.dot.watching {
-    background-color: var(--watching-color);
-}
-.dot.watched {
-    background-color: var(--watched-color);
-}
-.dot.paused {
-    background-color: var(--paused-color);
-}
-.dot.cancelled {
-    background-color: var(--cancelled-color);
-}
-.dot.queued {
-    background-color: var(--queued-color);
-}
-
+/* Button styles */
 .button {
     font-family: Exo, sans-serif;
     font-size: 16px;
@@ -152,6 +107,7 @@ body {
 .button.watching {
     border: 1px solid var(--watching-color);
 }
+
 .button.watching.selected {
     color: white;
     background-color: var(--watching-color);
@@ -160,6 +116,7 @@ body {
 .button.watched {
     border: 1px solid var(--watched-color);
 }
+
 .button.watched.selected {
     color: white;
     background-color: var(--watched-color);
@@ -168,6 +125,7 @@ body {
 .button.paused {
     border: 1px solid var(--paused-color);
 }
+
 .button.paused.selected {
     color: white;
     background-color: var(--paused-color);
@@ -176,6 +134,7 @@ body {
 .button.cancelled {
     border: 1px solid var(--cancelled-color);
 }
+
 .button.cancelled.selected {
     color: white;
     background-color: var(--cancelled-color);
@@ -190,13 +149,15 @@ body {
     background-color: var(--queued-color);
 }
 
-.shadow {
-    box-shadow: var(--common-shadow);
+a {
+    text-decoration: none;
+    color: var(--primary-color) !important;
+    cursor: pointer;
+    border-bottom: 1px solid transparent;
+    transition-duration: .5s;
 }
 
-.icon {
-    vertical-align: center;
-    margin-top: -4px;
-    margin-right: 5px;
-    height: 20px;
+a:hover {
+    border-bottom: 1px solid var(--primary-color);
+    transition-duration: .5s;
 }
