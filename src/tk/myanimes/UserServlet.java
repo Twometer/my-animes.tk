@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.Instant;
+import java.util.ArrayList;
 
 @WebServlet("/user/*")
 public class UserServlet extends HttpServlet {
@@ -31,7 +32,10 @@ public class UserServlet extends HttpServlet {
         var favAnime = new AnimeInfo();
         favAnime.setCanonicalTitle("DARLING in the FRANXX");
         favAnime.setCoverPicture("https://upload.wikimedia.org/wikipedia/en/d/dc/DARLING_in_the_FRANXX%2C_second_key_visual.jpg");
-        favAnime.setAnimeStudio("Trigger, A-1, CloverWorks");
+        favAnime.setAnimeStudios(new ArrayList<>());
+        favAnime.getAnimeStudios().add("Trigger");
+        favAnime.getAnimeStudios().add("A-1");
+        favAnime.getAnimeStudios().add("CloverWorks");
         favAnime.setEpisodeCount(24);
         favAnime.setEpisodeLength(24);
 

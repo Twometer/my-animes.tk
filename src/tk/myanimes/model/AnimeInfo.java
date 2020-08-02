@@ -1,5 +1,6 @@
 package tk.myanimes.model;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -11,11 +12,11 @@ public class AnimeInfo {
 
     private Map<String, String> titles;
 
-    private List<String> genres;
+    private Collection<String> genres;
 
     private String synopsis;
 
-    private String animeStudio;
+    private Collection<String> animeStudios;
 
     private String coverPicture;
 
@@ -49,7 +50,7 @@ public class AnimeInfo {
         this.titles = titles;
     }
 
-    public List<String> getGenres() {
+    public Collection<String> getGenres() {
         return genres;
     }
 
@@ -65,12 +66,16 @@ public class AnimeInfo {
         this.synopsis = synopsis;
     }
 
-    public String getAnimeStudio() {
-        return animeStudio;
+    public void setGenres(Collection<String> genres) {
+        this.genres = genres;
     }
 
-    public void setAnimeStudio(String animeStudio) {
-        this.animeStudio = animeStudio;
+    public Collection<String> getAnimeStudios() {
+        return animeStudios;
+    }
+
+    public void setAnimeStudios(Collection<String> animeStudios) {
+        this.animeStudios = animeStudios;
     }
 
     public String getCoverPicture() {

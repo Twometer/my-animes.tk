@@ -112,7 +112,7 @@
                             episodes
                         </div>
                         <div class="col-auto"><img alt="Studio" class="icon"
-                                                   src="${pageContext.request.contextPath}/icon/video.svg"> ${item.anime.animeStudio}
+                                                   src="${pageContext.request.contextPath}/icon/video.svg"> ${formatter.formatList(item.anime.animeStudios)}
                         </div>
                     </div>
                 </div>

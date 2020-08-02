@@ -12,6 +12,8 @@ public class UserInfo {
 
     private AnimeInfo favoriteAnime;
 
+    private byte[] passwordHash;
+
     public String getName() {
         return name;
     }
@@ -51,4 +53,13 @@ public class UserInfo {
     public void setFavoriteAnime(AnimeInfo favoriteAnime) {
         this.favoriteAnime = favoriteAnime;
     }
+
+    public byte[] getPasswordHash() {
+        return passwordHash;
+    }
+
+    public void setPasswordHash(byte[] passwordHash) {
+        this.passwordHash = passwordHash;
+    }
+
 }

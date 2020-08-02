@@ -2,8 +2,13 @@ package tk.myanimes.text;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.Collection;
 
 public class Formatter {
+
+    public String formatList(Collection<String> list) {
+        return String.join(", ", list);
+    }
 
     public String formatDate(Instant instant) {
         var duration = Duration.between(instant, Instant.now()).toSeconds();
