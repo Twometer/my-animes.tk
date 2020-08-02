@@ -3,8 +3,8 @@ package tk.myanimes.db;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-@DatabaseTable(tableName = "anime_studios")
-public class DbAnimeStudio {
+@DatabaseTable(tableName = "anime_categories")
+public class DbAnimeCategory {
 
     @DatabaseField
     private long id;
@@ -13,7 +13,7 @@ public class DbAnimeStudio {
     private long animeId;
 
     @DatabaseField
-    private String studioName;
+    private String categoryName;
 
     public long getId() {
         return id;
@@ -31,11 +31,11 @@ public class DbAnimeStudio {
         this.animeId = animeId;
     }
 
-    public String getStudioName() {
-        return studioName;
+    public String getCategoryName() {
+        return categoryName;
     }
 
-    public void setStudioName(String studioName) {
-        this.studioName = studioName;
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 }

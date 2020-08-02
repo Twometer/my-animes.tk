@@ -20,7 +20,7 @@ public class DataAccess {
     private Dao<DbUser, Long> userDao;
     private Dao<DbAnimeInfo, Long> animeInfoDao;
     private Dao<DbAnimeTitle, Long> animeTitleDao;
-    private Dao<DbAnimeGenre, Long> animeGenreDao;
+    private Dao<DbAnimeCategory, Long> animeCategoryDao;
     private Dao<DbAnimeStudio, Long> animeStudioDao;
     private Dao<DbAnimeListItem, Long> animeListItemDao;
 
@@ -37,14 +37,14 @@ public class DataAccess {
             TableUtils.createTableIfNotExists(connectionSource, DbUser.class);
             TableUtils.createTableIfNotExists(connectionSource, DbAnimeInfo.class);
             TableUtils.createTableIfNotExists(connectionSource, DbAnimeTitle.class);
-            TableUtils.createTableIfNotExists(connectionSource, DbAnimeGenre.class);
+            TableUtils.createTableIfNotExists(connectionSource, DbAnimeCategory.class);
             TableUtils.createTableIfNotExists(connectionSource, DbAnimeStudio.class);
             TableUtils.createTableIfNotExists(connectionSource, DbAnimeListItem.class);
 
             userDao = DaoManager.createDao(connectionSource, DbUser.class);
             animeInfoDao = DaoManager.createDao(connectionSource, DbAnimeInfo.class);
             animeTitleDao = DaoManager.createDao(connectionSource, DbAnimeTitle.class);
-            animeGenreDao = DaoManager.createDao(connectionSource, DbAnimeGenre.class);
+            animeCategoryDao = DaoManager.createDao(connectionSource, DbAnimeCategory.class);
             animeStudioDao = DaoManager.createDao(connectionSource, DbAnimeStudio.class);
             animeListItemDao = DaoManager.createDao(connectionSource, DbAnimeListItem.class);
         }
@@ -65,9 +65,9 @@ public class DataAccess {
         return animeTitleDao;
     }
 
-    public Dao<DbAnimeGenre, Long> getAnimeGenreDao() throws SQLException {
+    public Dao<DbAnimeCategory, Long> getAnimeCategoryDao() throws SQLException {
         ensureConnected();
-        return animeGenreDao;
+        return animeCategoryDao;
     }
 
     public Dao<DbAnimeStudio, Long> getAnimeStudioDao() throws SQLException {

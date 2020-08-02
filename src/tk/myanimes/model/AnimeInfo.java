@@ -6,13 +6,13 @@ import java.util.Map;
 
 public class AnimeInfo {
 
-    private String identifier;
+    private long id;
 
     private String canonicalTitle;
 
     private Map<String, String> titles;
 
-    private Collection<String> genres;
+    private Collection<String> categories;
 
     private String synopsis;
 
@@ -26,12 +26,12 @@ public class AnimeInfo {
 
     private int episodeLength;
 
-    public String getIdentifier() {
-        return identifier;
+    public long getId() {
+        return id;
     }
 
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getCanonicalTitle() {
@@ -50,12 +50,12 @@ public class AnimeInfo {
         this.titles = titles;
     }
 
-    public Collection<String> getGenres() {
-        return genres;
+    public Collection<String> getCategories() {
+        return categories;
     }
 
-    public void setGenres(List<String> genres) {
-        this.genres = genres;
+    public void setCategories(List<String> categories) {
+        this.categories = categories;
     }
 
     public String getSynopsis() {
@@ -67,7 +67,7 @@ public class AnimeInfo {
     }
 
     public void setGenres(Collection<String> genres) {
-        this.genres = genres;
+        this.categories = genres;
     }
 
     public Collection<String> getAnimeStudios() {

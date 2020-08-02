@@ -2,6 +2,8 @@ package tk.myanimes.model;
 
 public class UserInfo {
 
+    private long id;
+
     private String name;
 
     private String location;
@@ -13,6 +15,14 @@ public class UserInfo {
     private AnimeInfo favoriteAnime;
 
     private byte[] passwordHash;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
