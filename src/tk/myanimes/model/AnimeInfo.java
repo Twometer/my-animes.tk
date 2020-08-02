@@ -1,18 +1,23 @@
 package tk.myanimes.model;
 
+import java.util.List;
 import java.util.Map;
 
-public class Anime {
+public class AnimeInfo {
 
     private String identifier;
 
-    private String synopsis;
+    private String canonicalTitle;
 
     private Map<String, String> titles;
 
-    private String canonicalTitle;
+    private List<String> genres;
 
-    private String coverImageUrl;
+    private String synopsis;
+
+    private String animeStudio;
+
+    private String coverPicture;
 
     private String ageRating;
 
@@ -28,12 +33,12 @@ public class Anime {
         this.identifier = identifier;
     }
 
-    public String getSynopsis() {
-        return synopsis;
+    public String getCanonicalTitle() {
+        return canonicalTitle;
     }
 
-    public void setSynopsis(String synopsis) {
-        this.synopsis = synopsis;
+    public void setCanonicalTitle(String canonicalTitle) {
+        this.canonicalTitle = canonicalTitle;
     }
 
     public Map<String, String> getTitles() {
@@ -44,20 +49,36 @@ public class Anime {
         this.titles = titles;
     }
 
-    public String getCanonicalTitle() {
-        return canonicalTitle;
+    public List<String> getGenres() {
+        return genres;
     }
 
-    public void setCanonicalTitle(String canonicalTitle) {
-        this.canonicalTitle = canonicalTitle;
+    public void setGenres(List<String> genres) {
+        this.genres = genres;
     }
 
-    public String getCoverImageUrl() {
-        return coverImageUrl;
+    public String getSynopsis() {
+        return synopsis;
     }
 
-    public void setCoverImageUrl(String coverImageUrl) {
-        this.coverImageUrl = coverImageUrl;
+    public void setSynopsis(String synopsis) {
+        this.synopsis = synopsis;
+    }
+
+    public String getAnimeStudio() {
+        return animeStudio;
+    }
+
+    public void setAnimeStudio(String animeStudio) {
+        this.animeStudio = animeStudio;
+    }
+
+    public String getCoverPicture() {
+        return coverPicture;
+    }
+
+    public void setCoverPicture(String coverPicture) {
+        this.coverPicture = coverPicture;
     }
 
     public String getAgeRating() {
@@ -82,5 +103,9 @@ public class Anime {
 
     public void setEpisodeLength(int episodeLength) {
         this.episodeLength = episodeLength;
+    }
+
+    public int getTotalDuration() {
+        return episodeCount * episodeLength;
     }
 }

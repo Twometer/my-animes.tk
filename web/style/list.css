@@ -38,6 +38,12 @@
     color: white;
 }
 
+#empty-list {
+    width: 100%;
+    text-align: center;
+    font-size: 22px;
+}
+
 .dot {
     display: inline-block;
     width: 8px;

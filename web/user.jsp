@@ -1,3 +1,9 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page trimDirectiveWhitespaces="true" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<jsp:useBean id="animes" scope="request" type="tk.myanimes.model.AnimeList"/>
+<jsp:useBean id="user" scope="request" type="tk.myanimes.model.UserInfo"/>
+<jsp:useBean id="formatter" scope="request" type="tk.myanimes.text.Formatter"/>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,8 +18,8 @@
           integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Unica+One&family=Open+Sans:wght@300&family=Exo:wght@300&display=swap"
           rel="stylesheet">
-    <link href="style/main.css" rel="stylesheet">
-    <link href="style/list.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/style/main.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/style/list.css" rel="stylesheet">
 </head>
 
 <body>
@@ -40,28 +46,32 @@
     <div class="row align-items-center mt-5">
         <div class="col-sm-auto">
             <span class="profile-picture"
-                  style="background-image: url(https://i.pinimg.com/originals/92/f3/8b/92f38bfe1c3b5e3466908f57a3e27ca3.jpg)"></span>
+                  style="background-image: url(${user.profilePicture})"></span>
         </div>
         <div class="ml-5 col-sm">
-            <h2>Username
+            <h2>${user.name}
                 <button class="button primary inline ml-2">Follow</button>
             </h2>
 
-            Some text about yourself here
+            ${user.biography}
         </div>
         <div class="col-sm-auto">
-            <p><img alt="Animes" class="icon" src="icon/film.svg"> 32 animes</p>
-            <p><img alt="Watchtime" class="icon" src="icon/clock.svg"> 5.38 days</p>
-            <p><img alt="Location" class="icon" src="icon/map-pin.svg"> Germany</p>
+            <p><img alt="Animes" class="icon" src="${pageContext.request.contextPath}/icon/film.svg"> ${animes.size()}
+                animes</p>
+            <p><img alt="Watchtime" class="icon"
+                    src="${pageContext.request.contextPath}/icon/clock.svg"> ${formatter.formatDuration(animes.getTotalDuration())}
+            </p>
+            <p><img alt="Location" class="icon"
+                    src="${pageContext.request.contextPath}/icon/map-pin.svg"> ${user.location}</p>
         </div>
     </div>
     <div id="favorite-anime" class="row align-items-center mt-5 p-3">
         <div class="col-sm-auto">
             <span class="cover-picture small shadow"
-                  style="background-image: url('https://upload.wikimedia.org/wikipedia/en/d/dc/DARLING_in_the_FRANXX%2C_second_key_visual.jpg')"></span>
+                  style="background-image: url('${user.favoriteAnime.coverPicture}')"></span>
         </div>
         <div class="ml-2 col-sm">
-            <h4 class="mb-3">DARLING in the FRANXX</h4>
+            <h4 class="mb-3">${user.favoriteAnime.canonicalTitle}</h4>
             <h4 class="mt-3" style="opacity: 0.35">my favorite anime</h4>
         </div>
     </div>
@@ -75,22 +85,38 @@
     </div>
     <div class="row mt-5">
 
-        <div class="row align-items-center w-100">
-            <div class="col-sm-auto">
-                <span class="cover-picture"
-                      style="background-image: url('https://img.goldposter.com/2018/03/b-the-beginning-2_poster_goldposter_com_2.jpg?x-oss-process=image/resize,m_fill,h_800,w_567/quality,q_80')"></span>
+        <c:if test="${animes.size() == 0}">
+            <div id="empty-list">
+                No animes... yet :3
             </div>
-            <div class="ml-2 col-sm">
-                <h3><i class="dot watched"></i> B: The Beginning</h3>
-                <div class="row mt-3">
-                    <div class="col-2"><img alt="Rating" class="icon" src="icon/star.svg"> 8/10</div>
-                    <div class="col-3"><img alt="Watched" class="icon" src="icon/calendar.svg"> 4 months ago</div>
-                    <div class="col-3"><img alt="Episodes" class="icon" src="icon/tv.svg"> 12 episodes</div>
-                    <div class="col-3"><img alt="Studio" class="icon" src="icon/video.svg"> Production I.G</div>
+        </c:if>
+
+        <c:forEach var="item" items="${animes}">
+            <div class="row align-items-center w-100">
+                <div class="col-sm-auto">
+                <span class="cover-picture"
+                      style="background-image: url(${item.anime.coverPicture})"></span>
+                </div>
+                <div class="ml-2 col-sm">
+                    <h3><i class="dot ${item.watchState.toString()}"></i> ${item.anime.canonicalTitle}</h3>
+                    <div class="row mt-3">
+                        <div class="col-2"><img alt="Rating" class="icon"
+                                                src="${pageContext.request.contextPath}/icon/star.svg"> ${item.score}/10.0
+                        </div>
+                        <div class="col-3"><img alt="Watched" class="icon"
+                                                src="${pageContext.request.contextPath}/icon/calendar.svg"> ${formatter.formatDate(item.watchDate)}
+                        </div>
+                        <div class="col-3"><img alt="Episodes" class="icon"
+                                                src="${pageContext.request.contextPath}/icon/tv.svg"> ${item.anime.episodeCount}
+                            episodes
+                        </div>
+                        <div class="col-auto"><img alt="Studio" class="icon"
+                                                   src="${pageContext.request.contextPath}/icon/video.svg"> ${item.anime.animeStudio}
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-
+        </c:forEach>
     </div>
 </div>
 

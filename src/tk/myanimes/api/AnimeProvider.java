@@ -1,9 +1,9 @@
 package tk.myanimes.api;
 
-import tk.myanimes.model.Anime;
+import tk.myanimes.model.AnimeInfo;
 
 public interface AnimeProvider {
 
-    Anime getForName(String name);
+    AnimeInfo getForName(String name);
 
 }
