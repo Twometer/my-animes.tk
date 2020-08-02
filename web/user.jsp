@@ -102,7 +102,7 @@
                     <h3><i class="dot ${item.watchState.toString()}"></i> ${item.anime.canonicalTitle}</h3>
                     <div class="row mt-3">
                         <div class="col-2"><img alt="Rating" class="icon"
-                                                src="${pageContext.request.contextPath}/icon/star.svg"> ${item.score}/10.0
+                                                src="${pageContext.request.contextPath}/icon/star.svg"> ${formatter.formatScore(item.score)}/10.0
                         </div>
                         <div class="col-3"><img alt="Watched" class="icon"
                                                 src="${pageContext.request.contextPath}/icon/calendar.svg"> ${formatter.formatDate(item.watchDate)}

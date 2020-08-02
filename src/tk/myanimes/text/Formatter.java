@@ -33,6 +33,10 @@ public class Formatter {
         }
     }
 
+    public String formatScore(float score) {
+        return String.valueOf(round(score, 1));
+    }
+
     private double round(double d, int digits) {
         var exp = Math.pow(10, digits);
         return Math.round(d * exp) / exp;
