@@ -23,7 +23,7 @@ public class UserServlet extends HttpServlet {
         }
 
         var username = path.substring(1);
-        if (!validateUsername(username)) {
+        if (!isValidUsername(username)) {
             resp.sendError(404);
             return;
         }
@@ -57,7 +57,7 @@ public class UserServlet extends HttpServlet {
         req.getRequestDispatcher("/user.jsp").forward(req, resp);
     }
 
-    private boolean validateUsername(String username) {
+    private boolean isValidUsername(String username) {
         for (var c : username.toCharArray())
             if (!Character.isLetterOrDigit(c))
                 return false;

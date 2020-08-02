@@ -37,7 +37,8 @@
             <li class="nav-item active"><a class="nav-link" href="#">Characters</a></li>
         </ul>
         <ul class="navbar-nav ml-auto">
-            <li class="nav-item active"><a class="nav-link" href="#">Log in</a></li>
+            <li class="nav-item active"><a class="nav-link" href="${pageContext.request.contextPath}/login">Log in</a>
+            </li>
         </ul>
     </div>
 </nav>
@@ -50,7 +51,7 @@
         </div>
         <div class="ml-5 col-sm">
             <h2>${user.name}
-                <button class="button primary inline ml-2">Follow</button>
+                <button class="button primary inline ml-3">Follow</button>
             </h2>
 
             ${user.biography}

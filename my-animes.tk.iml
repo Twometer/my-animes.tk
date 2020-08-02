@@ -20,6 +20,8 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" scope="PROVIDED" name="Tomcat 9.0.37" level="application_server_libraries" />
-    <orderEntry type="library" name="javax.servlet:jstl:1.2" level="project" />
+    <orderEntry type="library" name="JSTL" level="project" />
+    <orderEntry type="library" name="ORM" level="project" />
+    <orderEntry type="library" name="SQLite" level="project" />
   </component>
 </module>

@@ -8,7 +8,9 @@
         </element>
         <element id="dir-copy" path="$PROJECT_DIR$/web" />
         <element id="directory" name="lib">
-          <element id="library" level="project" name="javax.servlet:jstl:1.2" />
+          <element id="library" level="project" name="JSTL" />
+          <element id="library" level="project" name="ORM" />
+          <element id="library" level="project" name="SQLite" />
         </element>
       </element>
     </root>
