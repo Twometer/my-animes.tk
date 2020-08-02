@@ -1,6 +1,10 @@
 package tk.myanimes;
 
-import tk.myanimes.model.*;
+import tk.myanimes.io.Database;
+import tk.myanimes.model.AnimeInfo;
+import tk.myanimes.model.AnimeList;
+import tk.myanimes.model.AnimeListItem;
+import tk.myanimes.model.WatchState;
 import tk.myanimes.text.Formatter;
 import tk.myanimes.text.Validator;
 
@@ -27,6 +31,12 @@ public class UserServlet extends BaseServlet {
             return;
         }
 
+        var user = Database.findUserInfo(username);
+        if (user == null) {
+            resp.sendError(404);
+            return;
+        }
+
         var favAnime = new AnimeInfo();
         favAnime.setCanonicalTitle("DARLING in the FRANXX");
         favAnime.setCoverPicture("https://upload.wikimedia.org/wikipedia/en/d/dc/DARLING_in_the_FRANXX%2C_second_key_visual.jpg");
@@ -37,12 +47,12 @@ public class UserServlet extends BaseServlet {
         favAnime.setEpisodeCount(24);
         favAnime.setEpisodeLength(24);
 
-        var user = new UserInfo();
-        user.setName(username);
-        user.setBiography("Some text about yourself here");
-        user.setLocation("Germany");
-        user.setProfilePicture("https://i.pinimg.com/originals/92/f3/8b/92f38bfe1c3b5e3466908f57a3e27ca3.jpg");
-        user.setFavoriteAnime(favAnime);
+        //var user = new UserInfo();
+        //user.setName(username);
+        //user.setBiography("Some text about yourself here");
+        //user.setLocation("Germany");
+        //user.setProfilePicture("https://i.pinimg.com/originals/92/f3/8b/92f38bfe1c3b5e3466908f57a3e27ca3.jpg");
+        //user.setFavoriteAnime(favAnime);
 
         var animes = new AnimeList();
 

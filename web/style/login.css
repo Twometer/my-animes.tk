@@ -43,7 +43,6 @@ input:active, input:focus {
 
 .backdrop-image {
     z-index: -2;
-    background: url('../img/login-wallpaper.jpg');
     background-size: cover;
     position: absolute;
     width: 100vw;

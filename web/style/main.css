@@ -159,5 +159,6 @@ a {
 
 a:hover {
     border-bottom: 1px solid var(--primary-color);
+    text-decoration: none;
     transition-duration: .5s;
 }

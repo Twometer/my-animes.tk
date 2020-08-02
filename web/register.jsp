@@ -1,7 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<jsp:useBean id="showLoginError" scope="request" type="java.lang.Boolean"/>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,27 +21,26 @@
 
 <body>
 
-<div class="backdrop-image" style="background-image: url('img/login-wallpaper.jpg');"></div>
+<div class="backdrop-image" style="background-image: url('img/register-wallpaper.jpg');"></div>
 <div class="backdrop-overlay"></div>
 
 <div class="login-container">
     <form class="login-content" method="post">
         <h1>myanimes</h1>
-        <h2>Welcome back!</h2>
+        <h2>Nice to meet you!</h2>
         <p>
             <input name="username" placeholder="username" type="text">
         </p>
         <p>
             <input name="password" placeholder="password" type="password">
         </p>
-
-        <c:if test="${showLoginError}">
-            <span class="password-error">Invalid credentials :c</span>
-        </c:if>
+        <p>
+            <input name="passwordConfirm" placeholder="confirm password" type="password">
+        </p>
 
         <div class="submit-ui">
-            <button type="submit" class="button primary mr-4">Log in</button>
-            <a href="${pageContext.request.contextPath}/register">new here?</a>
+            <button type="submit" class="button primary mr-4">Register</button>
+            <a href="${pageContext.request.contextPath}/login">back to login</a>
         </div>
     </form>
 </div>
