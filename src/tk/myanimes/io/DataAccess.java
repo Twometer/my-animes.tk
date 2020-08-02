@@ -1,10 +1,11 @@
 package tk.myanimes.io;
 
 import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
-import tk.myanimes.db.DbUser;
+import tk.myanimes.db.*;
 
 import java.io.File;
 import java.sql.SQLException;
@@ -17,6 +18,11 @@ public class DataAccess {
 
     private ConnectionSource connectionSource;
     private Dao<DbUser, Long> userDao;
+    private Dao<DbAnimeInfo, Long> animeInfoDao;
+    private Dao<DbAnimeTitle, Long> animeTitleDao;
+    private Dao<DbAnimeGenre, Long> animeGenreDao;
+    private Dao<DbAnimeStudio, Long> animeStudioDao;
+    private Dao<DbAnimeListItem, Long> animeListItemDao;
 
     public static DataAccess instance() {
         return instance;
@@ -29,11 +35,48 @@ public class DataAccess {
             connectionSource = new JdbcConnectionSource(databaseUrl);
 
             TableUtils.createTableIfNotExists(connectionSource, DbUser.class);
+            TableUtils.createTableIfNotExists(connectionSource, DbAnimeInfo.class);
+            TableUtils.createTableIfNotExists(connectionSource, DbAnimeTitle.class);
+            TableUtils.createTableIfNotExists(connectionSource, DbAnimeGenre.class);
+            TableUtils.createTableIfNotExists(connectionSource, DbAnimeStudio.class);
+            TableUtils.createTableIfNotExists(connectionSource, DbAnimeListItem.class);
+
+            userDao = DaoManager.createDao(connectionSource, DbUser.class);
+            animeInfoDao = DaoManager.createDao(connectionSource, DbAnimeInfo.class);
+            animeTitleDao = DaoManager.createDao(connectionSource, DbAnimeTitle.class);
+            animeGenreDao = DaoManager.createDao(connectionSource, DbAnimeGenre.class);
+            animeStudioDao = DaoManager.createDao(connectionSource, DbAnimeStudio.class);
+            animeListItemDao = DaoManager.createDao(connectionSource, DbAnimeListItem.class);
         }
     }
 
     public Dao<DbUser, Long> getUserDao() throws SQLException {
         ensureConnected();
         return userDao;
+    }
+
+    public Dao<DbAnimeInfo, Long> getAnimeInfoDao() throws SQLException {
+        ensureConnected();
+        return animeInfoDao;
+    }
+
+    public Dao<DbAnimeTitle, Long> getAnimeTitleDao() throws SQLException {
+        ensureConnected();
+        return animeTitleDao;
+    }
+
+    public Dao<DbAnimeGenre, Long> getAnimeGenreDao() throws SQLException {
+        ensureConnected();
+        return animeGenreDao;
+    }
+
+    public Dao<DbAnimeStudio, Long> getAnimeStudioDao() throws SQLException {
+        ensureConnected();
+        return animeStudioDao;
+    }
+
+    public Dao<DbAnimeListItem, Long> getAnimeListItemDao() throws SQLException {
+        ensureConnected();
+        return animeListItemDao;
     }
 }

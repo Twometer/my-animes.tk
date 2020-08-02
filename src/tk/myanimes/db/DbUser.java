@@ -2,10 +2,9 @@ package tk.myanimes.db;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
-import tk.myanimes.model.UserInfo;
 
 @DatabaseTable(tableName = "users")
-public class DbUser implements DbObject<UserInfo> {
+public class DbUser {
 
     @DatabaseField(generatedId = true)
     private long id;
@@ -27,28 +26,6 @@ public class DbUser implements DbObject<UserInfo> {
 
     @DatabaseField
     private byte[] passwordHash;
-
-    @Override
-    public void serialize(UserInfo userInfo) {
-        setName(userInfo.getName());
-        setLocation(userInfo.getLocation());
-        setBiography(userInfo.getBiography());
-        setProfilePicture(userInfo.getProfilePicture());
-        // TODO: Favorite anime ID
-        setPasswordHash(userInfo.getPasswordHash());
-    }
-
-    @Override
-    public UserInfo deserialize() {
-        var userInfo = new UserInfo();
-        userInfo.setName(name);
-        userInfo.setLocation(location);
-        userInfo.setBiography(biography);
-        userInfo.setProfilePicture(profilePicture);
-        userInfo.setFavoriteAnime(null); // TODO: Load from DB
-        userInfo.setPasswordHash(passwordHash);
-        return userInfo;
-    }
 
     public long getId() {
         return id;
