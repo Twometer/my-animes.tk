@@ -122,7 +122,7 @@
             </div>
         </c:if>
         <c:forEach var="item" items="${animes}">
-            <div class="row align-items-center w-100">
+            <div class="row align-items-center w-100 my-2">
                 <div class="col-sm-auto">
                 <span class="cover-picture"
                       style="background-image: url(${item.anime.coverPicture})"></span>
