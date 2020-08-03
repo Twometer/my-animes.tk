@@ -75,8 +75,7 @@ public class RegisterServlet extends BaseServlet {
     }
 
     private void sendResponse(HttpServletRequest req, HttpServletResponse resp, String error) throws ServletException, IOException {
-        req.setAttribute("showError", error != null);
-        req.setAttribute("errorMessage", error != null ? error : "");
+        loadError(req, error);
         req.getRequestDispatcher("/register.jsp").forward(req, resp);
     }
 

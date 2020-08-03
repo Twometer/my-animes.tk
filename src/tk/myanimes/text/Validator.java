@@ -10,6 +10,9 @@ public class Validator {
     }
 
     public static boolean isValidUsername(String username) {
+        if (username.length() == 0)
+            return false;
+
         if (username.length() > 20)
             return false;
 

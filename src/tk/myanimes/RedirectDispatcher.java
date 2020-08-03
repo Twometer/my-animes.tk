@@ -26,7 +26,7 @@ public class RedirectDispatcher {
         if (!user.isSetupComplete())
             resp.sendRedirect("profile");
         else
-            resp.sendRedirect("redirect");
+            resp.sendRedirect("dashboard");
     }
 
 }

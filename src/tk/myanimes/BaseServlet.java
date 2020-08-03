@@ -1,5 +1,6 @@
 package tk.myanimes;
 
+import tk.myanimes.model.UserInfo;
 import tk.myanimes.session.SessionManager;
 
 import javax.servlet.ServletException;
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.sql.SQLException;
 
 public abstract class BaseServlet extends HttpServlet {
 
@@ -57,6 +59,21 @@ public abstract class BaseServlet extends HttpServlet {
             return true;
         resp.sendRedirect("login");
         return false;
+    }
+
+    protected void loadLoggedInUserInfo(HttpServletRequest req) throws SQLException {
+        if (SessionManager.instance().isAuthenticated(req)) {
+            req.setAttribute("isAuthenticated", true);
+            req.setAttribute("authenticatedUser", SessionManager.instance().getCurrentUser(req));
+        } else {
+            req.setAttribute("isAuthenticated", false);
+            req.setAttribute("authenticatedUser", new UserInfo());
+        }
+    }
+
+    protected void loadError(HttpServletRequest req, String error) {
+        req.setAttribute("showError", error != null);
+        req.setAttribute("errorMessage", error != null ? error : "");
     }
 
 }

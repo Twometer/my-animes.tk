@@ -62,4 +62,6 @@ input:active, input:focus {
     height: 100vh;
     box-shadow: var(--common-shadow);
     background: white;
+    /*background: rgba(255,255,255,0.7);
+    backdrop-filter: blur(32px);*/
 }
