@@ -1,4 +1,4 @@
-package tk.myanimes;
+package tk.myanimes.servlet;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;

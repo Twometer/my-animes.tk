@@ -1,4 +1,4 @@
-package tk.myanimes;
+package tk.myanimes.servlet;
 
 import tk.myanimes.crypto.Credential;
 import tk.myanimes.crypto.Hash;
