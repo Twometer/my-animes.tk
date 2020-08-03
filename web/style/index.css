@@ -6,6 +6,7 @@ h1 {
 
 h2 {
     margin-bottom: 45px;
+    color: rgba(255, 255, 255, 0.6);
 }
 
 body {
@@ -20,8 +21,8 @@ body {
 
 .backdrop-overlay {
     z-index: 0;
+    width: 40vw;
     height: 60vh;
-    width: 60vw;
     border-radius: 30px;
     padding: 50px;
     justify-content: center;
@@ -31,4 +32,14 @@ body {
     backdrop-filter: blur(32px);
     display: flex;
     text-align: center;
+}
+
+a.container-link {
+    border: none !important;
+    transition: none !important;
+}
+
+a.container-link:hover {
+    border: none !important;
+    transition: none !important;
 }

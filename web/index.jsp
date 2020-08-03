@@ -24,7 +24,9 @@
         <img src="img/welcome-girl.png">
         <h1>Welcome To myanimes</h1>
         <h2>Share your favourite animes with the world</h2>
-        <button class="button primary mr-4">Join</button>
+        <a class="container-link" href="${pageContext.request.contextPath}/register">
+            <button class="button primary mr-4">Join</button>
+        </a>
         <a href="#">Explore</a>
     </div>
 </div>
