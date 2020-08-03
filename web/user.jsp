@@ -96,7 +96,7 @@
                   style="background-image: url('${user.favoriteAnime.coverPicture}')"></span>
             </div>
             <div class="ml-2 col-sm">
-                <h4 class="mb-3">${user.favoriteAnime.canonicalTitle}</h4>
+                <h4 class="mb-3">${user.favoriteAnime.englishTitle}</h4>
                 <h4 class="mt-3" style="opacity: 0.35">my favorite anime</h4>
             </div>
         </div>
@@ -124,7 +124,7 @@
                       style="background-image: url(${item.anime.coverPicture})"></span>
                 </div>
                 <div class="ml-2 col-sm">
-                    <h3><i class="dot ${item.watchState.toString()}"></i> ${item.anime.canonicalTitle}</h3>
+                    <h3><i class="dot ${item.watchState.toString()}"></i> ${item.anime.englishTitle}</h3>
                     <div class="row mt-3">
                         <div class="col-2"><img alt="Rating" class="icon"
                                                 src="${pageContext.request.contextPath}/icon/star.svg"> ${formatter.formatScore(item.score)}/10.0

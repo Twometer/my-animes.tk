@@ -182,3 +182,30 @@ a:hover {
     text-decoration: none;
     transition-duration: .5s;
 }
+
+#anime-search-results {
+    display: none;
+    position: absolute;
+    height: 200px;
+    overflow-y: auto;
+    background: white;
+    box-shadow: var(--common-shadow);
+}
+
+.search-message {
+    width: 100%;
+    text-align: center;
+    padding: 15px;
+}
+
+.search-result-item {
+    user-select: none !important;
+    cursor: pointer;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 5px;
+}
+
+.search-result-item:hover {
+    background: #EFEFEF;
+}

@@ -18,7 +18,7 @@ public class AnimeCache {
         return instance;
     }
 
-    public AnimeInfo tryGetFullAnimeInfo(SearchResult result) throws SQLException, IOException {
+    public AnimeInfo tryGetFullAnimeInfo(KitsuAnimeInfo result) throws SQLException, IOException {
         var cacheEntries = DataAccess.instance().getAnimeInfoDao().queryForEq("slug", result.getAnimeInfo().getSlug());
         if (cacheEntries.size() == 0) {
             log.info("Cache Miss: Full Anime query: " + result.getAnimeInfo().getSlug());

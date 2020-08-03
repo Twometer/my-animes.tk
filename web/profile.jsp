@@ -40,12 +40,19 @@
             <input name="bio" placeholder="about you" type="text" value="${authenticatedUser.biography}">
         </p>
         <p>
-            <input name="profilepic" placeholder="profile picture link" type="url"
+            <input name="profilePicUrl" placeholder="profile picture link" type="url"
                    value="${authenticatedUser.profilePicture}">
         </p>
         <p>
             <input name="location" placeholder="location" type="text" value="${authenticatedUser.location}">
         </p>
+        <p>
+            <input type="hidden" name="favoriteAnimeId" id="favorite-anime-id">
+            <input id="anime-search" placeholder="favorite anime" type="text"
+                   value="${authenticatedUser.favoriteAnime != null ? authenticatedUser.favoriteAnime.englishTitle : ""}">
+        <div id="anime-search-results">
+            <div class="search-message">Searching...</div>
+        </div>
         <c:if test="${showError}">
             <span class="password-error">${errorMessage}</span>
         </c:if>
@@ -67,5 +74,6 @@
 <script crossorigin="anonymous"
         integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
         src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script src="script/search.js"></script>
 
 </html>

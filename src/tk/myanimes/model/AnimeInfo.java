@@ -125,6 +125,16 @@ public class AnimeInfo {
         this.totalLength = totalLength;
     }
 
+    public String getEnglishTitle() {
+        if (titles.size() == 0)
+            return canonicalTitle;
+        if (titles.containsKey("en"))
+            return titles.get("en");
+        if (titles.containsKey("en_us"))
+            return titles.get("en_us");
+        return canonicalTitle;
+    }
+
     @Override
     public String toString() {
         return "AnimeInfo{" +

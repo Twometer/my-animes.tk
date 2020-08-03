@@ -1,5 +1,6 @@
 package tk.myanimes.anime;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import okhttp3.OkHttpClient;
@@ -27,37 +28,44 @@ public class AnimeProvider {
         return instance;
     }
 
-    public List<SearchResult> searchAnime(String query) throws IOException {
+    public KitsuAnimeInfo getKitsuAnime(long animeId) throws IOException {
+        var url = "https://kitsu.io/api/edge/anime/" + animeId;
+        var reply = parse(request(url)).getAsJsonObject("data");
+        return parseKitsuAnimeInfo(reply);
+    }
+
+    public List<KitsuAnimeInfo> searchAnime(String query) throws IOException {
         var baseUrl = "https://kitsu.io/api/edge/anime?filter[text]=" + URLEncoder.encode(query, StandardCharsets.UTF_8);
         var reply = parse(request(baseUrl)).getAsJsonArray("data");
-
-        var results = new ArrayList<SearchResult>();
-
+        var results = new ArrayList<KitsuAnimeInfo>();
         for (var item : reply) {
-            var obj = item.getAsJsonObject();
-            var attrs = obj.getAsJsonObject("attributes");
-
-            var anime = new AnimeInfo();
-            anime.setSlug(attrs.get("slug").getAsString());
-            anime.setCanonicalTitle(attrs.get("canonicalTitle").getAsString());
-            anime.setTitles(new HashMap<>());
-            for (var title : attrs.getAsJsonObject("titles").entrySet()) {
-                anime.getTitles().put(title.getKey(), title.getValue().getAsString());
-            }
-            anime.setCategories(new ArrayList<>());
-            anime.setSynopsis(attrs.get("synopsis").getAsString());
-            anime.setAnimeStudios(new ArrayList<>());
-            anime.setCoverPicture(attrs.getAsJsonObject("posterImage").get("tiny").getAsString());
-
-            anime.setAgeRating(getNullableString(attrs, "ageRatingGuide"));
-            anime.setEpisodeCount(getNullableInt(attrs, "episodeCount"));
-            anime.setEpisodeLength(getNullableInt(attrs, "episodeLength"));
-            anime.setTotalLength(attrs.get("totalLength").getAsInt());
-
-            results.add(new SearchResult(obj.get("id").getAsString(), anime));
+            results.add(parseKitsuAnimeInfo(item));
         }
-
         return results;
+    }
+
+    private KitsuAnimeInfo parseKitsuAnimeInfo(JsonElement dataObject) {
+        var obj = dataObject.getAsJsonObject();
+        var attrs = obj.getAsJsonObject("attributes");
+
+        var anime = new AnimeInfo();
+        anime.setSlug(attrs.get("slug").getAsString());
+        anime.setCanonicalTitle(attrs.get("canonicalTitle").getAsString());
+        anime.setTitles(new HashMap<>());
+        for (var title : attrs.getAsJsonObject("titles").entrySet()) {
+            anime.getTitles().put(title.getKey(), title.getValue().getAsString());
+        }
+        anime.setCategories(new ArrayList<>());
+        anime.setSynopsis(attrs.get("synopsis").getAsString());
+        anime.setAnimeStudios(new ArrayList<>());
+        anime.setCoverPicture(attrs.getAsJsonObject("posterImage").get("tiny").getAsString());
+
+        anime.setAgeRating(getNullableString(attrs, "ageRatingGuide"));
+        anime.setEpisodeCount(getNullableInt(attrs, "episodeCount"));
+        anime.setEpisodeLength(getNullableInt(attrs, "episodeLength"));
+        anime.setTotalLength(attrs.get("totalLength").getAsInt());
+
+        return new KitsuAnimeInfo(obj.get("id").getAsString(), anime);
     }
 
     public String getCompanyName(long companyId) throws IOException {
@@ -66,16 +74,16 @@ public class AnimeProvider {
         return reply.getAsJsonObject("attributes").get("name").getAsString();
     }
 
-    public AnimeInfo getFullInfo(SearchResult result) throws IOException, SQLException {
-        var categoryUrl = String.format("https://kitsu.io/api/edge/anime/%s/genres", result.getRemoteIdentifier());
+    public AnimeInfo getFullInfo(KitsuAnimeInfo kitsu) throws IOException, SQLException {
+        var categoryUrl = String.format("https://kitsu.io/api/edge/anime/%s/genres", kitsu.getRemoteIdentifier());
         var categoryReply = parse(request(categoryUrl)).getAsJsonArray("data");
 
         for (var item : categoryReply) {
             var categoryName = item.getAsJsonObject().getAsJsonObject("attributes").get("name").getAsString();
-            result.getAnimeInfo().getCategories().add(categoryName);
+            kitsu.getAnimeInfo().getCategories().add(categoryName);
         }
 
-        var productionsUrl = String.format("https://kitsu.io/api/edge/anime/%s/productions", result.getRemoteIdentifier());
+        var productionsUrl = String.format("https://kitsu.io/api/edge/anime/%s/productions", kitsu.getRemoteIdentifier());
         var productionsReply = parse(request(productionsUrl)).getAsJsonArray("data");
 
         for (var item : productionsReply) {
@@ -83,11 +91,11 @@ public class AnimeProvider {
             var attrs = obj.getAsJsonObject("attributes");
             if (attrs.get("role").getAsString().equals("studio")) {
                 var companyId = obj.get("id").getAsLong();
-                result.getAnimeInfo().getAnimeStudios().add(AnimeCache.instance().tryGetCompany(companyId));
+                kitsu.getAnimeInfo().getAnimeStudios().add(AnimeCache.instance().tryGetCompany(companyId));
             }
         }
 
-        return result.getAnimeInfo();
+        return kitsu.getAnimeInfo();
     }
 
     private String request(String url) throws IOException {
