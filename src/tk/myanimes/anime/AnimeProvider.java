@@ -47,7 +47,7 @@ public class AnimeProvider {
             anime.setCategories(new ArrayList<>());
             anime.setSynopsis(attrs.get("synopsis").getAsString());
             anime.setAnimeStudios(new ArrayList<>());
-            anime.setCoverPicture(attrs.getAsJsonObject("posterImage").get("small").getAsString());
+            anime.setCoverPicture(attrs.getAsJsonObject("posterImage").get("tiny").getAsString());
 
             anime.setAgeRating(getNullableString(attrs, "ageRatingGuide"));
             anime.setEpisodeCount(getNullableInt(attrs, "episodeCount"));
