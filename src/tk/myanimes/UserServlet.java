@@ -1,16 +1,15 @@
 package tk.myanimes;
 
 import tk.myanimes.io.Database;
-import tk.myanimes.model.AnimeInfo;
-import tk.myanimes.model.AnimeList;
-import tk.myanimes.model.AnimeListItem;
-import tk.myanimes.model.WatchState;
+import tk.myanimes.model.*;
+import tk.myanimes.session.SessionManager;
 import tk.myanimes.text.Formatter;
 import tk.myanimes.text.Validator;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.sql.SQLException;
 import java.time.Instant;
 import java.util.ArrayList;
 
@@ -66,8 +65,18 @@ public class UserServlet extends BaseServlet {
         req.setAttribute("formatter", new Formatter());
         req.setAttribute("animes", animes);
         req.setAttribute("user", user);
+        loadLoggedInUserInfo(req);
         req.getRequestDispatcher("/user.jsp").forward(req, resp);
     }
 
+    private void loadLoggedInUserInfo(HttpServletRequest req) throws SQLException {
+        if (SessionManager.instance().isAuthenticated(req)) {
+            req.setAttribute("isAuthenticated", true);
+            req.setAttribute("authenticatedUser", SessionManager.instance().getCurrentUser(req));
+        } else {
+            req.setAttribute("isAuthenticated", false);
+            req.setAttribute("authenticatedUser", new UserInfo());
+        }
+    }
 
 }

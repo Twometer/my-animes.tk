@@ -67,6 +67,7 @@ public class RegisterServlet extends BaseServlet {
         user.setName(username);
         user.setPasswordHash(Hash.passwordHash(new Credential(username, password)));
         user.setSetupComplete(false);
+        user.setLocation("Earth");
         Database.storeUserInfo(user);
 
         SessionManager.instance().registerSession(req, user);

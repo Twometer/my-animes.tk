@@ -4,6 +4,9 @@
 <jsp:useBean id="animes" scope="request" type="tk.myanimes.model.AnimeList"/>
 <jsp:useBean id="user" scope="request" type="tk.myanimes.model.UserInfo"/>
 <jsp:useBean id="formatter" scope="request" type="tk.myanimes.text.Formatter"/>
+
+<jsp:useBean id="isAuthenticated" scope="request" type="java.lang.Boolean"/>
+<jsp:useBean id="authenticatedUser" scope="request" type="tk.myanimes.model.UserInfo"/>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -37,8 +40,27 @@
             <li class="nav-item active"><a class="nav-link" href="#">Characters</a></li>
         </ul>
         <ul class="navbar-nav ml-auto">
-            <li class="nav-item active"><a class="nav-link" href="${pageContext.request.contextPath}/login">Log in</a>
-            </li>
+            <c:choose>
+                <c:when test="${!isAuthenticated}">
+                    <li class="nav-item active"><a class="nav-link" href="${pageContext.request.contextPath}/login">Log
+                        in</a>
+                    </li>
+                </c:when>
+                <c:otherwise>
+                    <li class="nav-item active dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                ${authenticatedUser.name}
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="${pageContext.request.contextPath}/profile">My Profile</a>
+                            <a class="dropdown-item" href="${pageContext.request.contextPath}/dashboard">My List</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="${pageContext.request.contextPath}/login?logoff">Log off</a>
+                        </div>
+                    </li>
+                </c:otherwise>
+            </c:choose>
         </ul>
     </div>
 </nav>
@@ -66,16 +88,18 @@
                     src="${pageContext.request.contextPath}/icon/map-pin.svg"> ${user.location}</p>
         </div>
     </div>
-    <div id="favorite-anime" class="row align-items-center mt-5 p-3">
-        <div class="col-sm-auto">
+    <c:if test="${user.favoriteAnime != null}">
+        <div id="favorite-anime" class="row align-items-center mt-5 p-3">
+            <div class="col-sm-auto">
             <span class="cover-picture small shadow"
                   style="background-image: url('${user.favoriteAnime.coverPicture}')"></span>
+            </div>
+            <div class="ml-2 col-sm">
+                <h4 class="mb-3">${user.favoriteAnime.canonicalTitle}</h4>
+                <h4 class="mt-3" style="opacity: 0.35">my favorite anime</h4>
+            </div>
         </div>
-        <div class="ml-2 col-sm">
-            <h4 class="mb-3">${user.favoriteAnime.canonicalTitle}</h4>
-            <h4 class="mt-3" style="opacity: 0.35">my favorite anime</h4>
-        </div>
-    </div>
+    </c:if>
     <div class="row mt-5 button-bar">
         <button class="button in-bar primary selected">All</button>
         <button class="button in-bar watching">Watching</button>
