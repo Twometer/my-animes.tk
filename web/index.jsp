@@ -1,17 +1,36 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Twometer
-  Date: 01/08/2020
-  Time: 18:09
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page trimDirectiveWhitespaces="true" %>
-<html>
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+
+    <title>myanimes</title>
+
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Unica+One&family=Open+Sans:wght@300&family=Exo:wght@300&display=swap"
+          rel="stylesheet">
+    <link href="style/main.css" rel="stylesheet">
+    <link href="style/index.css" rel="stylesheet">
 </head>
+
 <body>
-$END$
+<div class="backdrop-overlay">
+    <div class="main-content">
+        <img src="img/welcome-girl.png">
+        <h1>Welcome To myanimes</h1>
+        <h2>Share your favourite animes with the world</h2>
+        <button class="button primary mr-4">Join</button>
+        <a href="#">Explore</a>
+    </div>
+</div>
+
+
 </body>
+
 </html>
+

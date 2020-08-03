@@ -1,0 +1,34 @@
+h1 {
+    font-family: 'Unica One', sans-serif;
+    color: var(--primary-color);
+    margin-bottom: 30px;
+}
+
+h2 {
+    margin-bottom: 45px;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url('../img/index-wallpaper.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100vh;
+}
+
+.backdrop-overlay {
+    z-index: 0;
+    height: 60vh;
+    width: 60vw;
+    border-radius: 30px;
+    padding: 50px;
+    justify-content: center;
+    align-items: center;
+    box-shadow: var(--common-shadow);
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(32px);
+    display: flex;
+    text-align: center;
+}
