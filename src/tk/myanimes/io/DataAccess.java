@@ -24,6 +24,7 @@ public class DataAccess {
     private Dao<DbAnimeTitle, Long> animeTitleDao;
     private Dao<DbAnimeCategory, Long> animeCategoryDao;
     private Dao<DbAnimeStudio, Long> animeStudioDao;
+    private Dao<DbAnimeCompany, Long> animeCompanyDao;
     private Dao<DbAnimeListItem, Long> animeListItemDao;
 
     public static DataAccess instance() {
@@ -43,6 +44,7 @@ public class DataAccess {
             TableUtils.createTableIfNotExists(connectionSource, DbAnimeTitle.class);
             TableUtils.createTableIfNotExists(connectionSource, DbAnimeCategory.class);
             TableUtils.createTableIfNotExists(connectionSource, DbAnimeStudio.class);
+            TableUtils.createTableIfNotExists(connectionSource, DbAnimeCompany.class);
             TableUtils.createTableIfNotExists(connectionSource, DbAnimeListItem.class);
 
             userDao = DaoManager.createDao(connectionSource, DbUser.class);
@@ -50,6 +52,7 @@ public class DataAccess {
             animeTitleDao = DaoManager.createDao(connectionSource, DbAnimeTitle.class);
             animeCategoryDao = DaoManager.createDao(connectionSource, DbAnimeCategory.class);
             animeStudioDao = DaoManager.createDao(connectionSource, DbAnimeStudio.class);
+            animeCompanyDao = DaoManager.createDao(connectionSource, DbAnimeCompany.class);
             animeListItemDao = DaoManager.createDao(connectionSource, DbAnimeListItem.class);
         }
     }
@@ -77,6 +80,10 @@ public class DataAccess {
     public Dao<DbAnimeStudio, Long> getAnimeStudioDao() throws SQLException {
         ensureConnected();
         return animeStudioDao;
+    }
+
+    public Dao<DbAnimeCompany, Long> getAnimeCompanyDao() {
+        return animeCompanyDao;
     }
 
     public Dao<DbAnimeListItem, Long> getAnimeListItemDao() throws SQLException {

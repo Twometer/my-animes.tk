@@ -6,14 +6,14 @@ import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable(tableName = "anime_studios")
 public class DbAnimeStudio {
 
-    @DatabaseField
+    @DatabaseField(generatedId = true)
     private long id;
 
     @DatabaseField
     private long animeId;
 
     @DatabaseField
-    private String studioName;
+    private long companyId;
 
     public long getId() {
         return id;
@@ -31,11 +31,11 @@ public class DbAnimeStudio {
         this.animeId = animeId;
     }
 
-    public String getStudioName() {
-        return studioName;
+    public long getCompanyId() {
+        return companyId;
     }
 
-    public void setStudioName(String studioName) {
-        this.studioName = studioName;
+    public void setCompanyId(long companyId) {
+        this.companyId = companyId;
     }
 }

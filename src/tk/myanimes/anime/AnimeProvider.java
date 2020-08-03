@@ -5,11 +5,14 @@ import com.google.gson.JsonParser;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import tk.myanimes.db.DbAnimeCompany;
+import tk.myanimes.io.DataAccess;
 import tk.myanimes.model.AnimeInfo;
 
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -58,18 +61,44 @@ public class AnimeProvider {
         return results;
     }
 
-    public AnimeInfo getFullInfo(SearchResult result) throws IOException {
-        var categoryUrl = String.format("https://kitsu.io/api/edge/anime/%s/genres", result.getRemoteIdentifier());
-        var reply = parse(request(categoryUrl)).getAsJsonArray("data");
+    private String getCompanyName(long companyId) throws IOException {
+        var companyUrl = String.format("https://kitsu.io/api/edge/media-productions/%d/company", companyId);
+        var reply = parse(request(companyUrl)).getAsJsonObject("data");
+        return reply.getAsJsonObject("attributes").get("name").getAsString();
+    }
 
-        for (var item : reply) {
+    private String tryGetCompanyFromCache(long companyId) throws SQLException, IOException {
+        var company = DataAccess.instance().getAnimeCompanyDao().queryForId(companyId);
+        if (company == null) {
+            var name = getCompanyName(companyId);
+            DataAccess.instance().getAnimeCompanyDao().create(new DbAnimeCompany(companyId, name));
+            return name;
+        } else return company.getName();
+    }
+
+    public AnimeInfo getFullInfo(SearchResult result) throws IOException, SQLException {
+        var categoryUrl = String.format("https://kitsu.io/api/edge/anime/%s/genres", result.getRemoteIdentifier());
+        var categoryReply = parse(request(categoryUrl)).getAsJsonArray("data");
+
+        for (var item : categoryReply) {
             var categoryName = item.getAsJsonObject().getAsJsonObject("attributes").get("name").getAsString();
             result.getAnimeInfo().getCategories().add(categoryName);
         }
 
+        var productionsUrl = String.format("https://kitsu.io/api/edge/anime/%s/productions", result.getRemoteIdentifier());
+        var productionsReply = parse(request(productionsUrl)).getAsJsonArray("data");
+
+        for (var item : productionsReply) {
+            var obj = item.getAsJsonObject();
+            var attrs = obj.getAsJsonObject("attributes");
+            if (attrs.get("role").getAsString().equals("studio")) {
+                var companyId = obj.get("id").getAsLong();
+                result.getAnimeInfo().getAnimeStudios().add(tryGetCompanyFromCache(companyId));
+            }
+        }
+
         return result.getAnimeInfo();
     }
-
 
     private String request(String url) throws IOException {
         var request = new Request.Builder()

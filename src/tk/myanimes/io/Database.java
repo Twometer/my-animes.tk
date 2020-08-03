@@ -93,8 +93,10 @@ public class Database {
         for (var category : DataAccess.instance().getAnimeCategoryDao().queryForEq("animeId", anime.getId()))
             anime.getCategories().add(category.getCategoryName());
 
-        for (var studio : DataAccess.instance().getAnimeStudioDao().queryForEq("animeId", anime.getId()))
-            anime.getAnimeStudios().add(studio.getStudioName());
+        for (var studio : DataAccess.instance().getAnimeStudioDao().queryForEq("animeId", anime.getId())) {
+            var company = DataAccess.instance().getAnimeCompanyDao().queryForId(studio.getCompanyId());
+            anime.getAnimeStudios().add(company.getName());
+        }
 
         return anime;
     }
@@ -132,8 +134,9 @@ public class Database {
         deleteByAnimeId(DataAccess.instance().getAnimeStudioDao(), dbAnime.getId());
         for (var studio : anime.getAnimeStudios()) {
             var dbStudio = new DbAnimeStudio();
+            var dbCompany = DataAccess.instance().getAnimeCompanyDao().queryForEq("name", studio).get(0);
             dbStudio.setAnimeId(dbAnime.getId());
-            dbStudio.setStudioName(studio);
+            dbStudio.setCompanyId(dbCompany.getId());
             DataAccess.instance().getAnimeStudioDao().create(dbStudio);
         }
     }
