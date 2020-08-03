@@ -169,6 +169,21 @@ body {
     background-color: var(--queued-color);
 }
 
+input {
+    border: none;
+    border-bottom: 1px solid #B8B8B8;
+    width: 300px;
+    transition-duration: .5s;
+    margin: 10px 0;
+    padding-bottom: 4px;
+}
+
+input:active, input:focus {
+    outline: none;
+    border-bottom: 1px solid #707070;
+    transition-duration: .5s;
+}
+
 a {
     text-decoration: none;
     color: var(--primary-color) !important;
@@ -185,11 +200,12 @@ a:hover {
 
 #anime-search-results {
     display: none;
-    position: absolute;
+    position: fixed;
     height: 200px;
     overflow-y: auto;
     background: white;
     box-shadow: var(--common-shadow);
+    z-index: 10;
 }
 
 .search-message {

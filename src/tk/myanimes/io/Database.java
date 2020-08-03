@@ -2,10 +2,7 @@ package tk.myanimes.io;
 
 import com.j256.ormlite.dao.Dao;
 import tk.myanimes.db.*;
-import tk.myanimes.model.AnimeInfo;
-import tk.myanimes.model.AnimeList;
-import tk.myanimes.model.AnimeListItem;
-import tk.myanimes.model.UserInfo;
+import tk.myanimes.model.*;
 
 import java.sql.SQLException;
 import java.time.Instant;
@@ -55,6 +52,16 @@ public class Database {
         return newUser;
     }
 
+    public static void addToAnimeList(UserInfo userInfo, AnimeInfo animeInfo, float score, Instant watchDate, WatchState watchState) throws SQLException {
+        var dbAnimeListItem = new DbAnimeListItem();
+        dbAnimeListItem.setAnimeId(animeInfo.getId());
+        dbAnimeListItem.setScore(score);
+        dbAnimeListItem.setWatchState(watchState);
+        dbAnimeListItem.setWatchDate(watchDate.toEpochMilli());
+        dbAnimeListItem.setUserId(userInfo.getId());
+        DataAccess.instance().getAnimeListItemDao().create(dbAnimeListItem);
+    }
+
     public static AnimeList getAnimeList(UserInfo userInfo) throws SQLException {
         var animeList = new AnimeList();
         for (var dbItem : DataAccess.instance().getAnimeListItemDao().queryForEq("userId", userInfo.getId())) {
@@ -98,7 +105,7 @@ public class Database {
 
         for (var studio : DataAccess.instance().getAnimeStudioDao().queryForEq("animeId", anime.getId())) {
             var company = DataAccess.instance().getAnimeCompanyDao().queryForId(studio.getCompanyId());
-            anime.getAnimeStudios().add(company.getName());
+            anime.getAnimeStudios().add(company.getName().replace("Pictures", "").trim());
         }
 
         return anime;

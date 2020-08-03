@@ -8,21 +8,6 @@ h2 {
     margin-bottom: 45px;
 }
 
-input {
-    border: none;
-    border-bottom: 1px solid #B8B8B8;
-    width: 300px;
-    transition-duration: .5s;
-    margin: 10px 0;
-    padding-bottom: 4px;
-}
-
-input:active, input:focus {
-    outline: none;
-    border-bottom: 1px solid #707070;
-    transition-duration: .5s;
-}
-
 .login-container {
     display: flex;
     align-items: center;

@@ -17,4 +17,12 @@ public enum WatchState {
     public String toString() {
         return id;
     }
+
+    public static WatchState parse(String name) {
+        for (var state : WatchState.values())
+            if (state.id.equals(name))
+                return state;
+        return null;
+    }
+
 }

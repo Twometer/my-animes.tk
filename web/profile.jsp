@@ -47,9 +47,10 @@
             <input name="location" placeholder="location" type="text" value="${authenticatedUser.location}">
         </p>
         <p>
-            <input type="hidden" name="favoriteAnimeId" id="favorite-anime-id">
+            <input type="hidden" name="favoriteAnimeId" id="search-anime-id">
             <input id="anime-search" placeholder="favorite anime" type="text"
                    value="${authenticatedUser.favoriteAnime != null ? authenticatedUser.favoriteAnime.englishTitle : ""}">
+        </p>
         <div id="anime-search-results">
             <div class="search-message">Searching...</div>
         </div>

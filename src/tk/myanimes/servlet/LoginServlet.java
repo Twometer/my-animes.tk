@@ -33,7 +33,7 @@ public class LoginServlet extends BaseServlet {
     @Override
     protected void httpPost(HttpServletRequest req, HttpServletResponse resp) throws Exception {
         if (SessionManager.instance().isAuthenticated(req)) {
-            resp.sendError(400);
+            resp.sendError(403);
             return;
         }
 

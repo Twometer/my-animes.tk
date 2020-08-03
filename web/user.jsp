@@ -110,14 +110,17 @@
         <button class="button in-bar cancelled">Cancelled</button>
         <button class="button in-bar queued">Queued</button>
     </div>
+    <c:if test="${isAuthenticated}">
+        <p class="ml-auto text-right mt-3">
+            <a class="add-item" data-toggle="modal" data-target="#add-anime-modal">add</a>
+        </p>
+    </c:if>
     <div class="row mt-5">
-
         <c:if test="${animes.size() == 0}">
             <div id="empty-list">
                 No animes... yet :3
             </div>
         </c:if>
-
         <c:forEach var="item" items="${animes}">
             <div class="row align-items-center w-100">
                 <div class="col-sm-auto">
@@ -147,6 +150,46 @@
     </div>
 </div>
 
+<div class="modal fade" id="add-anime-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <form method="post" autocomplete="off">
+                    <h2 class="mb-4">Add an anime</h2>
+                    <p>
+                        <input type="hidden" name="animeId" id="search-anime-id" required>
+                        <input id="anime-search" placeholder="search for an anime..." type="text" value="" required>
+                    </p>
+                    <div id="anime-search-results">
+                        <div class="search-message">Searching...</div>
+                    </div>
+
+                    <p>
+                        <select name="watchState" id="watchState">
+                            <option value="watching">Watching</option>
+                            <option value="watched">Watched</option>
+                            <option value="paused">Paused</option>
+                            <option value="cancelled">Cancelled</option>
+                            <option value="queued">Queued</option>
+                        </select>
+                    </p>
+                    <p>
+                        <input type="date" name="watchDate" required>
+                    </p>
+                    <p>
+                        <input name="rating" type="range" min="0" max="100" value="50" width="100">
+                    </p>
+
+                    <div class="mt-4">
+                        <button type="submit" class="button primary mr-4">Add</button>
+                        <a data-dismiss="modal">cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 </body>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
@@ -158,6 +201,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
         integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
         crossorigin="anonymous"></script>
+<script src="${pageContext.request.contextPath}/script/search.js"></script>
 
 <script>
     (function () {
