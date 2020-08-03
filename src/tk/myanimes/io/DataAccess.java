@@ -33,7 +33,7 @@ public class DataAccess {
 
     private void ensureConnected() throws SQLException {
         if (connectionSource == null) {
-            File dbFile = context.getFile("charakteristikum.db");
+            File dbFile = context.getFile("animes.db");
             log.info("Database is stored in: " + dbFile);
 
             String databaseUrl = String.format("jdbc:sqlite:%s", dbFile.getAbsolutePath());

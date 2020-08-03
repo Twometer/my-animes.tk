@@ -5,8 +5,6 @@ import com.google.gson.JsonParser;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import tk.myanimes.db.DbAnimeCompany;
-import tk.myanimes.io.DataAccess;
 import tk.myanimes.model.AnimeInfo;
 
 import java.io.IOException;
@@ -62,33 +60,10 @@ public class AnimeProvider {
         return results;
     }
 
-    private String getNullableString(JsonObject object, String name) {
-        var elem = object.get(name);
-        if (elem.isJsonNull())
-            return "";
-        else return elem.getAsString();
-    }
-
-    private int getNullableInt(JsonObject object, String name) {
-        var elem = object.get(name);
-        if (elem.isJsonNull())
-            return 0;
-        else return elem.getAsInt();
-    }
-
-    private String getCompanyName(long companyId) throws IOException {
+    public String getCompanyName(long companyId) throws IOException {
         var companyUrl = String.format("https://kitsu.io/api/edge/media-productions/%d/company", companyId);
         var reply = parse(request(companyUrl)).getAsJsonObject("data");
         return reply.getAsJsonObject("attributes").get("name").getAsString();
-    }
-
-    private String tryGetCompanyFromCache(long companyId) throws SQLException, IOException {
-        var company = DataAccess.instance().getAnimeCompanyDao().queryForId(companyId);
-        if (company == null) {
-            var name = getCompanyName(companyId);
-            DataAccess.instance().getAnimeCompanyDao().create(new DbAnimeCompany(companyId, name));
-            return name;
-        } else return company.getName();
     }
 
     public AnimeInfo getFullInfo(SearchResult result) throws IOException, SQLException {
@@ -108,7 +83,7 @@ public class AnimeProvider {
             var attrs = obj.getAsJsonObject("attributes");
             if (attrs.get("role").getAsString().equals("studio")) {
                 var companyId = obj.get("id").getAsLong();
-                result.getAnimeInfo().getAnimeStudios().add(tryGetCompanyFromCache(companyId));
+                result.getAnimeInfo().getAnimeStudios().add(AnimeCache.instance().tryGetCompany(companyId));
             }
         }
 
@@ -130,4 +105,17 @@ public class AnimeProvider {
         return JsonParser.parseString(json).getAsJsonObject();
     }
 
+    private String getNullableString(JsonObject object, String name) {
+        var elem = object.get(name);
+        if (elem.isJsonNull())
+            return "";
+        else return elem.getAsString();
+    }
+
+    private int getNullableInt(JsonObject object, String name) {
+        var elem = object.get(name);
+        if (elem.isJsonNull())
+            return 0;
+        else return elem.getAsInt();
+    }
 }

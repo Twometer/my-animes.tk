@@ -70,7 +70,10 @@ public class Database {
 
     private static AnimeInfo getAnimeInfo(long animeId) throws SQLException {
         var dbAnime = DataAccess.instance().getAnimeInfoDao().queryForId(animeId);
+        return convertAnime(dbAnime);
+    }
 
+    public static AnimeInfo convertAnime(DbAnimeInfo dbAnime) throws SQLException {
         if (dbAnime == null)
             return null;
 

@@ -1,5 +1,6 @@
 package tk.myanimes.servlet;
 
+import tk.myanimes.anime.AnimeCache;
 import tk.myanimes.anime.AnimeProvider;
 
 import javax.servlet.annotation.WebServlet;
@@ -14,7 +15,7 @@ public class AnimeServlet extends BaseServlet {
         var path = req.getPathInfo().substring(1).split("/");
         var results = AnimeProvider.instance().searchAnime(path[0]);
         var result = results.get(Integer.parseInt(path[1]));
-        var anime = AnimeProvider.instance().getFullInfo(result);
+        var anime = AnimeCache.instance().tryGetFullAnimeInfo(result);
         resp.getWriter().println(anime.toString());
     }
 }
