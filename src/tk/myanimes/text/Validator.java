@@ -2,6 +2,12 @@ package tk.myanimes.text;
 
 public class Validator {
 
+    public static boolean areNullOrEmpty(String... strings) {
+        for (var str : strings)
+            if (str == null || str.isBlank())
+                return true;
+        return false;
+    }
 
     public static boolean isValidUsername(String username) {
         if (username.length() > 20)

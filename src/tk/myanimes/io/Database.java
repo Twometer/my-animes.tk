@@ -13,6 +13,18 @@ import java.util.HashMap;
 
 public class Database {
 
+    public static void storeUserInfo(UserInfo userInfo) throws SQLException {
+        var dbUser = new DbUser();
+        dbUser.setId(userInfo.getId());
+        dbUser.setName(userInfo.getName());
+        dbUser.setLocation(userInfo.getLocation());
+        dbUser.setBiography(userInfo.getBiography());
+        dbUser.setProfilePicture(userInfo.getProfilePicture());
+        dbUser.setFavoriteAnimeId(userInfo.getFavoriteAnime() == null ? 0 : userInfo.getFavoriteAnime().getId());
+        dbUser.setPasswordHash(userInfo.getPasswordHash());
+        DataAccess.instance().getUserDao().createOrUpdate(dbUser);
+    }
+
     public static UserInfo findUserInfo(String username) throws SQLException {
         var users = DataAccess.instance().getUserDao().queryForEq("name", username);
         if (users.size() != 1)
@@ -54,6 +66,9 @@ public class Database {
 
     private static AnimeInfo getAnimeInfo(long animeId) throws SQLException {
         var dbAnime = DataAccess.instance().getAnimeInfoDao().queryForId(animeId);
+
+        if (dbAnime == null)
+            return null;
 
         var anime = new AnimeInfo();
         anime.setId(dbAnime.getId());

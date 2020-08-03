@@ -30,16 +30,14 @@
         <h1>myanimes</h1>
         <h2>Welcome back!</h2>
         <p>
-            <input name="username" placeholder="username" type="text">
+            <input name="username" placeholder="username" type="text" required>
         </p>
         <p>
-            <input name="password" placeholder="password" type="password">
+            <input name="password" placeholder="password" type="password" required>
         </p>
-
         <c:if test="${showLoginError}">
             <span class="password-error">Invalid credentials :c</span>
         </c:if>
-
         <div class="submit-ui">
             <button type="submit" class="button primary mr-4">Log in</button>
             <a href="${pageContext.request.contextPath}/register">new here?</a>

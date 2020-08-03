@@ -37,7 +37,7 @@ public class LoginServlet extends BaseServlet {
     }
 
     private UserInfo tryAuthenticateUser(String username, String password) throws SQLException {
-        if (username == null || password == null || username.isEmpty() || password.isEmpty() || !Validator.isValidUsername(username))
+        if (Validator.areNullOrEmpty(username, password) || !Validator.isValidUsername(username))
             return null;
 
         var user = Database.findUserInfo(username);
