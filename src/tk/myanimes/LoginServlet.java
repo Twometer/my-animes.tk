@@ -17,6 +17,10 @@ public class LoginServlet extends BaseServlet {
 
     @Override
     protected void httpGet(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+        if (req.getParameterMap().containsKey("logoff")) {
+            SessionManager.instance().unregisterSession(req);
+        }
+
         if (SessionManager.instance().isAuthenticated(req)) {
             RedirectDispatcher.redirectToHomepage(req, resp);
             return;
