@@ -6,9 +6,9 @@ public class Credential {
 
     private final String salt;
 
-    public Credential(String password, String salt) {
-        this.password = password;
+    public Credential(String salt, String password) {
         this.salt = salt;
+        this.password = password;
     }
 
     public String getPassword() {
