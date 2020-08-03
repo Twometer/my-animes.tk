@@ -123,6 +123,7 @@ public class Database {
         dbAnime.setEpisodeLength(anime.getEpisodeLength());
         dbAnime.setTotalLength(anime.getTotalLength());
         DataAccess.instance().getAnimeInfoDao().createOrUpdate(dbAnime);
+        anime.setId(dbAnime.getId());
 
         deleteByAnimeId(DataAccess.instance().getAnimeTitleDao(), dbAnime.getId());
         for (var title : anime.getTitles().entrySet()) {

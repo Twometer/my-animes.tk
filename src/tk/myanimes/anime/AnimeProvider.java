@@ -28,20 +28,19 @@ public class AnimeProvider {
         return instance;
     }
 
-    public KitsuAnimeInfo getKitsuAnime(long animeId) throws IOException {
-        var url = "https://kitsu.io/api/edge/anime/" + animeId;
-        var reply = parse(request(url)).getAsJsonObject("data");
-        return parseKitsuAnimeInfo(reply);
-    }
-
     public List<KitsuAnimeInfo> searchAnime(String query) throws IOException {
         var baseUrl = "https://kitsu.io/api/edge/anime?filter[text]=" + URLEncoder.encode(query, StandardCharsets.UTF_8);
         var reply = parse(request(baseUrl)).getAsJsonArray("data");
         var results = new ArrayList<KitsuAnimeInfo>();
-        for (var item : reply) {
+        for (var item : reply)
             results.add(parseKitsuAnimeInfo(item));
-        }
         return results;
+    }
+
+    public KitsuAnimeInfo getKitsuAnimeInfo(long animeId) throws IOException {
+        var url = "https://kitsu.io/api/edge/anime/" + animeId;
+        var reply = parse(request(url)).getAsJsonObject("data");
+        return parseKitsuAnimeInfo(reply);
     }
 
     private KitsuAnimeInfo parseKitsuAnimeInfo(JsonElement dataObject) {

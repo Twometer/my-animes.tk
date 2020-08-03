@@ -26,6 +26,7 @@ public class AnimeCache {
             Database.storeAnimeInfo(info);
             return info;
         } else {
+            log.info("Cache hit: Found anime for " + result.getAnimeInfo().getSlug());
             return Database.convertAnime(cacheEntries.get(0));
         }
     }
@@ -37,6 +38,9 @@ public class AnimeCache {
             var name = AnimeProvider.instance().getCompanyName(companyId);
             DataAccess.instance().getAnimeCompanyDao().create(new DbAnimeCompany(companyId, name));
             return name;
-        } else return company.getName();
+        } else {
+            log.info("Cache hit: Found company for " + company);
+            return company.getName();
+        }
     }
 }

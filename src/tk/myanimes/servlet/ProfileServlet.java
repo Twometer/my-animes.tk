@@ -53,7 +53,7 @@ public class ProfileServlet extends BaseServlet {
         user.setSetupComplete(true);
 
         if (favoriteAnimeId != null && !favoriteAnimeId.isBlank()) {
-            var kitsuAnime = AnimeProvider.instance().getKitsuAnime(Long.parseLong(favoriteAnimeId));
+            var kitsuAnime = AnimeProvider.instance().getKitsuAnimeInfo(Long.parseLong(favoriteAnimeId));
             if (kitsuAnime != null) {
                 var anime = AnimeCache.instance().tryGetFullAnimeInfo(kitsuAnime);
                 user.setFavoriteAnime(anime);

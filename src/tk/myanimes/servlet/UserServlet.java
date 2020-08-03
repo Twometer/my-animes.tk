@@ -65,7 +65,7 @@ public class UserServlet extends BaseServlet {
         var ratingNumeric = Float.parseFloat(rating) / 10.0f;
         var watchDateInstant = LocalDate.parse(watchDate).atStartOfDay().toInstant(ZoneOffset.UTC);
 
-        var kitsuAnime = AnimeProvider.instance().getKitsuAnime(Long.parseLong(animeId));
+        var kitsuAnime = AnimeProvider.instance().getKitsuAnimeInfo(Long.parseLong(animeId));
         if (kitsuAnime != null) {
             var user = SessionManager.instance().getCurrentUser(req);
             var anime = AnimeCache.instance().tryGetFullAnimeInfo(kitsuAnime);
