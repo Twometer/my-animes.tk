@@ -47,6 +47,21 @@ public abstract class BaseServlet extends HttpServlet {
         return false;
     }
 
+    protected final void loadLoggedInUserInfo(HttpServletRequest req) throws SQLException {
+        if (SessionManager.instance().isAuthenticated(req)) {
+            req.setAttribute("isAuthenticated", true);
+            req.setAttribute("authenticatedUser", SessionManager.instance().getCurrentUser(req));
+        } else {
+            req.setAttribute("isAuthenticated", false);
+            req.setAttribute("authenticatedUser", new UserInfo());
+        }
+    }
+
+    protected final void loadError(HttpServletRequest req, String error) {
+        req.setAttribute("showError", error != null);
+        req.setAttribute("errorMessage", error != null ? error : "");
+    }
+
     private void applyEncoding(HttpServletRequest req, HttpServletResponse resp) throws UnsupportedEncodingException {
         req.setCharacterEncoding("UTF-8");
         resp.setCharacterEncoding("UTF-8");
@@ -61,19 +76,5 @@ public abstract class BaseServlet extends HttpServlet {
         return false;
     }
 
-    protected void loadLoggedInUserInfo(HttpServletRequest req) throws SQLException {
-        if (SessionManager.instance().isAuthenticated(req)) {
-            req.setAttribute("isAuthenticated", true);
-            req.setAttribute("authenticatedUser", SessionManager.instance().getCurrentUser(req));
-        } else {
-            req.setAttribute("isAuthenticated", false);
-            req.setAttribute("authenticatedUser", new UserInfo());
-        }
-    }
-
-    protected void loadError(HttpServletRequest req, String error) {
-        req.setAttribute("showError", error != null);
-        req.setAttribute("errorMessage", error != null ? error : "");
-    }
 
 }
