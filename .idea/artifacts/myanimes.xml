@@ -11,6 +11,8 @@
           <element id="library" level="project" name="JSTL" />
           <element id="library" level="project" name="ORM" />
           <element id="library" level="project" name="SQLite" />
+          <element id="library" level="project" name="OkHttp" />
+          <element id="library" level="project" name="Gson" />
         </element>
       </element>
     </root>

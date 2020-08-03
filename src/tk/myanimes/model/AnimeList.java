@@ -7,7 +7,7 @@ public class AnimeList extends ArrayList<AnimeListItem> {
     public final int getTotalDuration() {
         var duration = 0;
         for (var item : this) {
-            duration += item.getAnime().getTotalDuration();
+            duration += item.getAnime().getTotalLength();
         }
         return duration;
     }

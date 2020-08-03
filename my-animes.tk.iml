@@ -23,5 +23,7 @@
     <orderEntry type="library" name="JSTL" level="project" />
     <orderEntry type="library" name="ORM" level="project" />
     <orderEntry type="library" name="SQLite" level="project" />
+    <orderEntry type="library" name="OkHttp" level="project" />
+    <orderEntry type="library" name="Gson" level="project" />
   </component>
 </module>

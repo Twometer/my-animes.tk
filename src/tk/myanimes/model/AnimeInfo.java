@@ -1,7 +1,6 @@
 package tk.myanimes.model;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 
 public class AnimeInfo {
@@ -25,6 +24,8 @@ public class AnimeInfo {
     private int episodeCount;
 
     private int episodeLength;
+
+    private int totalLength;
 
     public long getId() {
         return id;
@@ -54,7 +55,7 @@ public class AnimeInfo {
         return categories;
     }
 
-    public void setCategories(List<String> categories) {
+    public void setCategories(Collection<String> categories) {
         this.categories = categories;
     }
 
@@ -64,10 +65,6 @@ public class AnimeInfo {
 
     public void setSynopsis(String synopsis) {
         this.synopsis = synopsis;
-    }
-
-    public void setGenres(Collection<String> genres) {
-        this.categories = genres;
     }
 
     public Collection<String> getAnimeStudios() {
@@ -110,7 +107,28 @@ public class AnimeInfo {
         this.episodeLength = episodeLength;
     }
 
-    public int getTotalDuration() {
-        return episodeCount * episodeLength;
+    public int getTotalLength() {
+        return totalLength;
+    }
+
+    public void setTotalLength(int totalLength) {
+        this.totalLength = totalLength;
+    }
+
+    @Override
+    public String toString() {
+        return "AnimeInfo{" +
+                "id=" + id +
+                ", canonicalTitle='" + canonicalTitle + '\'' +
+                ", titles=" + titles +
+                ", categories=" + categories +
+                ", synopsis='" + synopsis + '\'' +
+                ", animeStudios=" + animeStudios +
+                ", coverPicture='" + coverPicture + '\'' +
+                ", ageRating='" + ageRating + '\'' +
+                ", episodeCount=" + episodeCount +
+                ", episodeLength=" + episodeLength +
+                ", totalLength=" + totalLength +
+                '}';
     }
 }
