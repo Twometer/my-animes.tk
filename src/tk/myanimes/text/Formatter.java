@@ -13,7 +13,9 @@ public class Formatter {
     public String formatDate(Instant instant) {
         var duration = Duration.between(instant, Instant.now()).toSeconds();
 
-        if (duration < 60) {
+        if (duration < 0) {
+            return "in the future";
+        } else if (duration < 60) {
             return "a few seconds ago";
         } else if (duration < 60 * 15) {
             return "a few minutes ago";
@@ -39,7 +41,7 @@ public class Formatter {
     }
 
     public String formatScore(float score) {
-        return String.valueOf(round(score, 1));
+        return round(score, 1) + "/10.0";
     }
 
     private double round(double d, int digits) {

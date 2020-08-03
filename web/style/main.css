@@ -174,7 +174,6 @@ input {
     border-bottom: 1px solid #B8B8B8;
     width: 300px;
     transition-duration: .5s;
-    margin: 10px 0;
     padding-bottom: 4px;
 }
 
@@ -224,4 +223,8 @@ a:hover {
 
 .search-result-item:hover {
     background: #EFEFEF;
+}
+
+label {
+    font-size: 14px;
 }

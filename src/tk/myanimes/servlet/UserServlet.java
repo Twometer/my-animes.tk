@@ -57,6 +57,11 @@ public class UserServlet extends BaseServlet {
         var rating = req.getParameter("rating");
         var watchState = WatchState.parse(req.getParameter("watchState"));
 
+        if (watchState != WatchState.Watched)
+            rating = "-1";
+        if (watchState == WatchState.Queued)
+            watchDate = "9999-01-01";
+
         if (watchState == null || Validator.areNullOrEmpty(animeId, watchDate, rating)) {
             resp.sendError(400);
             return;

@@ -131,7 +131,7 @@
                     <h3><i class="dot ${item.watchState.toString()}"></i> ${item.anime.englishTitle}</h3>
                     <div class="row mt-3">
                         <div class="col-2"><img alt="Rating" class="icon"
-                                                src="${pageContext.request.contextPath}/icon/star.svg"> ${formatter.formatScore(item.score)}/10.0
+                                                src="${pageContext.request.contextPath}/icon/star.svg"> ${item.watchState.toString() == "watched" ? formatter.formatScore(item.score) : "unrated"}
                         </div>
                         <div class="col-3"><img alt="Watched" class="icon"
                                                 src="${pageContext.request.contextPath}/icon/calendar.svg"> ${formatter.formatDate(item.watchDate)}
@@ -153,35 +153,42 @@
 <div class="modal fade" id="add-anime-modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-body text-center">
-                <form method="post" autocomplete="off">
-                    <h2 class="mb-4">Add an anime</h2>
-                    <p>
+            <div class="modal-body mx-auto my-5">
+                <form method="post" autocomplete="off" style="width: 300px">
+                    <h2 class="mb-5 text-center">Add new anime</h2>
+                    <p class="mt-3 mb-4">
+                        <label for="anime-search">Anime name</label>
                         <input type="hidden" name="animeId" id="search-anime-id" required>
-                        <input id="anime-search" placeholder="search for an anime..." type="text" value="" required>
+                        <input id="anime-search" placeholder="search..." type="text" value="" required>
                     </p>
+
                     <div id="anime-search-results">
                         <div class="search-message">Searching...</div>
                     </div>
 
-                    <p>
-                        <select name="watchState" id="watchState">
+                    <div class="form-group my-4">
+                        <label for="watchState">State</label>
+                        <select name="watchState" class="form-control" id="watchState">
                             <option value="watching">Watching</option>
                             <option value="watched">Watched</option>
                             <option value="paused">Paused</option>
                             <option value="cancelled">Cancelled</option>
                             <option value="queued">Queued</option>
                         </select>
-                    </p>
-                    <p>
-                        <input type="date" name="watchDate" required>
-                    </p>
-                    <p>
-                        <input name="rating" type="range" min="0" max="100" value="50" width="100">
-                    </p>
+                    </div>
 
-                    <div class="mt-4">
-                        <button type="submit" class="button primary mr-4">Add</button>
+                    <div class="form-group my-4" id="date-box">
+                        <label for="watchDate">Watch date</label>
+                        <input type="date" id="watchDate" name="watchDate" required>
+                    </div>
+
+                    <div class="form-group my-4" id="rating-box">
+                        <label for="rating">Your rating</label>
+                        <input name="rating" id="rating" type="range" min="0" max="100" value="50" width="100">
+                    </div>
+
+                    <div class="mt-5 text-center">
+                        <button type="submit" class="button primary mr-4">Save</button>
                         <a data-dismiss="modal">cancel</a>
                     </div>
                 </form>
@@ -217,6 +224,27 @@
                 button.addClass("selected");
             });
         }
+    })();
+    (function () {
+        var ratingBox = $("#rating-box");
+        var dateBox = $("#date-box");
+        var dateInput = $("#watchDate");
+        var watchState = $("#watchState");
+        watchState.change(function () {
+            var val = watchState.val();
+
+            if (val === 'watched') ratingBox.show();
+            else ratingBox.hide();
+
+            if (val === 'queued') {
+                dateBox.hide();
+                dateInput.removeAttr('required');
+            } else {
+                dateBox.show();
+                dateInput.prop('required', true);
+            }
+        });
+        ratingBox.hide();
     })();
 </script>
 
