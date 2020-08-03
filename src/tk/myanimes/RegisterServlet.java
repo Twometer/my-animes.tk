@@ -19,17 +19,37 @@ public class RegisterServlet extends BaseServlet {
 
     @Override
     protected void httpGet(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+        if (SessionManager.instance().isAuthenticated(req)) {
+            RedirectDispatcher.redirectToHomepage(req, resp);
+            return;
+        }
+
         sendResponse(req, resp, null);
     }
 
     @Override
     protected void httpPost(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+        if (SessionManager.instance().isAuthenticated(req)) {
+            resp.sendError(400);
+            return;
+        }
+
         var username = req.getParameter("username");
         var password = req.getParameter("password");
         var passwordConfirm = req.getParameter("passwordConfirm");
 
         if (Validator.areNullOrEmpty(username, password, passwordConfirm)) {
             sendResponse(req, resp, "Empty credentials are not allowed");
+            return;
+        }
+
+        if (!Validator.isValidUsername(username)) {
+            sendResponse(req, resp, "A username may only contain letters, numbers, _ and .");
+            return;
+        }
+
+        if (password.length() < 6) {
+            sendResponse(req, resp, "Password must be at least 6 characters long!");
             return;
         }
 
@@ -46,10 +66,11 @@ public class RegisterServlet extends BaseServlet {
         var user = new UserInfo();
         user.setName(username);
         user.setPasswordHash(Hash.passwordHash(new Credential(username, password)));
+        user.setSetupComplete(false);
         Database.storeUserInfo(user);
 
         SessionManager.instance().registerSession(req, user);
-        resp.sendRedirect("profile");
+        RedirectDispatcher.redirectToHomepage(resp, user);
     }
 
     private void sendResponse(HttpServletRequest req, HttpServletResponse resp, String error) throws ServletException, IOException {
@@ -57,4 +78,5 @@ public class RegisterServlet extends BaseServlet {
         req.setAttribute("errorMessage", error != null ? error : "");
         req.getRequestDispatcher("/register.jsp").forward(req, resp);
     }
+
 }

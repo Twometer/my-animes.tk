@@ -9,9 +9,11 @@ import tk.myanimes.db.*;
 
 import java.io.File;
 import java.sql.SQLException;
+import java.util.logging.Logger;
 
 public class DataAccess {
 
+    private static final Logger log = Logger.getLogger(DataAccess.class.getName());
     private static final DataAccess instance = new DataAccess();
     private final String WEBAPP_NAME = "myanimes";
     private final DataContext context = DataContext.forWebapp(WEBAPP_NAME);
@@ -31,6 +33,8 @@ public class DataAccess {
     private void ensureConnected() throws SQLException {
         if (connectionSource == null) {
             File dbFile = context.getFile("charakteristikum.db");
+            log.info("Database is stored in: " + dbFile);
+
             String databaseUrl = String.format("jdbc:sqlite:%s", dbFile.getAbsolutePath());
             connectionSource = new JdbcConnectionSource(databaseUrl);
 

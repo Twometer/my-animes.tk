@@ -16,6 +16,8 @@ public class UserInfo {
 
     private byte[] passwordHash;
 
+    private boolean setupComplete;
+
     public long getId() {
         return id;
     }
@@ -72,4 +74,11 @@ public class UserInfo {
         this.passwordHash = passwordHash;
     }
 
+    public boolean isSetupComplete() {
+        return setupComplete;
+    }
+
+    public void setSetupComplete(boolean setupComplete) {
+        this.setupComplete = setupComplete;
+    }
 }

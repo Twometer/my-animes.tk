@@ -17,12 +17,22 @@ public class LoginServlet extends BaseServlet {
 
     @Override
     protected void httpGet(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+        if (SessionManager.instance().isAuthenticated(req)) {
+            RedirectDispatcher.redirectToHomepage(req, resp);
+            return;
+        }
+
         req.setAttribute("showLoginError", false);
         req.getRequestDispatcher("/login.jsp").forward(req, resp);
     }
 
     @Override
     protected void httpPost(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+        if (SessionManager.instance().isAuthenticated(req)) {
+            resp.sendError(400);
+            return;
+        }
+
         var username = req.getParameter("username");
         var password = req.getParameter("password");
 
@@ -32,7 +42,7 @@ public class LoginServlet extends BaseServlet {
             req.getRequestDispatcher("/login.jsp").forward(req, resp);
         } else {
             SessionManager.instance().registerSession(req, user);
-            resp.sendRedirect("dashboard");
+            RedirectDispatcher.redirectToHomepage(resp, user);
         }
     }
 

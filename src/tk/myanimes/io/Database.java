@@ -22,7 +22,9 @@ public class Database {
         dbUser.setProfilePicture(userInfo.getProfilePicture());
         dbUser.setFavoriteAnimeId(userInfo.getFavoriteAnime() == null ? 0 : userInfo.getFavoriteAnime().getId());
         dbUser.setPasswordHash(userInfo.getPasswordHash());
+        dbUser.setSetupComplete(userInfo.isSetupComplete());
         DataAccess.instance().getUserDao().createOrUpdate(dbUser);
+        userInfo.setId(dbUser.getId());
     }
 
     public static UserInfo findUserInfo(String username) throws SQLException {
@@ -48,6 +50,7 @@ public class Database {
         newUser.setProfilePicture(user.getProfilePicture());
         newUser.setFavoriteAnime(getAnimeInfo(user.getFavoriteAnimeId()));
         newUser.setPasswordHash(user.getPasswordHash());
+        newUser.setSetupComplete(user.isSetupComplete());
         return newUser;
     }
 

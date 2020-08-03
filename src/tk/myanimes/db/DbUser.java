@@ -28,6 +28,9 @@ public class DbUser {
     @DatabaseField(dataType = DataType.BYTE_ARRAY)
     private byte[] passwordHash;
 
+    @DatabaseField
+    private boolean setupComplete;
+
     public long getId() {
         return id;
     }
@@ -82,5 +85,13 @@ public class DbUser {
 
     public void setPasswordHash(byte[] passwordHash) {
         this.passwordHash = passwordHash;
+    }
+
+    public boolean isSetupComplete() {
+        return setupComplete;
+    }
+
+    public void setSetupComplete(boolean setupComplete) {
+        this.setupComplete = setupComplete;
     }
 }
