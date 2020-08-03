@@ -82,7 +82,8 @@ public class DataAccess {
         return animeStudioDao;
     }
 
-    public Dao<DbAnimeCompany, Long> getAnimeCompanyDao() {
+    public Dao<DbAnimeCompany, Long> getAnimeCompanyDao() throws SQLException {
+        ensureConnected();
         return animeCompanyDao;
     }
 

@@ -50,15 +50,30 @@ public class AnimeProvider {
             anime.setSynopsis(attrs.get("synopsis").getAsString());
             anime.setAnimeStudios(new ArrayList<>());
             anime.setCoverPicture(attrs.getAsJsonObject("posterImage").get("small").getAsString());
-            anime.setAgeRating(attrs.get("ageRatingGuide").getAsString());
-            anime.setEpisodeCount(attrs.get("episodeCount").getAsInt());
-            anime.setEpisodeLength(attrs.get("episodeLength").getAsInt());
+
+            anime.setAgeRating(getNullableString(attrs, "ageRatingGuide"));
+            anime.setEpisodeCount(getNullableInt(attrs, "episodeCount"));
+            anime.setEpisodeLength(getNullableInt(attrs, "episodeLength"));
             anime.setTotalLength(attrs.get("totalLength").getAsInt());
 
             results.add(new SearchResult(obj.get("id").getAsString(), anime));
         }
 
         return results;
+    }
+
+    private String getNullableString(JsonObject object, String name) {
+        var elem = object.get(name);
+        if (elem.isJsonNull())
+            return "";
+        else return elem.getAsString();
+    }
+
+    private int getNullableInt(JsonObject object, String name) {
+        var elem = object.get(name);
+        if (elem.isJsonNull())
+            return 0;
+        else return elem.getAsInt();
     }
 
     private String getCompanyName(long companyId) throws IOException {
