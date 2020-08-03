@@ -1,6 +1,7 @@
 package tk.myanimes.io;
 
-import tk.myanimes.db.DbUser;
+import com.j256.ormlite.dao.Dao;
+import tk.myanimes.db.*;
 import tk.myanimes.model.AnimeInfo;
 import tk.myanimes.model.AnimeList;
 import tk.myanimes.model.AnimeListItem;
@@ -84,6 +85,7 @@ public class Database {
         anime.setAgeRating(dbAnime.getAgeRating());
         anime.setEpisodeCount(dbAnime.getEpisodeCount());
         anime.setEpisodeLength(dbAnime.getEpisodeLength());
+        anime.setTotalLength(dbAnime.getTotalLength());
 
         for (var title : DataAccess.instance().getAnimeTitleDao().queryForEq("animeId", anime.getId()))
             anime.getTitles().put(title.getLanguage(), title.getTitle());
@@ -95,6 +97,51 @@ public class Database {
             anime.getAnimeStudios().add(studio.getStudioName());
 
         return anime;
+    }
+
+    public static void storeAnimeInfo(AnimeInfo anime) throws SQLException {
+        var dbAnime = new DbAnimeInfo();
+        dbAnime.setId(anime.getId());
+        dbAnime.setSlug(anime.getSlug());
+        dbAnime.setCanonicalTitle(anime.getCanonicalTitle());
+        dbAnime.setSynopsis(anime.getSynopsis());
+        dbAnime.setCoverPicture(anime.getCoverPicture());
+        dbAnime.setAgeRating(anime.getAgeRating());
+        dbAnime.setEpisodeCount(anime.getEpisodeCount());
+        dbAnime.setEpisodeLength(anime.getEpisodeLength());
+        dbAnime.setTotalLength(anime.getTotalLength());
+        DataAccess.instance().getAnimeInfoDao().createOrUpdate(dbAnime);
+
+        deleteByAnimeId(DataAccess.instance().getAnimeTitleDao(), dbAnime.getId());
+        for (var title : anime.getTitles().entrySet()) {
+            var dbTitle = new DbAnimeTitle();
+            dbTitle.setAnimeId(dbAnime.getId());
+            dbTitle.setLanguage(title.getKey());
+            dbTitle.setTitle(title.getValue());
+            DataAccess.instance().getAnimeTitleDao().create(dbTitle);
+        }
+
+        deleteByAnimeId(DataAccess.instance().getAnimeCategoryDao(), dbAnime.getId());
+        for (var cat : anime.getCategories()) {
+            var dbCategory = new DbAnimeCategory();
+            dbCategory.setAnimeId(dbAnime.getId());
+            dbCategory.setCategoryName(cat);
+            DataAccess.instance().getAnimeCategoryDao().create(dbCategory);
+        }
+
+        deleteByAnimeId(DataAccess.instance().getAnimeStudioDao(), dbAnime.getId());
+        for (var studio : anime.getAnimeStudios()) {
+            var dbStudio = new DbAnimeStudio();
+            dbStudio.setAnimeId(dbAnime.getId());
+            dbStudio.setStudioName(studio);
+            DataAccess.instance().getAnimeStudioDao().create(dbStudio);
+        }
+    }
+
+    private static <T, ID> void deleteByAnimeId(Dao<T, ID> dao, long animeId) throws SQLException {
+        var builder = dao.deleteBuilder();
+        builder.where().eq("animeId", animeId);
+        builder.delete();
     }
 
 }

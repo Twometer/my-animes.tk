@@ -37,6 +37,7 @@ public class AnimeProvider {
             var attrs = obj.getAsJsonObject("attributes");
 
             var anime = new AnimeInfo();
+            anime.setSlug(attrs.get("slug").getAsString());
             anime.setCanonicalTitle(attrs.get("canonicalTitle").getAsString());
             anime.setTitles(new HashMap<>());
             for (var title : attrs.getAsJsonObject("titles").entrySet()) {

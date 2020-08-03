@@ -7,6 +7,8 @@ public class AnimeInfo {
 
     private long id;
 
+    private String slug;
+
     private String canonicalTitle;
 
     private Map<String, String> titles;
@@ -33,6 +35,14 @@ public class AnimeInfo {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getSlug() {
+        return slug;
+    }
+
+    public void setSlug(String slug) {
+        this.slug = slug;
     }
 
     public String getCanonicalTitle() {

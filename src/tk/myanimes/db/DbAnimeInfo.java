@@ -10,7 +10,7 @@ public class DbAnimeInfo {
     private long id;
 
     @DatabaseField
-    private String identifier;
+    private String slug;
 
     @DatabaseField
     private String canonicalTitle;
@@ -30,6 +30,9 @@ public class DbAnimeInfo {
     @DatabaseField
     private int episodeLength;
 
+    @DatabaseField
+    private int totalLength;
+
     public long getId() {
         return id;
     }
@@ -38,12 +41,12 @@ public class DbAnimeInfo {
         this.id = id;
     }
 
-    public String getIdentifier() {
-        return identifier;
+    public String getSlug() {
+        return slug;
     }
 
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
+    public void setSlug(String slug) {
+        this.slug = slug;
     }
 
     public String getCanonicalTitle() {
@@ -92,5 +95,13 @@ public class DbAnimeInfo {
 
     public void setEpisodeLength(int episodeLength) {
         this.episodeLength = episodeLength;
+    }
+
+    public int getTotalLength() {
+        return totalLength;
+    }
+
+    public void setTotalLength(int totalLength) {
+        this.totalLength = totalLength;
     }
 }
