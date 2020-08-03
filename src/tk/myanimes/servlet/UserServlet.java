@@ -1,18 +1,12 @@
 package tk.myanimes.servlet;
 
 import tk.myanimes.io.Database;
-import tk.myanimes.model.AnimeInfo;
-import tk.myanimes.model.AnimeList;
-import tk.myanimes.model.AnimeListItem;
-import tk.myanimes.model.WatchState;
 import tk.myanimes.text.Formatter;
 import tk.myanimes.text.Validator;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.time.Instant;
-import java.util.ArrayList;
 
 @WebServlet("/user/*")
 public class UserServlet extends BaseServlet {
@@ -37,34 +31,8 @@ public class UserServlet extends BaseServlet {
             return;
         }
 
-        var favAnime = new AnimeInfo();
-        favAnime.setCanonicalTitle("DARLING in the FRANXX");
-        favAnime.setCoverPicture("https://upload.wikimedia.org/wikipedia/en/d/dc/DARLING_in_the_FRANXX%2C_second_key_visual.jpg");
-        favAnime.setAnimeStudios(new ArrayList<>());
-        favAnime.getAnimeStudios().add("Trigger");
-        favAnime.getAnimeStudios().add("A-1");
-        favAnime.getAnimeStudios().add("CloverWorks");
-        favAnime.setEpisodeCount(24);
-        favAnime.setEpisodeLength(24);
-
-        //var user = new UserInfo();
-        //user.setName(username);
-        //user.setBiography("Some text about yourself here");
-        //user.setLocation("Germany");
-        //user.setProfilePicture("https://i.pinimg.com/originals/92/f3/8b/92f38bfe1c3b5e3466908f57a3e27ca3.jpg");
-        //user.setFavoriteAnime(favAnime);
-
-        var animes = new AnimeList();
-
-        var item = new AnimeListItem();
-        item.setAnime(favAnime);
-        item.setScore(10);
-        item.setWatchDate(Instant.now());
-        item.setWatchState(WatchState.Watched);
-        animes.add(item);
-
         req.setAttribute("formatter", new Formatter());
-        req.setAttribute("animes", animes);
+        req.setAttribute("animes", Database.getAnimeList(user));
         req.setAttribute("user", user);
 
         loadLoggedInUserInfo(req);
