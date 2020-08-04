@@ -71,8 +71,8 @@ public class AnimeProvider {
         anime.setCoverPicture(attrs.getAsJsonObject("posterImage").get("tiny").getAsString());
         anime.setAgeRating(getNullableString(attrs, "ageRatingGuide"));
         anime.setNsfw(attrs.get("nsfw").getAsBoolean());
-        anime.setStartDate(Parser.parseDate(attrs.get("startDate").getAsString()));
-        anime.setEndDate(Parser.parseDate(attrs.get("endDate").getAsString()));
+        anime.setStartDate(Parser.parseDate(getNullableString(attrs, "startDate")));
+        anime.setEndDate(Parser.parseDate(getNullableString(attrs, "endDate")));
         anime.setYoutubeVideoId(getNullableString(attrs, "youtubeVideoId"));
         anime.setStatus(AnimeStatus.parse(getNullableString(attrs, "status")));
         anime.setShowType(ShowType.parse(getNullableString(attrs, "subtype")));
