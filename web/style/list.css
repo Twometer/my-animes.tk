@@ -95,3 +95,13 @@
     margin: 0 !important;
     padding: 0 !important;
 }
+
+.anime-options {
+    opacity: 1;
+    transition-duration: .3s;
+}
+
+.anime-options.hidden {
+    opacity: 0;
+    transition-duration: .3s;
+}

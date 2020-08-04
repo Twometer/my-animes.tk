@@ -81,10 +81,10 @@
 (function () {
     var items = $(".anime-list-item");
     items.mouseover(function () {
-        $(this).children(".anime-delete").removeClass('hidden');
+        $(this).children(".anime-options").removeClass('hidden');
     });
     items.mouseleave(function () {
-        $(this).children(".anime-delete").addClass('hidden');
+        $(this).children(".anime-options").addClass('hidden');
     });
 })();
 /* Deletion data loading */

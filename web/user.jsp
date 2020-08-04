@@ -153,7 +153,10 @@
                     </div>
                 </div>
                 <c:if test="${isAuthenticated}">
-                    <div class="anime-delete hidden col-sm-auto">
+                    <div class="anime-options hidden col-sm-auto">
+                        <button class="btn">
+                            <img src="${pageContext.request.contextPath}/icon/edit.svg">
+                        </button>
                         <button class="btn" data-toggle="modal" data-target="#delete-anime-modal"
                                 data-anime-name="${item.anime.englishTitle}" data-anime-id="${item.anime.id}">
                             <img src="${pageContext.request.contextPath}/icon/delete.svg">
