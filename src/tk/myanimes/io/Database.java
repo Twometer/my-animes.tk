@@ -96,6 +96,7 @@ public class Database {
 
         var anime = new AnimeInfo();
         anime.setId(dbAnime.getId());
+        anime.setSlug(dbAnime.getSlug());
         anime.setCanonicalTitle(dbAnime.getCanonicalTitle());
         anime.setTitles(new HashMap<>());
         anime.setCategories(new ArrayList<>());
