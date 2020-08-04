@@ -59,7 +59,7 @@
         </c:if>
         <div class="submit-ui">
             <button type="submit" class="button primary mr-4">Save</button>
-            <a href="${pageContext.request.contextPath}/dashboard">cancel</a>
+            <a onclick="history.back()">cancel</a>
         </div>
     </form>
 </div>

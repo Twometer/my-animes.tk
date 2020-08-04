@@ -57,7 +57,8 @@
                                 ${authenticatedUser.name}
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="${pageContext.request.contextPath}/profile">My Profile</a>
+                            <a class="dropdown-item"
+                               href="${pageContext.request.contextPath}/profile?src=${currentPath}">My Profile</a>
                             <a class="dropdown-item"
                                href="${pageContext.request.contextPath}/user/${authenticatedUser.name}">My List</a>
                             <div class="dropdown-divider"></div>
