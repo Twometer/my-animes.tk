@@ -61,7 +61,8 @@ public class AnimeProvider {
         anime.setCanonicalTitle(attrs.get("canonicalTitle").getAsString());
         anime.setTitles(new HashMap<>());
         for (var title : attrs.getAsJsonObject("titles").entrySet()) {
-            anime.getTitles().put(title.getKey(), title.getValue().getAsString());
+            if (!title.getValue().isJsonNull())
+                anime.getTitles().put(title.getKey(), title.getValue().getAsString());
         }
         anime.setCategories(new ArrayList<>());
         anime.setSynopsis(attrs.get("synopsis").getAsString());
