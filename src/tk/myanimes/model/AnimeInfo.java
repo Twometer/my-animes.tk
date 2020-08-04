@@ -20,6 +20,8 @@ public class AnimeInfo {
 
     private Collection<AnimeStudioInfo> animeStudios;
 
+    private String thumbnail;
+
     private String coverPicture;
 
     private String ageRating;
@@ -108,6 +110,14 @@ public class AnimeInfo {
 
     public void setAnimeStudios(Collection<AnimeStudioInfo> animeStudios) {
         this.animeStudios = animeStudios;
+    }
+
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
     }
 
     public String getCoverPicture() {
@@ -208,6 +218,7 @@ public class AnimeInfo {
                 ", categories=" + categories +
                 ", synopsis='" + synopsis + '\'' +
                 ", animeStudios=" + animeStudios +
+                ", thumbnail='" + thumbnail + '\'' +
                 ", coverPicture='" + coverPicture + '\'' +
                 ", ageRating='" + ageRating + '\'' +
                 ", nsfw=" + nsfw +

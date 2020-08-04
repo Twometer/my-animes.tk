@@ -21,6 +21,9 @@ public class DbAnimeInfo {
     private String synopsis;
 
     @DatabaseField
+    private String thumbnail;
+
+    @DatabaseField
     private String coverPicture;
 
     @DatabaseField
@@ -83,6 +86,14 @@ public class DbAnimeInfo {
 
     public void setSynopsis(String synopsis) {
         this.synopsis = synopsis;
+    }
+
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
     }
 
     public String getCoverPicture() {

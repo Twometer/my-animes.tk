@@ -96,10 +96,12 @@
         <div id="favorite-anime" class="row align-items-center mt-5 p-3">
             <div class="col-sm-auto">
             <span class="cover-picture small shadow"
-                  style="background-image: url('${user.favoriteAnime.coverPicture}')"></span>
+                  style="background-image: url('${user.favoriteAnime.thumbnail}')"></span>
             </div>
             <div class="ml-2 col-sm">
-                <h4 class="mb-3">${user.favoriteAnime.englishTitle}</h4>
+                <h4 class="mb-3"><a class="link-muted"
+                                    href="${pageContext.request.contextPath}/anime/${user.favoriteAnime.slug}">${user.favoriteAnime.englishTitle}</a>
+                </h4>
                 <h4 class="mt-3" style="opacity: 0.35">my favorite anime</h4>
             </div>
         </div>
@@ -127,7 +129,7 @@
             <div class="anime-list-item row align-items-center w-100 my-2" data-state="${item.watchState.toString()}">
                 <div class="col-sm-auto">
                 <span class="cover-picture"
-                      style="background-image: url(${item.anime.coverPicture})"></span>
+                      style="background-image: url(${item.anime.thumbnail})"></span>
                 </div>
                 <div class="ml-2 col-sm">
                     <h3><i class="dot ${item.watchState.toString()}"></i> <a class="link-muted"

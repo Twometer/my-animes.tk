@@ -7,7 +7,7 @@
     <div class="row align-items-center search-result-item" slug="${result.animeInfo.slug}"
          onclick="searchItemClicked(this);" title="${result.animeInfo.englishTitle}">
         <div class="col-sm-auto">
-            <img src="${result.animeInfo.coverPicture}" width=50>
+            <img src="${result.animeInfo.thumbnail}" width=50>
         </div>
         <div class="col-sm">
                 ${result.animeInfo.englishTitle}

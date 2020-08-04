@@ -112,6 +112,7 @@ public class Database {
         anime.setCategories(new ArrayList<>());
         anime.setSynopsis(dbAnime.getSynopsis());
         anime.setAnimeStudios(new ArrayList<>());
+        anime.setThumbnail(dbAnime.getThumbnail());
         anime.setCoverPicture(dbAnime.getCoverPicture());
         anime.setAgeRating(dbAnime.getAgeRating());
         anime.setNsfw(dbAnime.isNsfw());
@@ -150,6 +151,7 @@ public class Database {
         dbAnime.setSlug(anime.getSlug());
         dbAnime.setCanonicalTitle(anime.getCanonicalTitle());
         dbAnime.setSynopsis(anime.getSynopsis());
+        dbAnime.setThumbnail(anime.getThumbnail());
         dbAnime.setCoverPicture(anime.getCoverPicture());
         dbAnime.setAgeRating(anime.getAgeRating());
         dbAnime.setNsfw(anime.isNsfw());

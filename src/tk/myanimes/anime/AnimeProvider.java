@@ -68,7 +68,8 @@ public class AnimeProvider {
         anime.setCategories(new ArrayList<>());
         anime.setSynopsis(attrs.get("synopsis").getAsString());
         anime.setAnimeStudios(new ArrayList<>());
-        anime.setCoverPicture(attrs.getAsJsonObject("posterImage").get("tiny").getAsString());
+        anime.setThumbnail(attrs.getAsJsonObject("posterImage").get("tiny").getAsString());
+        anime.setCoverPicture(attrs.getAsJsonObject("posterImage").get("small").getAsString());
         anime.setAgeRating(getNullableString(attrs, "ageRatingGuide"));
         anime.setNsfw(attrs.get("nsfw").getAsBoolean());
         anime.setStartDate(Parser.parseDate(getNullableString(attrs, "startDate")));

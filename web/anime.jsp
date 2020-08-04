@@ -67,8 +67,19 @@
 
 <div class="main-content pt-5">
 
-    <img src="${anime.coverPicture}">
-    <h1>${anime.englishTitle}</h1>
+    <div class="row align-items-center">
+        <div class="col-auto">
+            <img src="${anime.coverPicture}" width=200>
+        </div>
+        <div class="col ml-5">
+            <h1>${anime.englishTitle}</h1>
+            <p class="mt-3">
+                ${anime.synopsis}
+            </p>
+        </div>
+    </div>
+
+    <h2 class="mt-4">About</h2>
 
     <p>Start date: ${anime.startDate}</p>
     <p>End date: ${anime.endDate}</p>
@@ -78,16 +89,17 @@
     <p>Categories: ${formatter.formatStrings(anime.categories)}}</p>
     <p>Age rating: ${anime.ageRating}</p>
     <p>NSFW: ${anime.nsfw}</p>
-    <p>Trailer: <a href="https://youtube.com/watch?v=${anime.youtubeVideoId}">YouTube</a></p>
     <p>Episodes: ${anime.episodeCount}</p>
     <p>Episode length: ${anime.episodeLength}</p>
     <p>Total length: ${formatter.formatDuration(anime.totalLength)}</p>
 
-    <h2>Synopsis</h2>
-    <p>
-        ${anime.synopsis}
-    </p>
+    <h2>Trailer</h2>
+    <iframe width="700" height="393" src="https://www.youtube.com/embed/${anime.youtubeVideoId}" style="margin: auto"
+            frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen></iframe>
 
+    <h2>Episodes</h2>
+    <div class="alert">Work in progress</div>
 </div>
 
 </body>
