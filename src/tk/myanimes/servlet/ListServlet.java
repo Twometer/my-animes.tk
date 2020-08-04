@@ -2,6 +2,7 @@ package tk.myanimes.servlet;
 
 import tk.myanimes.anime.AnimeCache;
 import tk.myanimes.io.Database;
+import tk.myanimes.model.UserInfo;
 import tk.myanimes.model.WatchState;
 import tk.myanimes.session.SessionManager;
 import tk.myanimes.text.Validator;
@@ -9,6 +10,7 @@ import tk.myanimes.text.Validator;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.ZoneOffset;
 
@@ -38,7 +40,14 @@ public class ListServlet extends BaseServlet {
     }
 
     private void handleDeleteRequest(HttpServletRequest req, HttpServletResponse resp) throws Exception {
-
+        var animeId = req.getParameter("animeId");
+        if (Validator.nullOrEmpty(animeId)) {
+            resp.sendError(400);
+            return;
+        }
+        var user = SessionManager.instance().getCurrentUser(req);
+        Database.removeFromAnimeList(user, Long.parseLong(animeId));
+        redirectToList(req, resp, user);
     }
 
     private void handleEditRequest(HttpServletRequest req, HttpServletResponse resp) throws Exception {
@@ -71,10 +80,14 @@ public class ListServlet extends BaseServlet {
             var user = SessionManager.instance().getCurrentUser(req);
             if (!Database.animeListContains(user, animeInfo.getId()))
                 Database.addToAnimeList(user, animeInfo, ratingNumeric, watchDateInstant, watchState);
-            resp.sendRedirect(req.getContextPath() + "/user/" + user.getName());
+            redirectToList(req, resp, user);
             return;
         }
         resp.sendError(400);
+    }
+
+    private void redirectToList(HttpServletRequest req, HttpServletResponse resp, UserInfo user) throws IOException {
+        resp.sendRedirect(req.getContextPath() + "/user/" + user.getName());
     }
 
     private long parseRating(HttpServletRequest request, WatchState watchState, String name) {

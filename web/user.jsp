@@ -148,8 +148,39 @@
                         </div>
                     </div>
                 </div>
+                <c:if test="${isAuthenticated}">
+                    <div class="anime-delete hidden col-sm-auto">
+                        <button class="btn" data-toggle="modal" data-target="#delete-anime-modal"
+                                data-anime-name="${item.anime.englishTitle}" data-anime-id="${item.anime.id}">
+                            <img src="${pageContext.request.contextPath}/icon/delete.svg">
+                        </button>
+                    </div>
+                </c:if>
             </div>
         </c:forEach>
+    </div>
+</div>
+
+<div class="modal fade" id="delete-anime-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body mx-auto my-5">
+                <form method="post" action="${pageContext.request.contextPath}/list" autocomplete="off"
+                      style="width: 300px">
+                    <input type="hidden" name="action" value="delete">
+                    <input type="hidden" id="delete-anime-id" name="animeId" value="">
+                    <h2 class="mb-5 text-center">Confirm delete</h2>
+                    <p class="text-center">
+                        Do you really want to delete <span id="delete-anime-name" class="font-italic">$ANIMENAME$</span>
+                        from your anime list?
+                    </p>
+                    <div class="mt-5 text-center">
+                        <button type="submit" class="button cancelled mr-4">Delete</button>
+                        <a data-dismiss="modal">cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 

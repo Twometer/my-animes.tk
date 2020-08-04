@@ -44,10 +44,10 @@
             }
             button.addClass("selected");
 
-            var filter = button.attr('data-filter');
+            var filter = button.data('filter');
             $(".anime-list-item").each(function () {
                 var $this = $(this);
-                if (filter === 'all' || $this.attr('data-state') === filter)
+                if (filter === 'all' || $this.data('state') === filter)
                     $this.removeClass('filtered');
                 else
                     $this.addClass('filtered');
@@ -76,4 +76,26 @@
         }
     });
     ratingBox.hide();
+})();
+/* Action button fading */
+(function () {
+    var items = $(".anime-list-item");
+    items.mouseover(function () {
+        $(this).children(".anime-delete").removeClass('hidden');
+    });
+    items.mouseleave(function () {
+        $(this).children(".anime-delete").addClass('hidden');
+    });
+})();
+/* Deletion data loading */
+(function () {
+    $('#delete-anime-modal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget)
+        var animeName = button.data('anime-name')
+        var animeId = button.data('anime-id');
+
+        var modal = $(this)
+        modal.find('#delete-anime-name').text(animeName)
+        modal.find('#delete-anime-id').val(animeId)
+    })
 })();
