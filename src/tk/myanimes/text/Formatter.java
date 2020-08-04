@@ -41,7 +41,7 @@ public class Formatter {
     }
 
     public String formatScore(float score) {
-        return round(score, 1) + "/10.0";
+        return round(score, 1) + "/5.0";
     }
 
     private double round(double d, int digits) {

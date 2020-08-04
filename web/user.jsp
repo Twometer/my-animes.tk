@@ -19,8 +19,9 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
           integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css2?family=Unica+One&family=Open+Sans:wght@300&family=Exo:wght@300&display=swap"
-          rel="stylesheet">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Unica+One&family=Open+Sans:wght@300&family=Exo:wght@300&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="${pageContext.request.contextPath}/style/main.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/style/list.css" rel="stylesheet">
 </head>
@@ -183,8 +184,33 @@
                     </div>
 
                     <div class="form-group my-4" id="rating-box">
-                        <label for="rating">Your rating</label>
-                        <input name="rating" id="rating" type="range" min="0" max="100" value="50" width="100">
+                        <div class="row">
+                            <label class="col" for="rating-story">Story</label>
+                            <div class="col star-input">
+                                <input id="rating-story" name="rating-story" type="hidden">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <label class="col" for="rating-characters">Characters</label>
+                            <div class="col star-input">
+                                <input id="rating-characters" name="rating-characters" type="hidden">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <label class="col" for="rating-art">Art</label>
+                            <div class="col star-input">
+                                <input id="rating-art" name="rating-art" type="hidden">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <label class="col" for="rating-enjoyment">Enjoyment</label>
+                            <div class="col star-input">
+                                <input id="rating-enjoyment" name="rating-enjoyment" type="hidden">
+                            </div>
+                        </div>
                     </div>
 
                     <div class="mt-5 text-center">
@@ -209,43 +235,6 @@
         integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
         crossorigin="anonymous"></script>
 <script src="${pageContext.request.contextPath}/script/search.js"></script>
-
-<script>
-    (function () {
-        var buttons = [];
-        $(".button.in-bar").each(function () {
-            buttons.push($(this));
-        });
-        for (const button of buttons) {
-            button.click(function () {
-                for (const otherButton of buttons) {
-                    otherButton.removeClass("selected");
-                }
-                button.addClass("selected");
-            });
-        }
-    })();
-    (function () {
-        var ratingBox = $("#rating-box");
-        var dateBox = $("#date-box");
-        var dateInput = $("#watchDate");
-        var watchState = $("#watchState");
-        watchState.change(function () {
-            var val = watchState.val();
-
-            if (val === 'watched') ratingBox.show();
-            else ratingBox.hide();
-
-            if (val === 'queued') {
-                dateBox.hide();
-                dateInput.removeAttr('required');
-            } else {
-                dateBox.show();
-                dateInput.prop('required', true);
-            }
-        });
-        ratingBox.hide();
-    })();
-</script>
+<script src="${pageContext.request.contextPath}/script/list.js"></script>
 
 </html>

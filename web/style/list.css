@@ -78,3 +78,7 @@
 .add-item { /* TODO this does not work correctly, see design mockup */
     float: right;
 }
+
+.checked {
+    color: orange;
+}
