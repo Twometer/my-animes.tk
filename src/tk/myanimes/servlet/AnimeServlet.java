@@ -1,6 +1,7 @@
 package tk.myanimes.servlet;
 
 import tk.myanimes.anime.AnimeCache;
+import tk.myanimes.text.Formatter;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +16,11 @@ public class AnimeServlet extends BaseServlet {
         var anime = AnimeCache.instance().tryGetFullAnimeInfoBySlug(path);
         if (anime == null)
             resp.getWriter().println("Not a valid slug");
-        else
-            resp.getWriter().println(anime.toString());
+        else {
+            loadLoggedInUserInfo(req);
+            req.setAttribute("anime", anime);
+            req.setAttribute("formatter", new Formatter());
+            req.getRequestDispatcher("/anime.jsp").forward(req, resp);
+        }
     }
 }

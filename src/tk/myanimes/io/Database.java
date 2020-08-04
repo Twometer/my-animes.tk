@@ -137,7 +137,8 @@ public class Database {
             } else {
                 name = DataAccess.instance().getAnimeProducerDao().queryForId(studio.getStudioId()).getName();
             }
-            anime.getAnimeStudios().add(new AnimeStudioInfo(studio.getStudioId(), name.replace("Pictures", ""), studio.getLocation()));
+            var shortName = name.replace("Pictures", "").trim();
+            anime.getAnimeStudios().add(new AnimeStudioInfo(studio.getStudioId(), shortName, studio.getLocation()));
         }
 
         return anime;

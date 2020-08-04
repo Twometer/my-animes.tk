@@ -22,6 +22,10 @@ public class Formatter {
         return val + " " + (val == 1 ? singular : plural);
     }
 
+    public String formatStrings(Collection<String> list) {
+        return String.join(", ", list);
+    }
+
     public String formatStudios(Collection<AnimeStudioInfo> list) {
         return list.stream().map(AnimeStudioInfo::getName).collect(Collectors.joining(", "));
     }
