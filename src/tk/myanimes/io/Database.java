@@ -64,15 +64,13 @@ public class Database {
 
     public static boolean animeListContains(UserInfo userInfo, long id) throws SQLException {
         var builder = DataAccess.instance().getAnimeListItemDao().queryBuilder();
-        builder.where().eq("userId", userInfo.getId());
-        builder.where().eq("animeId", id);
+        builder.where().eq("userId", userInfo.getId()).and().eq("animeId", id);
         return !builder.query().isEmpty();
     }
 
     public static void removeFromAnimeList(UserInfo userInfo, long animeId) throws SQLException {
         var builder = DataAccess.instance().getAnimeListItemDao().deleteBuilder();
-        builder.where().eq("userId", userInfo.getId());
-        builder.where().eq("animeId", animeId);
+        builder.where().eq("userId", userInfo.getId()).and().eq("animeId", animeId);
         builder.delete();
     }
 

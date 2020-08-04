@@ -245,7 +245,7 @@
                         </div>
 
                         <div class="row">
-                            <label class="col" for="rating-enjoyment">Enjoyment</label>
+                            <label class="col" for="rating-enjoyment">Entertainment</label>
                             <div class="col star-input">
                                 <input id="rating-enjoyment" name="rating-enjoyment" type="hidden">
                             </div>
