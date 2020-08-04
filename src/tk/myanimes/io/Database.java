@@ -62,6 +62,10 @@ public class Database {
         DataAccess.instance().getAnimeListItemDao().create(dbAnimeListItem);
     }
 
+    public static boolean animeListContains(UserInfo userInfo, long id) throws SQLException {
+        return !DataAccess.instance().getAnimeListItemDao().queryForEq("animeId", id).isEmpty();
+    }
+
     public static AnimeList getAnimeList(UserInfo userInfo) throws SQLException {
         var animeList = new AnimeList();
         for (var dbItem : DataAccess.instance().getAnimeListItemDao().queryForEq("userId", userInfo.getId())) {

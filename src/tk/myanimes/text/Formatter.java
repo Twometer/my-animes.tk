@@ -1,10 +1,24 @@
 package tk.myanimes.text;
 
+import tk.myanimes.model.AnimeInfo;
+
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Collection;
 
 public class Formatter {
+
+    public String formatPlurals(int val, String singular, String plural) {
+        return val + " " + (val == 1 ? singular : plural);
+    }
+
+    public String formatPlurals(float val, String singular, String plural) {
+        return val + " " + (val == 1 ? singular : plural);
+    }
+
+    public String formatPlurals(double val, String singular, String plural) {
+        return val + " " + (val == 1 ? singular : plural);
+    }
 
     public String formatList(Collection<String> list) {
         return String.join(", ", list);
@@ -20,23 +34,30 @@ public class Formatter {
         } else if (duration < 60 * 15) {
             return "a few minutes ago";
         } else if (duration < 60 * 60) {
-            return Math.round(duration / 60.0) + " minutes ago";
+            return formatPlurals((int) Math.round(duration / 60.0), "minute", "minutes") + "ago";
         } else if (duration < 60 * 60 * 24) {
-            return Math.round(duration / 60.0 / 60.0) + " hours ago";
+            return formatPlurals((int) Math.round(duration / 60.0 / 60.0), "hour", "hours") + "ago";
         } else if (duration < 60 * 60 * 24 * 30.5) {
-            return Math.round(duration / 60.0 / 60.0 / 24.0) + " days ago";
+            return formatPlurals((int) Math.round(duration / 60.0 / 60.0 / 24.0), "day", "days") + " ago";
         } else {
-            return Math.round(duration / 60.0 / 60.0 / 24.0 / 30.5) + " months ago";
+            return formatPlurals((int) Math.round(duration / 60.0 / 60.0 / 24.0 / 30.5), "month", "months") + " ago";
         }
+    }
+
+    public String formatAnimeLength(AnimeInfo animeInfo) {
+        if (animeInfo.getEpisodeCount() == 1)
+            return animeInfo.getTotalLength() + " minutes";
+        else
+            return animeInfo.getEpisodeCount() + " episodes";
     }
 
     public String formatDuration(int minutes) {
         if (minutes < 60) {
-            return minutes + " minutes";
+            return formatPlurals(minutes, "minute", "minutes");
         } else if (minutes < 60 * 24) {
-            return round(minutes / 60.0, 2) + " hours";
+            return formatPlurals(round(minutes / 60.0, 2), "hour", "hours");
         } else {
-            return round(minutes / 60.0 / 24.0, 2) + " days";
+            return formatPlurals(round(minutes / 60.0 / 24.0, 2), "day", "days");
         }
     }
 

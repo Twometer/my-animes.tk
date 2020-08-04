@@ -76,7 +76,8 @@ public class UserServlet extends BaseServlet {
         if (kitsuAnime != null) {
             var user = SessionManager.instance().getCurrentUser(req);
             var anime = AnimeCache.instance().tryGetFullAnimeInfo(kitsuAnime);
-            Database.addToAnimeList(user, anime, ratingNumeric, watchDateInstant, watchState);
+            if (!Database.animeListContains(user, anime.getId()))
+                Database.addToAnimeList(user, anime, ratingNumeric, watchDateInstant, watchState);
             resp.sendRedirect(req.getRequestURI());
             return;
         }

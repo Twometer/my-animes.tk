@@ -82,8 +82,9 @@
             ${user.biography}
         </div>
         <div class="col-sm-auto">
-            <p><img alt="Animes" class="icon" src="${pageContext.request.contextPath}/icon/film.svg"> ${animes.size()}
-                animes</p>
+            <p><img alt="Animes" class="icon"
+                    src="${pageContext.request.contextPath}/icon/film.svg"> ${formatter.formatPlurals(animes.size(), "anime", "animes")}
+            </p>
             <p><img alt="Watchtime" class="icon"
                     src="${pageContext.request.contextPath}/icon/clock.svg"> ${formatter.formatDuration(animes.getTotalDuration())}
             </p>
@@ -138,8 +139,7 @@
                                                 src="${pageContext.request.contextPath}/icon/calendar.svg"> ${formatter.formatDate(item.watchDate)}
                         </div>
                         <div class="col-3"><img alt="Episodes" class="icon"
-                                                src="${pageContext.request.contextPath}/icon/tv.svg"> ${item.anime.episodeCount}
-                            episodes
+                                                src="${pageContext.request.contextPath}/icon/tv.svg"> ${formatter.formatAnimeLength(item.anime)}
                         </div>
                         <div class="col-auto"><img alt="Studio" class="icon"
                                                    src="${pageContext.request.contextPath}/icon/video.svg"> ${formatter.formatList(item.anime.animeStudios)}
