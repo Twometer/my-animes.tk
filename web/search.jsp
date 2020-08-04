@@ -4,7 +4,7 @@
 <jsp:useBean id="results" scope="request" type="java.util.List<tk.myanimes.anime.KitsuAnimeInfo>"/>
 
 <c:forEach var="result" items="${results}">
-    <div class="row align-items-center search-result-item" kitsu-id="${result.remoteIdentifier}"
+    <div class="row align-items-center search-result-item" slug="${result.animeInfo.slug}"
          onclick="searchItemClicked(this);" title="${result.animeInfo.englishTitle}">
         <div class="col-sm-auto">
             <img src="${result.animeInfo.coverPicture}" width=50>

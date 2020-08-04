@@ -1,7 +1,6 @@
 package tk.myanimes.servlet;
 
 import tk.myanimes.anime.AnimeCache;
-import tk.myanimes.anime.AnimeProvider;
 import tk.myanimes.io.Database;
 import tk.myanimes.model.WatchState;
 import tk.myanimes.session.SessionManager;
@@ -47,7 +46,7 @@ public class ListServlet extends BaseServlet {
     }
 
     private void handleAddRequest(HttpServletRequest req, HttpServletResponse resp) throws Exception {
-        var animeId = req.getParameter("animeId");
+        var animeSlug = req.getParameter("animeSlug");
         var watchDate = req.getParameter("watchDate");
         var watchState = WatchState.parse(req.getParameter("watchState"));
 
@@ -59,7 +58,7 @@ public class ListServlet extends BaseServlet {
         if (watchState == WatchState.Queued) // Set date to maximum... not the prettiest solution but well
             watchDate = "9999-12-31";
 
-        if (watchState == null || Validator.nullOrEmpty(animeId, watchDate)) {
+        if (watchState == null || Validator.nullOrEmpty(animeSlug, watchDate)) {
             resp.sendError(400);
             return;
         }
@@ -67,16 +66,14 @@ public class ListServlet extends BaseServlet {
         var ratingNumeric = average(storyRating, characterRating, artRating, enjoymentRating);
         var watchDateInstant = LocalDate.parse(watchDate).atStartOfDay().toInstant(ZoneOffset.UTC);
 
-        var kitsuAnime = AnimeProvider.instance().getKitsuAnimeInfo(Long.parseLong(animeId));
-        if (kitsuAnime != null) {
+        var animeInfo = AnimeCache.instance().tryGetFullAnimeInfoBySlug(animeSlug);
+        if (animeInfo != null) {
             var user = SessionManager.instance().getCurrentUser(req);
-            var anime = AnimeCache.instance().tryGetFullAnimeInfo(kitsuAnime);
-            if (!Database.animeListContains(user, anime.getId()))
-                Database.addToAnimeList(user, anime, ratingNumeric, watchDateInstant, watchState);
+            if (!Database.animeListContains(user, animeInfo.getId()))
+                Database.addToAnimeList(user, animeInfo, ratingNumeric, watchDateInstant, watchState);
             resp.sendRedirect(req.getContextPath() + "/user/" + user.getName());
             return;
         }
-
         resp.sendError(400);
     }
 

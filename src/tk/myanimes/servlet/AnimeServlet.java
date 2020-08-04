@@ -1,7 +1,6 @@
 package tk.myanimes.servlet;
 
 import tk.myanimes.anime.AnimeCache;
-import tk.myanimes.anime.AnimeProvider;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -12,10 +11,11 @@ public class AnimeServlet extends BaseServlet {
 
     @Override
     protected void httpGet(HttpServletRequest req, HttpServletResponse resp) throws Exception {
-        var path = req.getPathInfo().substring(1).split("/");
-        var results = AnimeProvider.instance().searchAnime(path[0]);
-        var result = results.get(Integer.parseInt(path[1]));
-        var anime = AnimeCache.instance().tryGetFullAnimeInfo(result);
-        resp.getWriter().println(anime.toString());
+        var path = req.getPathInfo().substring(1);
+        var anime = AnimeCache.instance().tryGetFullAnimeInfoBySlug(path);
+        if (anime == null)
+            resp.getWriter().println("Not a valid slug");
+        else
+            resp.getWriter().println(anime.toString());
     }
 }

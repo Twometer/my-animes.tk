@@ -37,8 +37,8 @@
     window.searchItemClicked = function (i) {
         var element = $(i);
         var title = element.attr('title');
-        var kitsuId = element.attr('kitsu-id');
-        $("#search-anime-id").val(kitsuId);
+        var slug = element.attr('slug');
+        $("#search-anime-slug").val(slug);
         $("#anime-search").val(title);
     }
 

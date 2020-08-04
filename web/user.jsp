@@ -161,7 +161,7 @@
                     <h2 class="mb-5 text-center">Add new anime</h2>
                     <p class="mt-3 mb-4">
                         <label for="anime-search">Anime name</label>
-                        <input type="hidden" name="animeId" id="search-anime-id" required>
+                        <input type="hidden" name="animeSlug" id="search-anime-slug" required>
                         <input id="anime-search" placeholder="search..." type="text" value="" required>
                     </p>
 

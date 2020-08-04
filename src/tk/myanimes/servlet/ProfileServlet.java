@@ -1,7 +1,6 @@
 package tk.myanimes.servlet;
 
 import tk.myanimes.anime.AnimeCache;
-import tk.myanimes.anime.AnimeProvider;
 import tk.myanimes.io.DataAccess;
 import tk.myanimes.io.Database;
 import tk.myanimes.session.SessionManager;
@@ -31,7 +30,7 @@ public class ProfileServlet extends BaseServlet {
         var bio = req.getParameter("bio");
         var profilePicture = req.getParameter("profilePicUrl");
         var location = req.getParameter("location");
-        var favoriteAnimeId = req.getParameter("favoriteAnimeId");
+        var favoriteAnimeSlug = req.getParameter("favoriteAnimeSlug");
 
         if (!Validator.isValidUsername(username)) {
             sendResponse(req, resp, "This is not a valid username!");
@@ -52,13 +51,13 @@ public class ProfileServlet extends BaseServlet {
         user.setName(username);
         user.setSetupComplete(true);
 
-        if (favoriteAnimeId != null && !favoriteAnimeId.isBlank()) {
-            var kitsuAnime = AnimeProvider.instance().getKitsuAnimeInfo(Long.parseLong(favoriteAnimeId));
-            if (kitsuAnime != null) {
-                var anime = AnimeCache.instance().tryGetFullAnimeInfo(kitsuAnime);
+        if (favoriteAnimeSlug != null && !favoriteAnimeSlug.isBlank()) {
+            var anime = AnimeCache.instance().tryGetFullAnimeInfoBySlug(favoriteAnimeSlug);
+            if (anime != null)
                 user.setFavoriteAnime(anime);
-            } else log.info("Could not retrieve kitsu anime");
-        } else log.info("Invalid favorite anime id!");
+            else
+                log.info("Could not resolve slug: " + favoriteAnimeSlug);
+        } else log.info("Invalid favorite anime slug!");
 
         Database.storeUserInfo(user);
         RedirectDispatcher.redirectToHomepage(resp, user);
