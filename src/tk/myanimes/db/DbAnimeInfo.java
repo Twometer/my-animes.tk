@@ -2,6 +2,8 @@ package tk.myanimes.db;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
+import tk.myanimes.model.AnimeStatus;
+import tk.myanimes.model.ShowType;
 
 @DatabaseTable(tableName = "anime_info")
 public class DbAnimeInfo {
@@ -23,6 +25,24 @@ public class DbAnimeInfo {
 
     @DatabaseField
     private String ageRating;
+
+    @DatabaseField
+    private boolean nsfw;
+
+    @DatabaseField
+    private long startDate;
+
+    @DatabaseField
+    private long endDate;
+
+    @DatabaseField
+    private String youtubeVideoId;
+
+    @DatabaseField
+    private AnimeStatus status;
+
+    @DatabaseField
+    private ShowType showType;
 
     @DatabaseField
     private int episodeCount;
@@ -79,6 +99,54 @@ public class DbAnimeInfo {
 
     public void setAgeRating(String ageRating) {
         this.ageRating = ageRating;
+    }
+
+    public boolean isNsfw() {
+        return nsfw;
+    }
+
+    public void setNsfw(boolean nsfw) {
+        this.nsfw = nsfw;
+    }
+
+    public long getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(long startDate) {
+        this.startDate = startDate;
+    }
+
+    public long getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(long endDate) {
+        this.endDate = endDate;
+    }
+
+    public String getYoutubeVideoId() {
+        return youtubeVideoId;
+    }
+
+    public void setYoutubeVideoId(String youtubeVideoId) {
+        this.youtubeVideoId = youtubeVideoId;
+    }
+
+    public AnimeStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(AnimeStatus status) {
+        this.status = status;
+    }
+
+    public ShowType getShowType() {
+        return showType;
+    }
+
+    public void setShowType(ShowType showType) {
+        this.showType = showType;
     }
 
     public int getEpisodeCount() {

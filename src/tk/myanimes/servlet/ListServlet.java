@@ -5,14 +5,13 @@ import tk.myanimes.io.Database;
 import tk.myanimes.model.UserInfo;
 import tk.myanimes.model.WatchState;
 import tk.myanimes.session.SessionManager;
+import tk.myanimes.text.Parser;
 import tk.myanimes.text.Validator;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.ZoneOffset;
 
 @WebServlet("/list")
 public class ListServlet extends BaseServlet {
@@ -73,7 +72,7 @@ public class ListServlet extends BaseServlet {
         }
 
         var ratingNumeric = average(storyRating, characterRating, artRating, enjoymentRating);
-        var watchDateInstant = LocalDate.parse(watchDate).atStartOfDay().toInstant(ZoneOffset.UTC);
+        var watchDateInstant = Parser.parseDate(watchDate);
 
         var animeInfo = AnimeCache.instance().tryGetFullAnimeInfoBySlug(animeSlug);
         if (animeInfo != null) {

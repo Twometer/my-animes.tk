@@ -1,10 +1,12 @@
 package tk.myanimes.text;
 
 import tk.myanimes.model.AnimeInfo;
+import tk.myanimes.model.AnimeStudioInfo;
 
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 public class Formatter {
 
@@ -20,8 +22,8 @@ public class Formatter {
         return val + " " + (val == 1 ? singular : plural);
     }
 
-    public String formatList(Collection<String> list) {
-        return String.join(", ", list);
+    public String formatStudios(Collection<AnimeStudioInfo> list) {
+        return list.stream().map(AnimeStudioInfo::getName).collect(Collectors.joining(", "));
     }
 
     public String formatDate(Instant instant) {

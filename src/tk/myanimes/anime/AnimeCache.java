@@ -1,6 +1,7 @@
 package tk.myanimes.anime;
 
 import tk.myanimes.db.DbAnimeCompany;
+import tk.myanimes.db.DbAnimeProducer;
 import tk.myanimes.io.DataAccess;
 import tk.myanimes.io.Database;
 import tk.myanimes.model.AnimeInfo;
@@ -48,6 +49,24 @@ public class AnimeCache {
         } else {
             log.info("Cache Hit: Found anime for " + result.getAnimeInfo().getSlug());
             return Database.convertAnime(cacheEntries.get(0));
+        }
+    }
+
+    public String tryGetProducer(long producerId) throws SQLException, IOException {
+        var company = DataAccess.instance().getAnimeProducerDao().queryForId(producerId);
+        if (company == null) {
+            log.info("Cache Miss: Producer name query: " + producerId);
+            var name = AnimeProvider.instance().getProducerName(producerId);
+            if (name == null) {
+                log.info("Cache Error: Producer does not exist: " + producerId);
+                return null;
+            }
+
+            DataAccess.instance().getAnimeProducerDao().create(new DbAnimeProducer(producerId, name));
+            return name;
+        } else {
+            log.info("Cache Hit: Found producer for " + company);
+            return company.getName();
         }
     }
 

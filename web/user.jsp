@@ -144,7 +144,7 @@
                                                 src="${pageContext.request.contextPath}/icon/tv.svg"> ${formatter.formatAnimeLength(item.anime)}
                         </div>
                         <div class="col-auto"><img alt="Studio" class="icon"
-                                                   src="${pageContext.request.contextPath}/icon/video.svg"> ${formatter.formatList(item.anime.animeStudios)}
+                                                   src="${pageContext.request.contextPath}/icon/video.svg"> ${formatter.formatStudios(item.anime.animeStudios)}
                         </div>
                     </div>
                 </div>

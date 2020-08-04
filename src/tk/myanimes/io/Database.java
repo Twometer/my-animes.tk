@@ -63,11 +63,15 @@ public class Database {
     }
 
     public static boolean animeListContains(UserInfo userInfo, long id) throws SQLException {
-        return !DataAccess.instance().getAnimeListItemDao().queryForEq("animeId", id).isEmpty();
+        var builder = DataAccess.instance().getAnimeListItemDao().queryBuilder();
+        builder.where().eq("userId", userInfo.getId());
+        builder.where().eq("animeId", id);
+        return !builder.query().isEmpty();
     }
 
     public static void removeFromAnimeList(UserInfo userInfo, long animeId) throws SQLException {
         var builder = DataAccess.instance().getAnimeListItemDao().deleteBuilder();
+        builder.where().eq("userId", userInfo.getId());
         builder.where().eq("animeId", animeId);
         builder.delete();
     }
@@ -110,6 +114,12 @@ public class Database {
         anime.setAnimeStudios(new ArrayList<>());
         anime.setCoverPicture(dbAnime.getCoverPicture());
         anime.setAgeRating(dbAnime.getAgeRating());
+        anime.setNsfw(dbAnime.isNsfw());
+        anime.setStartDate(Instant.ofEpochMilli(dbAnime.getStartDate()));
+        anime.setEndDate(Instant.ofEpochMilli(dbAnime.getEndDate()));
+        anime.setYoutubeVideoId(dbAnime.getYoutubeVideoId());
+        anime.setStatus(dbAnime.getStatus());
+        anime.setShowType(dbAnime.getShowType());
         anime.setEpisodeCount(dbAnime.getEpisodeCount());
         anime.setEpisodeLength(dbAnime.getEpisodeLength());
         anime.setTotalLength(dbAnime.getTotalLength());
@@ -121,8 +131,13 @@ public class Database {
             anime.getCategories().add(category.getCategoryName());
 
         for (var studio : DataAccess.instance().getAnimeStudioDao().queryForEq("animeId", anime.getId())) {
-            var company = DataAccess.instance().getAnimeCompanyDao().queryForId(studio.getCompanyId());
-            anime.getAnimeStudios().add(company.getName().replace("Pictures", "").trim());
+            String name;
+            if (studio.getLocation() == AnimeStudioNamespace.Company) {
+                name = DataAccess.instance().getAnimeCompanyDao().queryForId(studio.getStudioId()).getName();
+            } else {
+                name = DataAccess.instance().getAnimeProducerDao().queryForId(studio.getStudioId()).getName();
+            }
+            anime.getAnimeStudios().add(new AnimeStudioInfo(studio.getStudioId(), name.replace("Pictures", ""), studio.getLocation()));
         }
 
         return anime;
@@ -136,6 +151,12 @@ public class Database {
         dbAnime.setSynopsis(anime.getSynopsis());
         dbAnime.setCoverPicture(anime.getCoverPicture());
         dbAnime.setAgeRating(anime.getAgeRating());
+        dbAnime.setNsfw(anime.isNsfw());
+        dbAnime.setStartDate(anime.getStartDate().toEpochMilli());
+        dbAnime.setEndDate(anime.getEndDate().toEpochMilli());
+        dbAnime.setYoutubeVideoId(anime.getYoutubeVideoId());
+        dbAnime.setStatus(anime.getStatus());
+        dbAnime.setShowType(anime.getShowType());
         dbAnime.setEpisodeCount(anime.getEpisodeCount());
         dbAnime.setEpisodeLength(anime.getEpisodeLength());
         dbAnime.setTotalLength(anime.getTotalLength());
@@ -162,9 +183,9 @@ public class Database {
         deleteByAnimeId(DataAccess.instance().getAnimeStudioDao(), dbAnime.getId());
         for (var studio : anime.getAnimeStudios()) {
             var dbStudio = new DbAnimeStudio();
-            var dbCompany = DataAccess.instance().getAnimeCompanyDao().queryForEq("name", studio).get(0);
             dbStudio.setAnimeId(dbAnime.getId());
-            dbStudio.setCompanyId(dbCompany.getId());
+            dbStudio.setLocation(studio.getLocation());
+            dbStudio.setStudioId(studio.getId());
             DataAccess.instance().getAnimeStudioDao().create(dbStudio);
         }
     }

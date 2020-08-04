@@ -6,7 +6,8 @@ import com.google.gson.JsonParser;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import tk.myanimes.model.AnimeInfo;
+import tk.myanimes.model.*;
+import tk.myanimes.text.Parser;
 
 import java.io.IOException;
 import java.net.URLEncoder;
@@ -68,8 +69,13 @@ public class AnimeProvider {
         anime.setSynopsis(attrs.get("synopsis").getAsString());
         anime.setAnimeStudios(new ArrayList<>());
         anime.setCoverPicture(attrs.getAsJsonObject("posterImage").get("tiny").getAsString());
-
         anime.setAgeRating(getNullableString(attrs, "ageRatingGuide"));
+        anime.setNsfw(attrs.get("nsfw").getAsBoolean());
+        anime.setStartDate(Parser.parseDate(attrs.get("startDate").getAsString()));
+        anime.setEndDate(Parser.parseDate(attrs.get("endDate").getAsString()));
+        anime.setYoutubeVideoId(getNullableString(attrs, "youtubeVideoId"));
+        anime.setStatus(AnimeStatus.parse(getNullableString(attrs, "status")));
+        anime.setShowType(ShowType.parse(getNullableString(attrs, "subtype")));
         anime.setEpisodeCount(getNullableInt(attrs, "episodeCount"));
         anime.setEpisodeLength(getNullableInt(attrs, "episodeLength"));
         anime.setTotalLength(attrs.get("totalLength").getAsInt());
@@ -83,6 +89,12 @@ public class AnimeProvider {
         return reply.getAsJsonObject("attributes").get("name").getAsString();
     }
 
+    public String getProducerName(long producerId) throws IOException {
+        var companyUrl = String.format("https://kitsu.io/api/edge/anime-productions/%d/producer", producerId);
+        var reply = parse(request(companyUrl)).getAsJsonObject("data");
+        return reply.getAsJsonObject("attributes").get("name").getAsString();
+    }
+
     public AnimeInfo getFullInfo(KitsuAnimeInfo kitsu) throws IOException, SQLException {
         var categoryUrl = String.format("https://kitsu.io/api/edge/anime/%s/genres", kitsu.getRemoteIdentifier());
         var categoryReply = parse(request(categoryUrl)).getAsJsonArray("data");
@@ -92,6 +104,32 @@ public class AnimeProvider {
             kitsu.getAnimeInfo().getCategories().add(categoryName);
         }
 
+        parseCompanies(kitsu);
+        if (kitsu.getAnimeInfo().getAnimeStudios().size() == 0)
+            parseProducers(kitsu);
+
+        return kitsu.getAnimeInfo();
+    }
+
+    // Yes, this is twice the same code for the EXACT same data
+    // but with different names and ID namespaces. Kitsu did it that way.
+    // I have no idea why they did it that way, and I'm too lazy to write code
+    // that handles this BS more elegant.
+    private void parseProducers(KitsuAnimeInfo kitsu) throws IOException, SQLException {
+        var productionsUrl = String.format("https://kitsu.io/api/edge/anime/%s/anime-productions", kitsu.getRemoteIdentifier());
+        var productionsReply = parse(request(productionsUrl)).getAsJsonArray("data");
+
+        for (var item : productionsReply) {
+            var obj = item.getAsJsonObject();
+            var attrs = obj.getAsJsonObject("attributes");
+            if (attrs.get("role").getAsString().equals("studio")) {
+                var producerId = obj.get("id").getAsLong();
+                kitsu.getAnimeInfo().getAnimeStudios().add(new AnimeStudioInfo(producerId, AnimeCache.instance().tryGetProducer(producerId), AnimeStudioNamespace.Producer));
+            }
+        }
+    }
+
+    private void parseCompanies(KitsuAnimeInfo kitsu) throws IOException, SQLException {
         var productionsUrl = String.format("https://kitsu.io/api/edge/anime/%s/productions", kitsu.getRemoteIdentifier());
         var productionsReply = parse(request(productionsUrl)).getAsJsonArray("data");
 
@@ -100,11 +138,9 @@ public class AnimeProvider {
             var attrs = obj.getAsJsonObject("attributes");
             if (attrs.get("role").getAsString().equals("studio")) {
                 var companyId = obj.get("id").getAsLong();
-                kitsu.getAnimeInfo().getAnimeStudios().add(AnimeCache.instance().tryGetCompany(companyId));
+                kitsu.getAnimeInfo().getAnimeStudios().add(new AnimeStudioInfo(companyId, AnimeCache.instance().tryGetCompany(companyId), AnimeStudioNamespace.Company));
             }
         }
-
-        return kitsu.getAnimeInfo();
     }
 
     private String request(String url) throws IOException {

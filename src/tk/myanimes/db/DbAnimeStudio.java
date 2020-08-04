@@ -2,6 +2,7 @@ package tk.myanimes.db;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
+import tk.myanimes.model.AnimeStudioNamespace;
 
 @DatabaseTable(tableName = "anime_studios")
 public class DbAnimeStudio {
@@ -13,7 +14,10 @@ public class DbAnimeStudio {
     private long animeId;
 
     @DatabaseField
-    private long companyId;
+    private long studioId;
+
+    @DatabaseField
+    private AnimeStudioNamespace location;
 
     public long getId() {
         return id;
@@ -31,11 +35,19 @@ public class DbAnimeStudio {
         this.animeId = animeId;
     }
 
-    public long getCompanyId() {
-        return companyId;
+    public long getStudioId() {
+        return studioId;
     }
 
-    public void setCompanyId(long companyId) {
-        this.companyId = companyId;
+    public void setStudioId(long studioId) {
+        this.studioId = studioId;
+    }
+
+    public AnimeStudioNamespace getLocation() {
+        return location;
+    }
+
+    public void setLocation(AnimeStudioNamespace location) {
+        this.location = location;
     }
 }
