@@ -197,6 +197,16 @@ a:hover {
     transition-duration: .5s;
 }
 
+a.link-muted {
+    color: inherit !important;
+    transition: none;
+}
+
+a.link-muted:hover {
+    border-bottom: none !important;
+    transition: none;
+}
+
 #anime-search-results {
     display: none;
     position: fixed;

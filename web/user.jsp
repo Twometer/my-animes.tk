@@ -130,10 +130,12 @@
                       style="background-image: url(${item.anime.coverPicture})"></span>
                 </div>
                 <div class="ml-2 col-sm">
-                    <h3><i class="dot ${item.watchState.toString()}"></i> ${item.anime.englishTitle}</h3>
+                    <h3><i class="dot ${item.watchState.toString()}"></i> <a class="link-muted"
+                                                                             href="${pageContext.request.contextPath}/anime/${item.anime.slug}">${item.anime.englishTitle}</a>
+                    </h3>
                     <div class="row mt-3">
                         <div class="col-2"><img alt="Rating" class="icon"
-                                                src="${pageContext.request.contextPath}/icon/star.svg"> ${item.watchState.toString() == "watched" ? formatter.formatScore(item.score) : "unrated"}
+                                                src="${pageContext.request.contextPath}/icon/star.svg"> ${item.score != -1 ? formatter.formatScore(item.score) : "unrated"}
                         </div>
                         <div class="col-3"><img alt="Watched" class="icon"
                                                 src="${pageContext.request.contextPath}/icon/calendar.svg"> ${formatter.formatDate(item.watchDate)}
