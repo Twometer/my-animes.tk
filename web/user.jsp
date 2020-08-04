@@ -105,12 +105,12 @@
         </div>
     </c:if>
     <div class="row mt-5 button-bar">
-        <button class="button in-bar primary selected">All</button>
-        <button class="button in-bar watching">Watching</button>
-        <button class="button in-bar watched">Watched</button>
-        <button class="button in-bar paused">Paused</button>
-        <button class="button in-bar cancelled">Cancelled</button>
-        <button class="button in-bar queued">Queued</button>
+        <button class="button in-bar primary selected" data-filter="all">All</button>
+        <button class="button in-bar watching" data-filter="watching">Watching</button>
+        <button class="button in-bar watched" data-filter="watched">Watched</button>
+        <button class="button in-bar paused" data-filter="paused">Paused</button>
+        <button class="button in-bar cancelled" data-filter="cancelled">Cancelled</button>
+        <button class="button in-bar queued" data-filter="queued">Queued</button>
     </div>
     <c:if test="${isAuthenticated}">
         <p class="ml-auto text-right mt-3">
@@ -124,7 +124,7 @@
             </div>
         </c:if>
         <c:forEach var="item" items="${animes}">
-            <div class="row align-items-center w-100 my-2">
+            <div class="anime-list-item row align-items-center w-100 my-2" data-state="${item.watchState.toString()}">
                 <div class="col-sm-auto">
                 <span class="cover-picture"
                       style="background-image: url(${item.anime.coverPicture})"></span>

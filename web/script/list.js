@@ -43,6 +43,15 @@
                 otherButton.removeClass("selected");
             }
             button.addClass("selected");
+
+            var filter = button.attr('data-filter');
+            $(".anime-list-item").each(function () {
+                var $this = $(this);
+                if (filter === 'all' || $this.attr('data-state') === filter)
+                    $this.removeClass('filtered');
+                else
+                    $this.addClass('filtered');
+            });
         });
     }
 })();
