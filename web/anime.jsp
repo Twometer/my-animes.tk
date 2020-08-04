@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<jsp:useBean id="currentPath" scope="request" type="java.lang.String"/>
 <jsp:useBean id="formatter" scope="request" type="tk.myanimes.text.Formatter"/>
 <jsp:useBean id="anime" scope="request" type="tk.myanimes.model.AnimeInfo"/>
 <jsp:useBean id="isAuthenticated" scope="request" type="java.lang.Boolean"/>
@@ -41,7 +42,8 @@
         <ul class="navbar-nav ml-auto">
             <c:choose>
                 <c:when test="${!isAuthenticated}">
-                    <li class="nav-item active"><a class="nav-link" href="${pageContext.request.contextPath}/login">Log
+                    <li class="nav-item active"><a class="nav-link"
+                                                   href="${pageContext.request.contextPath}/login?src=${currentPath}">Log
                         in</a>
                     </li>
                 </c:when>

@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<jsp:useBean id="currentPath" scope="request" type="java.lang.String"/>
 <jsp:useBean id="isAuthenticated" scope="request" type="java.lang.Boolean"/>
 <jsp:useBean id="authenticatedUser" scope="request" type="tk.myanimes.model.UserInfo"/>
 <!DOCTYPE html>
@@ -39,7 +40,8 @@
         <ul class="navbar-nav ml-auto">
             <c:choose>
                 <c:when test="${!isAuthenticated}">
-                    <li class="nav-item active"><a class="nav-link" href="${pageContext.request.contextPath}/login">Log
+                    <li class="nav-item active"><a class="nav-link"
+                                                   href="${pageContext.request.contextPath}/login?src=${currentPath}">Log
                         in</a>
                     </li>
                 </c:when>
@@ -63,9 +65,13 @@
     </div>
 </nav>
 
-<div class="main-content">
+<div class="main-content pt-5">
 
-    Dashboard is WIP
+    <h1>Hi, ${authenticatedUser.name}!</h1>
+    <p>Sorry, the dashboard is still work-in-progress</p>
+    <p>In the meantime, you can try visiting <a
+            href="${pageContext.request.contextPath}/user/${authenticatedUser.name}">your anime list</a>.</p>
+
 
 </div>
 

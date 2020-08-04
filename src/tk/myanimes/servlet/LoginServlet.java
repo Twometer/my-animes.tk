@@ -46,7 +46,7 @@ public class LoginServlet extends BaseServlet {
             req.getRequestDispatcher("/login.jsp").forward(req, resp);
         } else {
             SessionManager.instance().registerSession(req, user);
-            RedirectDispatcher.redirectToHomepage(resp, user);
+            RedirectDispatcher.redirectToHomepage(req, resp, user);
         }
     }
 

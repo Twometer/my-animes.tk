@@ -71,7 +71,7 @@ public class RegisterServlet extends BaseServlet {
         Database.storeUserInfo(user);
 
         SessionManager.instance().registerSession(req, user);
-        RedirectDispatcher.redirectToHomepage(resp, user);
+        RedirectDispatcher.redirectToHomepage(req, resp, user);
     }
 
     private void sendResponse(HttpServletRequest req, HttpServletResponse resp, String error) throws ServletException, IOException {

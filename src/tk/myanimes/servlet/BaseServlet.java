@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 
 public abstract class BaseServlet extends HttpServlet {
@@ -18,6 +20,7 @@ public abstract class BaseServlet extends HttpServlet {
         if (!tryAuthenticate(req, resp)) return;
         applyEncoding(req, resp);
         try {
+            req.setAttribute("currentPath", URLEncoder.encode(req.getRequestURI(), StandardCharsets.UTF_8));
             httpGet(req, resp);
         } catch (Exception e) {
             throw new ServletException(e);
