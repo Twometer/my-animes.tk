@@ -2,7 +2,7 @@ package tk.myanimes.text;
 
 public class Validator {
 
-    public static boolean areNullOrEmpty(String... strings) {
+    public static boolean nullOrEmpty(String... strings) {
         for (var str : strings)
             if (str == null || str.isBlank())
                 return true;

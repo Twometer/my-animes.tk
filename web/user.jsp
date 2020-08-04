@@ -155,7 +155,9 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-body mx-auto my-5">
-                <form method="post" autocomplete="off" style="width: 300px">
+                <form method="post" action="${pageContext.request.contextPath}/list" autocomplete="off"
+                      style="width: 300px">
+                    <input type="hidden" name="action" value="add">
                     <h2 class="mb-5 text-center">Add new anime</h2>
                     <p class="mt-3 mb-4">
                         <label for="anime-search">Anime name</label>

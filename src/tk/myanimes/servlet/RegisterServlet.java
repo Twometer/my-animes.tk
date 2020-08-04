@@ -38,7 +38,7 @@ public class RegisterServlet extends BaseServlet {
         var password = req.getParameter("password");
         var passwordConfirm = req.getParameter("passwordConfirm");
 
-        if (Validator.areNullOrEmpty(username, password, passwordConfirm)) {
+        if (Validator.nullOrEmpty(username, password, passwordConfirm)) {
             sendResponse(req, resp, "Empty credentials are not allowed");
             return;
         }
