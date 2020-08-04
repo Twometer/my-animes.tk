@@ -68,7 +68,12 @@ public class Database {
 
     public static AnimeList getAnimeList(UserInfo userInfo) throws SQLException {
         var animeList = new AnimeList();
-        for (var dbItem : DataAccess.instance().getAnimeListItemDao().queryForEq("userId", userInfo.getId())) {
+
+        var queryBuilder = DataAccess.instance().getAnimeListItemDao().queryBuilder();
+        queryBuilder.where().eq("userId", userInfo.getId());
+        queryBuilder.orderBy("watchDate", true);
+
+        for (var dbItem : queryBuilder.query()) {
             var item = new AnimeListItem();
             item.setAnime(getAnimeInfo(dbItem.getAnimeId()));
             item.setWatchState(dbItem.getWatchState());
@@ -76,6 +81,7 @@ public class Database {
             item.setScore(dbItem.getScore());
             animeList.add(item);
         }
+
         return animeList;
     }
 
