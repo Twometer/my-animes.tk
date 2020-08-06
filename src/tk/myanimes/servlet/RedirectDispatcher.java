@@ -8,30 +8,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.logging.Logger;
 
 public class RedirectDispatcher {
 
-    private static final Logger log = Logger.getLogger(RedirectDispatcher.class.getName());
-
-    public static void redirectToHomepage(HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException {
-        var user = SessionManager.instance().getCurrentUser(req);
-        redirectToHomepage(req, resp, user);
+    public static void dispatch(HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException {
+        var user = SessionManager.instance().isAuthenticated(req) ? SessionManager.instance().getCurrentUser(req) : null;
+        dispatch(req, resp, user);
     }
 
-    public static void redirectToHomepage(HttpServletRequest req, HttpServletResponse resp, UserInfo user) throws IOException {
-        log.info("Redirecting: User = " + user);
-        if (user == null)
-            return;
-
+    public static void dispatch(HttpServletRequest req, HttpServletResponse resp, UserInfo user) throws IOException {
         var source = req.getParameter("src");
-
-        if (!user.isSetupComplete())
+        if (user != null && !user.isSetupComplete())
             resp.sendRedirect("profile");
         else if (!Validator.nullOrEmpty(source) && source.startsWith("/"))
             resp.sendRedirect(source);
-        else
+        else if (user != null)
             resp.sendRedirect("dashboard");
+        else
+            resp.sendRedirect("/");
     }
 
 }

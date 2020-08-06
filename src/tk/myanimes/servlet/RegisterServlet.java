@@ -20,7 +20,7 @@ public class RegisterServlet extends BaseServlet {
     @Override
     protected void httpGet(HttpServletRequest req, HttpServletResponse resp) throws Exception {
         if (SessionManager.instance().isAuthenticated(req)) {
-            RedirectDispatcher.redirectToHomepage(req, resp);
+            RedirectDispatcher.dispatch(req, resp);
             return;
         }
 
@@ -71,7 +71,7 @@ public class RegisterServlet extends BaseServlet {
         Database.storeUserInfo(user);
 
         SessionManager.instance().registerSession(req, user);
-        RedirectDispatcher.redirectToHomepage(req, resp, user);
+        RedirectDispatcher.dispatch(req, resp, user);
     }
 
     private void sendResponse(HttpServletRequest req, HttpServletResponse resp, String error) throws ServletException, IOException {

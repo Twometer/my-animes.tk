@@ -15,13 +15,19 @@ import java.sql.SQLException;
 
 public abstract class BaseServlet extends HttpServlet {
 
+    private String getFullPath(HttpServletRequest req) {
+        var fullPath = req.getRequestURI();
+        if (req.getQueryString() != null)
+            fullPath += "?" + req.getQueryString();
+        return fullPath;
+    }
+
     @Override
     protected final void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if (!tryAuthenticate(req, resp)) return;
         applyEncoding(req, resp);
         try {
-            var fullPath = String.format("%s?%s", req.getRequestURI(), req.getQueryString());
-            req.setAttribute("currentPath", URLEncoder.encode(fullPath, StandardCharsets.UTF_8));
+            req.setAttribute("currentPath", URLEncoder.encode(getFullPath(req), StandardCharsets.UTF_8));
             httpGet(req, resp);
         } catch (Exception e) {
             throw new ServletException(e);

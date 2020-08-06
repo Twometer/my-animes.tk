@@ -60,7 +60,7 @@ public class ProfileServlet extends BaseServlet {
         } else log.info("Invalid favorite anime slug!");
 
         Database.storeUserInfo(user);
-        RedirectDispatcher.redirectToHomepage(req, resp, user);
+        RedirectDispatcher.dispatch(req, resp, user);
     }
 
     private void sendResponse(HttpServletRequest req, HttpServletResponse resp, String error) throws SQLException, ServletException, IOException {

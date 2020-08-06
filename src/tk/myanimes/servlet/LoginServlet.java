@@ -19,10 +19,12 @@ public class LoginServlet extends BaseServlet {
     protected void httpGet(HttpServletRequest req, HttpServletResponse resp) throws Exception {
         if (req.getParameterMap().containsKey("logoff")) {
             SessionManager.instance().unregisterSession(req);
+            RedirectDispatcher.dispatch(req, resp);
+            return;
         }
 
         if (SessionManager.instance().isAuthenticated(req)) {
-            RedirectDispatcher.redirectToHomepage(req, resp);
+            RedirectDispatcher.dispatch(req, resp);
             return;
         }
 
@@ -46,7 +48,7 @@ public class LoginServlet extends BaseServlet {
             req.getRequestDispatcher("/login.jsp").forward(req, resp);
         } else {
             SessionManager.instance().registerSession(req, user);
-            RedirectDispatcher.redirectToHomepage(req, resp, user);
+            RedirectDispatcher.dispatch(req, resp, user);
         }
     }
 

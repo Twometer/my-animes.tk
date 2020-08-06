@@ -63,7 +63,8 @@
                             <a class="dropdown-item"
                                href="${pageContext.request.contextPath}/user/${authenticatedUser.name}">My List</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="${pageContext.request.contextPath}/login?logoff">Log off</a>
+                            <a class="dropdown-item"
+                               href="${pageContext.request.contextPath}/login?logoff&src=${currentPath}">Log off</a>
                         </div>
                     </li>
                 </c:otherwise>
