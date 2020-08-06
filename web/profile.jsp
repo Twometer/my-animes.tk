@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<jsp:useBean id="rootPath" scope="request" type="java.lang.String"/>
 <jsp:useBean id="showError" scope="request" type="java.lang.Boolean"/>
 <jsp:useBean id="errorMessage" scope="request" type="java.lang.String"/>
 

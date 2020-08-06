@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page trimDirectiveWhitespaces="true" %>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,10 +25,10 @@
         <img src="img/welcome-girl.png">
         <h1>Welcome To myanimes</h1>
         <h2>Share your favorite animes with the world</h2>
-        <a class="container-link" href="${pageContext.request.contextPath}/register">
+        <a class="container-link" href="register">
             <button class="button primary mr-4">Join</button>
         </a>
-        <a class="container-link" href="${pageContext.request.contextPath}/login">
+        <a class="container-link" href="login">
             <button class="button primary">Log in</button>
         </a>
     </div>

@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<jsp:useBean id="rootPath" scope="request" type="java.lang.String"/>
 <jsp:useBean id="showLoginError" scope="request" type="java.lang.Boolean"/>
 <!DOCTYPE html>
 <html lang="en">
@@ -40,7 +41,7 @@
         </c:if>
         <div class="submit-ui">
             <button type="submit" class="button primary mr-4">Log in</button>
-            <a href="${pageContext.request.contextPath}/register">new here?</a>
+            <a href="${rootPath}/register">new here?</a>
         </div>
     </form>
 </div>

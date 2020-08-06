@@ -1,5 +1,6 @@
 package tk.myanimes.servlet;
 
+import tk.myanimes.io.AppConfig;
 import tk.myanimes.model.UserInfo;
 import tk.myanimes.session.SessionManager;
 
@@ -28,6 +29,7 @@ public abstract class BaseServlet extends HttpServlet {
         applyEncoding(req, resp);
         try {
             req.setAttribute("currentPath", URLEncoder.encode(getFullPath(req), StandardCharsets.UTF_8));
+            req.setAttribute("rootPath", AppConfig.instance().getRootPath());
             httpGet(req, resp);
         } catch (Exception e) {
             throw new ServletException(e);
@@ -39,6 +41,7 @@ public abstract class BaseServlet extends HttpServlet {
         if (!tryAuthenticate(req, resp)) return;
         applyEncoding(req, resp);
         try {
+            req.setAttribute("rootPath", AppConfig.instance().getRootPath());
             httpPost(req, resp);
         } catch (Exception e) {
             throw new ServletException(e);
@@ -82,7 +85,7 @@ public abstract class BaseServlet extends HttpServlet {
             return true;
         if (SessionManager.instance().isAuthenticated(req))
             return true;
-        resp.sendRedirect("login");
+        resp.sendRedirect(AppConfig.instance().getRootPath() + "/login");
         return false;
     }
 

@@ -1,5 +1,6 @@
 package tk.myanimes.servlet;
 
+import tk.myanimes.io.AppConfig;
 import tk.myanimes.model.UserInfo;
 import tk.myanimes.session.SessionManager;
 import tk.myanimes.text.Validator;
@@ -19,13 +20,13 @@ public class RedirectDispatcher {
     public static void dispatch(HttpServletRequest req, HttpServletResponse resp, UserInfo user) throws IOException {
         var source = req.getParameter("src");
         if (user != null && !user.isSetupComplete())
-            resp.sendRedirect("profile");
+            resp.sendRedirect(AppConfig.instance().getRootPath() + "/profile");
         else if (!Validator.nullOrEmpty(source) && source.startsWith("/"))
             resp.sendRedirect(source);
         else if (user != null)
-            resp.sendRedirect("dashboard");
+            resp.sendRedirect(AppConfig.instance().getRootPath() + "/dashboard");
         else
-            resp.sendRedirect("/");
+            resp.sendRedirect(AppConfig.instance().getRootPath());
     }
 
 }

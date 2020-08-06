@@ -99,4 +99,8 @@ public class DataAccess {
         ensureConnected();
         return animeListItemDao;
     }
+
+    public DataContext getContext() {
+        return context;
+    }
 }
