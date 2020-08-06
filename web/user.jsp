@@ -36,7 +36,7 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto ml-5-lg">
+        <ul class="navbar-nav mr-auto ml-lg-5">
             <li class="nav-item active"><a class="nav-link" href="${pageContext.request.contextPath}/dashboard">Dashboard</a>
             </li>
             <li class="nav-item active"><a class="nav-link" href="#">Animes</a></li>
@@ -77,7 +77,7 @@
             <span class="profile-picture"
                   style="background-image: url(${user.profilePicture})"></span>
         </div>
-        <div class="ml-5-lg col-sm">
+        <div class="ml-lg-5 col-sm">
             <h2>${user.name}
                 <button class="button primary inline ml-3">Follow</button>
             </h2>

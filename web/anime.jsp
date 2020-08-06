@@ -33,7 +33,7 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto ml-5-lg">
+        <ul class="navbar-nav mr-auto ml-lg-5">
             <li class="nav-item active"><a class="nav-link" href="${pageContext.request.contextPath}/dashboard">Dashboard</a>
             </li>
             <li class="nav-item active"><a class="nav-link" href="#">Animes</a></li>
@@ -74,7 +74,7 @@
         <div class="col-lg-auto mr-4-lg">
             <img class="shadow" src="${anime.coverPicture}" width=200>
         </div>
-        <div class="col-lg ml-5-lg">
+        <div class="col-lg ml-lg-5">
             <h1>${anime.englishTitle}</h1>
             <h4>${anime.japaneseTitle}</h4>
             <p class="mt-3">
