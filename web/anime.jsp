@@ -93,7 +93,7 @@
             <p>End date: ${formatter.formatDateAbsolute(anime.endDate)}</p>
             <p>Studios: ${formatter.formatStudios(anime.animeStudios)}</p>
             <p>Status: ${anime.status}</p>
-            <p>Type: ${anime.showType}</p>
+            <p>Type: ${formatter.formatShowType(anime.showType)}</p>
         </div>
         <div class="col-md">
             <p>Categories: ${formatter.formatStrings(anime.categories)}</p>

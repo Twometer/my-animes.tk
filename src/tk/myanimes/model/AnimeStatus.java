@@ -1,9 +1,9 @@
 package tk.myanimes.model;
 
 public enum AnimeStatus {
-    Current("current"),
+    Airing("current"),
     Finished("finished"),
-    Tba("tba"),
+    TBA("tba"),
     Unreleased("unreleased"),
     Upcoming("upcoming");
 

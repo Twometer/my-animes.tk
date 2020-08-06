@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<jsp:useBean id="formatter" scope="request" type="tk.myanimes.text.Formatter"/>
 <jsp:useBean id="query" scope="request" type="java.lang.String"/>
 <jsp:useBean id="results" scope="request" type="java.util.List<tk.myanimes.anime.KitsuAnimeInfo>"/>
 <jsp:useBean id="currentPath" scope="request" type="java.lang.String"/>
@@ -79,8 +80,8 @@
                 </div>
                 <div class="col-sm">
                     <h4>${result.animeInfo.englishTitle}</h4>
-                    <h6 class="mb-3">${result.animeInfo.japaneseTitle}</h6>
-                        ${result.animeInfo.showType}
+                    <h6 class="mb-3">${result.animeInfo.alternateTitle.equalsIgnoreCase(result.animeInfo.englishTitle) ? result.animeInfo.japaneseTitle : result.animeInfo.alternateTitle}</h6>
+                        ${formatter.formatShowType(result.animeInfo.showType)}
                 </div>
             </div>
         </a>

@@ -1,6 +1,7 @@
 package tk.myanimes.servlet;
 
 import tk.myanimes.anime.AnimeProvider;
+import tk.myanimes.text.Formatter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -28,6 +29,7 @@ public class SearchServlet extends BaseServlet {
             req.getRequestDispatcher("/search_raw.jsp").forward(req, resp);
         else {
             req.setAttribute("query", query);
+            req.setAttribute("formatter", new Formatter());
             loadLoggedInUserInfo(req);
             req.getRequestDispatcher("/search.jsp").forward(req, resp);
         }

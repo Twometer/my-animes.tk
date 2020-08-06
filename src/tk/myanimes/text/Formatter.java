@@ -2,6 +2,7 @@ package tk.myanimes.text;
 
 import tk.myanimes.model.AnimeInfo;
 import tk.myanimes.model.AnimeStudioInfo;
+import tk.myanimes.model.ShowType;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -78,6 +79,19 @@ public class Formatter {
             return formatPlurals(round(minutes / 60.0, 2), "hour", "hours");
         } else {
             return formatPlurals(round(minutes / 60.0 / 24.0, 2), "day", "days");
+        }
+    }
+
+    public String formatShowType(ShowType showType) {
+        switch (showType) {
+            case TV:
+                return "TV Show";
+            case ONA:
+                return "Web Anime";
+            case OVA:
+                return "Original video animation";
+            default:
+                return showType.name();
         }
     }
 
