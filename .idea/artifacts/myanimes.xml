@@ -2,19 +2,7 @@
   <artifact type="war" name="myanimes">
     <output-path>$PROJECT_DIR$/out/artifacts/myanimes</output-path>
     <root id="archive" name="myanimes.war">
-      <element id="directory" name="WEB-INF">
-        <element id="directory" name="classes">
-          <element id="module-output" name="my-animes.tk" />
-        </element>
-        <element id="dir-copy" path="$PROJECT_DIR$/web" />
-        <element id="directory" name="lib">
-          <element id="library" level="project" name="JSTL" />
-          <element id="library" level="project" name="ORM" />
-          <element id="library" level="project" name="SQLite" />
-          <element id="library" level="project" name="OkHttp" />
-          <element id="library" level="project" name="Gson" />
-        </element>
-      </element>
+      <element id="artifact" artifact-name="myanimes_staging" />
     </root>
   </artifact>
 </component>
