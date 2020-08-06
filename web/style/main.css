@@ -30,9 +30,15 @@ body {
 .navbar {
     background-color: var(--primary-color);
     box-shadow: var(--common-shadow);
-    padding-left: 10% !important;
-    padding-right: 10% !important;
 }
+
+@media (min-width: 992px) {
+    .navbar {
+        padding-left: 10% !important;
+        padding-right: 10% !important;
+    }
+}
+
 
 .navbar-brand {
     font-family: 'Unica One', sans-serif;
@@ -105,11 +111,6 @@ body {
     -moz-outline-style: none;
 }
 
-.button.in-bar {
-    width: 110px;
-    padding: 1px 0;
-}
-
 .button.inline {
     vertical-align: top;
     margin-top: 6px;
@@ -169,6 +170,7 @@ body {
     background-color: var(--queued-color);
 }
 
+/* Input styles */
 input {
     border: none;
     border-bottom: 1px solid #B8B8B8;
@@ -183,6 +185,7 @@ input:active, input:focus {
     transition-duration: .5s;
 }
 
+/* Link styles */
 a {
     text-decoration: none;
     color: var(--primary-color) !important;
@@ -207,6 +210,7 @@ a.link-muted:hover {
     transition: none;
 }
 
+/* Other */
 #anime-search-results {
     display: none;
     position: fixed;

@@ -43,14 +43,39 @@ input {
     font-size: 14px;
 }
 
-/* TODO: In the original design mockup, this overlay is diagonal */
 .backdrop-overlay {
     z-index: -1;
     position: absolute;
-    width: 40vw;
+    width: 100vw;
     height: 100vh;
     box-shadow: var(--common-shadow);
-    background: white;
-    /*background: rgba(255,255,255,0.7);
-    backdrop-filter: blur(32px);*/
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(32px);
+}
+
+input {
+    background: transparent;
+}
+
+@media (min-width: 576px) {
+    .backdrop-overlay {
+        width: 60vw;
+        background: white;
+    }
+
+    input {
+        background: white;
+    }
+}
+
+@media (min-width: 992px) {
+    .backdrop-overlay {
+        width: 50vw;
+    }
+}
+
+@media (min-width: 1600px) {
+    .backdrop-overlay {
+        width: 40vw;
+    }
 }

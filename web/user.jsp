@@ -36,7 +36,7 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto ml-5">
+        <ul class="navbar-nav mr-auto ml-5-lg">
             <li class="nav-item active"><a class="nav-link" href="${pageContext.request.contextPath}/dashboard">Dashboard</a>
             </li>
             <li class="nav-item active"><a class="nav-link" href="#">Animes</a></li>
@@ -72,12 +72,12 @@
 </nav>
 
 <div class="main-content">
-    <div class="row align-items-center mt-5">
+    <div class="row align-items-center mt-5 profile-container">
         <div class="col-sm-auto">
             <span class="profile-picture"
                   style="background-image: url(${user.profilePicture})"></span>
         </div>
-        <div class="ml-5 col-sm">
+        <div class="ml-5-lg col-sm">
             <h2>${user.name}
                 <button class="button primary inline ml-3">Follow</button>
             </h2>
@@ -139,17 +139,17 @@
                                                                              href="${pageContext.request.contextPath}/anime/${item.anime.slug}">${item.anime.englishTitle}</a>
                     </h3>
                     <div class="row mt-3">
-                        <div class="col-2"><img alt="Rating" class="icon"
-                                                src="${pageContext.request.contextPath}/icon/star.svg"> ${item.score != -1 ? formatter.formatScore(item.score) : "unrated"}
+                        <div class="col-sm-2"><img alt="Rating" class="icon"
+                                                   src="${pageContext.request.contextPath}/icon/star.svg"> ${item.score != -1 ? formatter.formatScore(item.score) : "unrated"}
                         </div>
-                        <div class="col-3"><img alt="Watched" class="icon"
-                                                src="${pageContext.request.contextPath}/icon/calendar.svg"> ${formatter.formatDateRelative(item.watchDate)}
+                        <div class="col-sm-3"><img alt="Watched" class="icon"
+                                                   src="${pageContext.request.contextPath}/icon/calendar.svg"> ${formatter.formatDateRelative(item.watchDate)}
                         </div>
-                        <div class="col-3"><img alt="Episodes" class="icon"
-                                                src="${pageContext.request.contextPath}/icon/tv.svg"> ${formatter.formatAnimeLength(item.anime)}
+                        <div class="col-sm-3"><img alt="Episodes" class="icon"
+                                                   src="${pageContext.request.contextPath}/icon/tv.svg"> ${formatter.formatAnimeLength(item.anime)}
                         </div>
-                        <div class="col-auto"><img alt="Studio" class="icon"
-                                                   src="${pageContext.request.contextPath}/icon/video.svg"> ${formatter.formatStudios(item.anime.animeStudios)}
+                        <div class="col-sm-auto"><img alt="Studio" class="icon"
+                                                      src="${pageContext.request.contextPath}/icon/video.svg"> ${formatter.formatStudios(item.anime.animeStudios)}
                         </div>
                     </div>
                 </div>
