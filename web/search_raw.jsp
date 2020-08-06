@@ -5,7 +5,8 @@
 
 <c:forEach var="result" items="${results}">
     <div class="row align-items-center search-result-item" data-slug="${result.animeInfo.slug}"
-         onclick="searchItemClicked(this);" data-title="${result.animeInfo.englishTitle}">
+         onclick="searchItemClicked(this);" onmousedown="searchItemMouseDown()"
+         data-title="${result.animeInfo.englishTitle}">
         <div class="col-sm-auto">
             <img src="${result.animeInfo.thumbnail}" width=50>
         </div>

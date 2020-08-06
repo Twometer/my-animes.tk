@@ -27,11 +27,16 @@
             hasResults = true;
 
             var url = endpoint + encodeURIComponent(query);
-            console.log("Querying ", url);
             httpGetAsync(url, function (e) {
                 resultBox.html(e);
             });
         }
+    }
+
+    var nextFocusOnSearchItem = false;
+
+    window.searchItemMouseDown = function () {
+        nextFocusOnSearchItem = true;
     }
 
     window.searchItemClicked = function (i) {
@@ -40,10 +45,15 @@
         var slug = element.data('slug');
         $("#search-anime-slug").val(slug);
         $("#anime-search").val(title);
+        hideResultBox();
     }
 
     searchBox.focusout(function () {
-        setTimeout(hideResultBox, 500);
+        if (nextFocusOnSearchItem) {
+            nextFocusOnSearchItem = false;
+        } else {
+            hideResultBox();
+        }
     });
 
     searchBox.focus(function () {
