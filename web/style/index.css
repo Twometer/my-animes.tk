@@ -23,6 +23,7 @@ body {
     z-index: 0;
     width: 40vw;
     height: 60vh;
+    min-height: 600px;
     border-radius: 30px;
     padding: 50px;
     justify-content: center;
@@ -55,7 +56,7 @@ body {
     }
 }
 
-@media (max-width: 400px) {
+@media (max-width: 430px) {
     .backdrop-overlay {
         width: 100vw;
         height: 100vh;
@@ -70,6 +71,14 @@ body {
 
     h2 {
         font-size: 1.5rem;
+    }
+}
+
+@media (max-height: 600px) {
+    .backdrop-overlay {
+        width: 100vw;
+        height: 100vh;
+        border-radius: 0;
     }
 }
 
