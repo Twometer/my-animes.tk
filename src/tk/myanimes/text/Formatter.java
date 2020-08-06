@@ -25,7 +25,7 @@ public class Formatter {
     }
 
     public String formatStrings(Collection<String> list) {
-        return String.join(", ", list);
+        return !list.isEmpty() ? String.join(", ", list) : "none";
     }
 
     public String formatStudios(Collection<AnimeStudioInfo> list) {
@@ -38,6 +38,10 @@ public class Formatter {
 
     public String formatDateAbsolute(Instant instant) {
         return DateTimeFormatter.ofPattern("dd MMM yyyy").withZone(ZoneOffset.UTC).format(instant);
+    }
+
+    public String formatBoolean(boolean val) {
+        return val ? "yes" : "no";
     }
 
     public String formatDateRelative(Instant instant) {

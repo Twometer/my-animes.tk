@@ -97,7 +97,7 @@
         <div class="col-md">
             <p>Categories: ${formatter.formatStrings(anime.categories)}</p>
             <p>Age rating: ${anime.ageRating}</p>
-            <p>NSFW: ${anime.nsfw}</p>
+            <p>NSFW: ${formatter.formatBoolean(anime.nsfw)}</p>
             <p>Episodes: ${anime.episodeCount}</p>
             <p>Episode length: ${anime.episodeLength} minutes</p>
             <p>Total length: ${formatter.formatDuration(anime.totalLength)}</p>
