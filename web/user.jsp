@@ -119,7 +119,7 @@
     </div>
     <c:if test="${isAuthenticated}">
         <p class="ml-auto text-right mt-3">
-            <a class="add-item" data-toggle="modal" data-target="#add-anime-modal">add</a>
+            <a class="add-item" data-toggle="modal" data-target="#anime-property-modal" data-mode="add">add</a>
         </p>
     </c:if>
     <div class="row mt-5">
@@ -155,7 +155,10 @@
                 </div>
                 <c:if test="${isAuthenticated}">
                     <div class="anime-options hidden col-sm-auto">
-                        <button class="btn">
+                        <button class="btn" data-toggle="modal" data-target="#anime-property-modal"
+                                data-anime-name="${item.anime.englishTitle}" data-anime-id="${item.anime.id}"
+                                data-mode="edit" data-anime-state="${item.watchState.toString()}"
+                                data-anime-date="${formatter.formatDateSystem(item.watchDate)}">
                             <img src="${pageContext.request.contextPath}/icon/edit.svg">
                         </button>
                         <button class="btn" data-toggle="modal" data-target="#delete-anime-modal"
@@ -179,7 +182,8 @@
                     <input type="hidden" id="delete-anime-id" name="animeId" value="">
                     <h2 class="mb-5 text-center">Confirm delete</h2>
                     <p class="text-center">
-                        Do you really want to delete <span id="delete-anime-name" class="font-italic">$ANIMENAME$</span>
+                        Do you really want to delete <span id="delete-anime-name"
+                                                           class="font-weight-bold">$ANIMENAME$</span>
                         from your anime list?
                     </p>
                     <div class="mt-5 text-center">
@@ -192,15 +196,17 @@
     </div>
 </div>
 
-<div class="modal fade" id="add-anime-modal" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="anime-property-modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-body mx-auto my-5">
                 <form method="post" action="${pageContext.request.contextPath}/list" autocomplete="off"
                       style="width: 300px">
-                    <input type="hidden" name="action" value="add">
-                    <h2 class="mb-5 text-center">Add new anime</h2>
-                    <p class="mt-3 mb-4">
+                    <input id="edit-anime-id" type="hidden" name="animeId" value="-1"/>
+                    <input id="property-action" type="hidden" name="action" value="add">
+                    <h2 id="anime-property-header" class="mb-5 text-center">Add new anime</h2>
+                    <h5 id="edit-anime-name" class="text-center">$animename</h5>
+                    <p id="anime-search-box" class="mt-3 mb-4">
                         <label for="anime-search">Anime name</label>
                         <input type="hidden" name="animeSlug" id="search-anime-slug" required>
                         <input id="anime-search" placeholder="search..." type="text" value="" required>

@@ -5,6 +5,8 @@ import tk.myanimes.model.AnimeStudioInfo;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
@@ -28,6 +30,10 @@ public class Formatter {
 
     public String formatStudios(Collection<AnimeStudioInfo> list) {
         return list.stream().map(AnimeStudioInfo::getName).collect(Collectors.joining(", "));
+    }
+
+    public String formatDateSystem(Instant instant) {
+        return DateTimeFormatter.ofPattern("yyyy-MM-dd").withZone(ZoneOffset.UTC).format(instant);
     }
 
     public String formatDate(Instant instant) {

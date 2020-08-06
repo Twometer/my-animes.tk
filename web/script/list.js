@@ -55,6 +55,7 @@
         });
     }
 })();
+
 /* Dialog visibility management */
 (function () {
     var ratingBox = $("#rating-box");
@@ -77,6 +78,7 @@
     });
     ratingBox.hide();
 })();
+
 /* Action button fading */
 (function () {
     var items = $(".anime-list-item");
@@ -87,15 +89,43 @@
         $(this).children(".anime-options").addClass('hidden');
     });
 })();
-/* Deletion data loading */
+/* Modal data loading */
 (function () {
     $('#delete-anime-modal').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget)
+        loadAnimeData($(event.relatedTarget), event, "delete");
+    })
+    $('#anime-property-modal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var mode = button.data('mode');
+        $("#property-action").val(mode);
+        if (mode === 'edit') {
+            $("#anime-search-box").hide();
+            $("#edit-anime-name").show();
+            $("#anime-property-header").text("Edit anime");
+            $("#anime-search").removeAttr('required');
+            setWatchProperties(button.data('anime-date'), button.data('anime-state'));
+        } else if (mode === 'add') {
+            $("#anime-search-box").show();
+            $("#edit-anime-name").hide();
+            $("#anime-property-header").text("Add new anime");
+            $("#anime-search").prop('required', true);
+            setWatchProperties('', 'watching');
+        }
+        loadAnimeData(button, event, "edit");
+    })
+
+    function setWatchProperties(date, state) {
+        $("#watchDate").val(date);
+        var watchState = $("#watchState");
+        watchState.val(state)
+        watchState.change();
+    }
+
+    function loadAnimeData(button, event, idPrefix) {
         var animeName = button.data('anime-name')
         var animeId = button.data('anime-id');
 
-        var modal = $(this)
-        modal.find('#delete-anime-name').text(animeName)
-        modal.find('#delete-anime-id').val(animeId)
-    })
+        $('#' + idPrefix + '-anime-name').text(animeName)
+        $('#' + idPrefix + '-anime-id').val(animeId)
+    }
 })();

@@ -74,6 +74,12 @@ public class Database {
         builder.delete();
     }
 
+    public static DbAnimeListItem getFromAnimeList(UserInfo userInfo, long animeId) throws SQLException {
+        var builder = DataAccess.instance().getAnimeListItemDao().queryBuilder();
+        builder.where().eq("userId", userInfo.getId()).and().eq("animeId", animeId);
+        return builder.queryForFirst();
+    }
+
     public static AnimeList getAnimeList(UserInfo userInfo) throws SQLException {
         var animeList = new AnimeList();
 

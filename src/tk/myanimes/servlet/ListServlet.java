@@ -1,6 +1,7 @@
 package tk.myanimes.servlet;
 
 import tk.myanimes.anime.AnimeCache;
+import tk.myanimes.io.DataAccess;
 import tk.myanimes.io.Database;
 import tk.myanimes.model.UserInfo;
 import tk.myanimes.model.WatchState;
@@ -12,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.Instant;
 
 @WebServlet("/list")
 public class ListServlet extends BaseServlet {
@@ -25,7 +27,7 @@ public class ListServlet extends BaseServlet {
 
         var action = req.getParameter("action");
         if (Validator.nullOrEmpty(action)) {
-            resp.sendError(400);
+            resp.sendError(400, "Missing required parameter 'action'");
             return;
         }
 
@@ -35,13 +37,15 @@ public class ListServlet extends BaseServlet {
             handleDeleteRequest(req, resp);
         } else if (action.equalsIgnoreCase("edit")) {
             handleEditRequest(req, resp);
+        } else {
+            resp.sendError(400, "Invalid action");
         }
     }
 
     private void handleDeleteRequest(HttpServletRequest req, HttpServletResponse resp) throws Exception {
         var animeId = req.getParameter("animeId");
         if (Validator.nullOrEmpty(animeId)) {
-            resp.sendError(400);
+            resp.sendError(400, "Missing required parameter 'animeId'");
             return;
         }
         var user = SessionManager.instance().getCurrentUser(req);
@@ -50,13 +54,57 @@ public class ListServlet extends BaseServlet {
     }
 
     private void handleEditRequest(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+        var request = parseListRequest(req);
+        if (request == null) {
+            resp.sendError(400, "Missing required parameters");
+            return;
+        }
+        var user = SessionManager.instance().getCurrentUser(req);
+        var item = Database.getFromAnimeList(user, request.animeId);
 
+        if (item == null) {
+            resp.sendError(400, "No such anime list item");
+            return;
+        }
+        item.setScore(request.rating);
+        item.setWatchDate(request.watchDate.toEpochMilli());
+        item.setWatchState(request.watchState);
+        DataAccess.instance().getAnimeListItemDao().update(item);
+        redirectToList(req, resp, user);
     }
 
     private void handleAddRequest(HttpServletRequest req, HttpServletResponse resp) throws Exception {
-        var animeSlug = req.getParameter("animeSlug");
+        var request = parseListRequest(req);
+        if (request == null) {
+            resp.sendError(400, "Missing required parameters");
+            return;
+        }
+
+        if (Validator.nullOrEmpty(request.animeSlug)) {
+            resp.sendError(400, "Missing required parameter 'animeSlug'");
+            return;
+        }
+
+        var animeInfo = AnimeCache.instance().tryGetFullAnimeInfoBySlug(request.animeSlug);
+        if (animeInfo != null) {
+            var user = SessionManager.instance().getCurrentUser(req);
+            if (!Database.animeListContains(user, animeInfo.getId()))
+                Database.addToAnimeList(user, animeInfo, request.rating, request.watchDate, request.watchState);
+            redirectToList(req, resp, user);
+            return;
+        }
+        resp.sendError(400, "Anime does not exist");
+    }
+
+    private ListRequest parseListRequest(HttpServletRequest req) {
+        var request = new ListRequest();
+        request.animeSlug = req.getParameter("animeSlug");
         var watchDate = req.getParameter("watchDate");
         var watchState = WatchState.parse(req.getParameter("watchState"));
+
+        var animeIdRaw = req.getParameter("animeId");
+        if (!Validator.nullOrEmpty(animeIdRaw))
+            request.animeId = Long.parseLong(animeIdRaw);
 
         var storyRating = parseRating(req, watchState, "rating-story");
         var characterRating = parseRating(req, watchState, "rating-characters");
@@ -66,23 +114,22 @@ public class ListServlet extends BaseServlet {
         if (watchState == WatchState.Queued) // Set date to maximum... not the prettiest solution but well
             watchDate = "9999-12-31";
 
-        if (watchState == null || Validator.nullOrEmpty(animeSlug, watchDate)) {
-            resp.sendError(400);
-            return;
+        if (watchState == null || Validator.nullOrEmpty(watchDate)) {
+            return null;
         }
 
-        var ratingNumeric = average(storyRating, characterRating, artRating, enjoymentRating);
-        var watchDateInstant = Parser.parseDate(watchDate);
+        request.rating = average(storyRating, characterRating, artRating, enjoymentRating);
+        request.watchDate = Parser.parseDate(watchDate);
+        request.watchState = watchState;
+        return request;
+    }
 
-        var animeInfo = AnimeCache.instance().tryGetFullAnimeInfoBySlug(animeSlug);
-        if (animeInfo != null) {
-            var user = SessionManager.instance().getCurrentUser(req);
-            if (!Database.animeListContains(user, animeInfo.getId()))
-                Database.addToAnimeList(user, animeInfo, ratingNumeric, watchDateInstant, watchState);
-            redirectToList(req, resp, user);
-            return;
-        }
-        resp.sendError(400);
+    private static class ListRequest {
+        long animeId;
+        String animeSlug;
+        Instant watchDate;
+        WatchState watchState;
+        float rating;
     }
 
     private void redirectToList(HttpServletRequest req, HttpServletResponse resp, UserInfo user) throws IOException {
