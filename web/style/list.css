@@ -116,11 +116,11 @@
         margin: 4px;
     }
 
-    .anime-list-item, .profile-container, #favorite-anime {
+    .anime-list-item, .profile-container, #favorite-anime, .anime-header {
         text-align: center;
     }
 
-    [class*="col-sm-"] {
+    [class*="col-"] {
         margin-bottom: 10px;
     }
 }

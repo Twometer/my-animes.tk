@@ -44,6 +44,22 @@ public class AnimeInfo {
 
     private int totalLength;
 
+    public String getAlternateTitle() {
+        if (canonicalTitle.equals(getEnglishTitle())) {
+            if (titles.containsKey("en_jp"))
+                return titles.get("en_jp");
+            return titles.values().iterator().next();
+        } else return canonicalTitle;
+    }
+
+    public String getJapaneseTitle() {
+        if (titles.containsKey("jp"))
+            return titles.get("jp");
+        for (var entry : titles.entrySet())
+            if (entry.getKey().contains("jp"))
+                return entry.getValue();
+        return getCanonicalTitle();
+    }
 
     public String getEnglishTitle() {
         if (titles.size() == 0)

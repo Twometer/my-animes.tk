@@ -70,39 +70,48 @@
 
 <div class="main-content pt-5">
 
-    <div class="row align-items-center">
-        <div class="col-auto">
-            <img src="${anime.coverPicture}" width=200>
+    <div class="row align-items-center anime-header">
+        <div class="col-lg-auto mr-4-lg">
+            <img class="shadow" src="${anime.coverPicture}" width=200>
         </div>
-        <div class="col ml-5">
+        <div class="col-lg ml-5-lg">
             <h1>${anime.englishTitle}</h1>
+            <h4>${anime.japaneseTitle}</h4>
             <p class="mt-3">
                 ${anime.synopsis}
             </p>
         </div>
     </div>
 
-    <h2 class="mt-4">About</h2>
+    <h2 class="mt-5">About</h2>
 
-    <p>Start date: ${formatter.formatDateAbsolute(anime.startDate)}</p>
-    <p>End date: ${formatter.formatDateAbsolute(anime.endDate)}</p>
-    <p>Studios: ${formatter.formatStudios(anime.animeStudios)}</p>
-    <p>Status: ${anime.status}</p>
-    <p>Type: ${anime.showType}</p>
-    <p>Categories: ${formatter.formatStrings(anime.categories)}</p>
-    <p>Age rating: ${anime.ageRating}</p>
-    <p>NSFW: ${anime.nsfw}</p>
-    <p>Episodes: ${anime.episodeCount}</p>
-    <p>Episode length: ${anime.episodeLength} minutes</p>
-    <p>Total length: ${formatter.formatDuration(anime.totalLength)}</p>
+    <div class="row">
+        <div class="col-md">
+            <p>Alternative title: ${anime.alternateTitle}</p>
+            <p>Start date: ${formatter.formatDateAbsolute(anime.startDate)}</p>
+            <p>End date: ${formatter.formatDateAbsolute(anime.endDate)}</p>
+            <p>Studios: ${formatter.formatStudios(anime.animeStudios)}</p>
+            <p>Status: ${anime.status}</p>
+            <p>Type: ${anime.showType}</p>
+        </div>
+        <div class="col-md">
+            <p>Categories: ${formatter.formatStrings(anime.categories)}</p>
+            <p>Age rating: ${anime.ageRating}</p>
+            <p>NSFW: ${anime.nsfw}</p>
+            <p>Episodes: ${anime.episodeCount}</p>
+            <p>Episode length: ${anime.episodeLength} minutes</p>
+            <p>Total length: ${formatter.formatDuration(anime.totalLength)}</p>
+        </div>
+    </div>
 
-    <h2>Trailer</h2>
-    <iframe width="700" height="393" src="https://www.youtube.com/embed/${anime.youtubeVideoId}" style="margin: auto"
-            frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen></iframe>
+    <h2 class="mt-5">Trailer</h2>
+    <div class="embed-responsive embed-responsive-16by9">
+        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/${anime.youtubeVideoId}"
+                allowfullscreen allow="encrypted-media"></iframe>
+    </div>
 
-    <h2>Episodes</h2>
-    <div class="alert">Work in progress</div>
+    <h2 class="mt-5">Episodes</h2>
+    <div class="alert alert-light">Work in progress</div>
 </div>
 
 </body>
