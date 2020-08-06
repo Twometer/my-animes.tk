@@ -181,8 +181,8 @@ input {
 }
 
 @media (max-width: 340px) {
-    input {
-        width: 100%;
+    input, select {
+        width: 270px !important;
     }
 }
 
