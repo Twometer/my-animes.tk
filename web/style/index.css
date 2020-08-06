@@ -34,6 +34,45 @@ body {
     text-align: center;
 }
 
+@media (max-width: 1210px) {
+    .backdrop-overlay {
+        width: 60vw;
+        height: 60vh;
+    }
+}
+
+@media (max-width: 820px) {
+    .backdrop-overlay {
+        width: 80vw;
+        height: 70vh;
+    }
+}
+
+@media (max-width: 576px) {
+    .backdrop-overlay {
+        width: 85vw;
+        height: 85vh;
+    }
+}
+
+@media (max-width: 400px) {
+    .backdrop-overlay {
+        width: 100vw;
+        height: 100vh;
+        border-radius: 0;
+    }
+}
+
+@media (max-width: 340px) {
+    h1 {
+        font-size: 2rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+}
+
 a.container-link {
     border: none !important;
     transition: none !important;
@@ -42,4 +81,8 @@ a.container-link {
 a.container-link:hover {
     border: none !important;
     transition: none !important;
+}
+
+button {
+    width: 100px;
 }

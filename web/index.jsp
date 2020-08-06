@@ -27,7 +27,9 @@
         <a class="container-link" href="${pageContext.request.contextPath}/register">
             <button class="button primary mr-4">Join</button>
         </a>
-        <a href="#">Explore</a>
+        <a class="container-link" href="${pageContext.request.contextPath}/login">
+            <button class="button primary">Log in</button>
+        </a>
     </div>
 </div>
 
