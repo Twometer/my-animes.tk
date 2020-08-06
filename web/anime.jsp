@@ -89,20 +89,60 @@
 
     <div class="row">
         <div class="col-md">
-            <p><b>Alternative title</b>: ${anime.alternateTitle}</p>
-            <p><b>Start date</b>: ${formatter.formatDateAbsolute(anime.startDate)}</p>
-            <p><b>End date</b>: ${formatter.formatDateAbsolute(anime.endDate)}</p>
-            <p><b>Studios</b>: ${formatter.formatStudios(anime.animeStudios)}</p>
-            <p><b>Status</b>: ${anime.status}</p>
-            <p><b>Type</b>: ${formatter.formatShowType(anime.showType)}</p>
+            <table>
+                <tr>
+                    <th>Alternative title:</th>
+                    <td>${anime.alternateTitle}</td>
+                </tr>
+                <tr>
+                    <th>Status:</th>
+                    <td>${anime.status}</td>
+                </tr>
+                <tr>
+                    <th>Type:</th>
+                    <td>${formatter.formatShowType(anime.showType)}</td>
+                </tr>
+                <tr>
+                    <th>Studios:</th>
+                    <td>${formatter.formatStudios(anime.animeStudios)}</td>
+                </tr>
+                <tr>
+                    <th>Start date:</th>
+                    <td>${formatter.formatDateAbsolute(anime.startDate)}</td>
+                </tr>
+                <tr>
+                    <th>End date:</th>
+                    <td>${formatter.formatDateAbsolute(anime.endDate)}</td>
+                </tr>
+            </table>
         </div>
         <div class="col-md">
-            <p><b>Categories</b>: ${formatter.formatStrings(anime.categories)}</p>
-            <p><b>Age rating</b>: ${anime.ageRating}</p>
-            <p><b>NSFW</b>: ${formatter.formatBoolean(anime.nsfw)}</p>
-            <p><b>Episodes</b>: ${anime.episodeCount}</p>
-            <p><b>Episode length</b>: ${anime.episodeLength} minutes</p>
-            <p><b>Total length</b>: ${formatter.formatDuration(anime.totalLength)}</p>
+            <table>
+                <tr>
+                    <th>Categories:</th>
+                    <td>${formatter.formatStrings(anime.categories)}</td>
+                </tr>
+                <tr>
+                    <th>Episodes:</th>
+                    <td>${anime.episodeCount}</td>
+                </tr>
+                <tr>
+                    <th>Episode length:</th>
+                    <td>${anime.episodeLength} minutes</td>
+                </tr>
+                <tr>
+                    <th>Total length:</th>
+                    <td>${formatter.formatDuration(anime.totalLength)}</td>
+                </tr>
+                <tr>
+                    <th>Age rating:</th>
+                    <td>${anime.ageRating}</td>
+                </tr>
+                <tr>
+                    <th>NSFW:</th>
+                    <td>${formatter.formatBoolean(anime.nsfw)}</td>
+                </tr>
+            </table>
         </div>
     </div>
 

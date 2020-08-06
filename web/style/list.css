@@ -135,3 +135,17 @@
 b {
     font-weight: bold;
 }
+
+table {
+    width: 100%;
+}
+
+th, td {
+    padding-bottom: 1rem;
+    align-content: center;
+}
+
+td {
+    text-align: left;
+    padding-left: 10px;
+}
