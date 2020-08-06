@@ -1,7 +1,7 @@
 <component name="ArtifactManager">
-  <artifact type="exploded-war" name="myanimes">
+  <artifact type="war" name="myanimes">
     <output-path>$PROJECT_DIR$/out/artifacts/myanimes</output-path>
-    <root id="root">
+    <root id="archive" name="myanimes.war">
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
           <element id="module-output" name="my-animes.tk" />
