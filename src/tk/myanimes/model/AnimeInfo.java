@@ -53,12 +53,12 @@ public class AnimeInfo {
     }
 
     public String getJapaneseTitle() {
-        if (titles.containsKey("jp"))
-            return titles.get("jp");
+        if (titles.containsKey("ja_jp"))
+            return titles.get("ja_jp");
         for (var entry : titles.entrySet())
-            if (entry.getKey().contains("jp"))
+            if (entry.getKey().endsWith("jp"))
                 return entry.getValue();
-        return getCanonicalTitle();
+        return canonicalTitle;
     }
 
     public String getEnglishTitle() {

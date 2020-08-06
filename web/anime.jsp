@@ -14,7 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <title>myanimes</title>
+    <title>${anime.englishTitle} | myanimes</title>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
           integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
@@ -84,34 +84,34 @@
         </div>
     </div>
 
-    <h2 class="mt-5">About</h2>
+    <h2 class="mt-5 mb-2">Info</h2>
 
     <div class="row">
         <div class="col-md">
-            <p>Alternative title: ${anime.alternateTitle}</p>
-            <p>Start date: ${formatter.formatDateAbsolute(anime.startDate)}</p>
-            <p>End date: ${formatter.formatDateAbsolute(anime.endDate)}</p>
-            <p>Studios: ${formatter.formatStudios(anime.animeStudios)}</p>
-            <p>Status: ${anime.status}</p>
-            <p>Type: ${formatter.formatShowType(anime.showType)}</p>
+            <p><b>Alternative title</b>: ${anime.alternateTitle}</p>
+            <p><b>Start date</b>: ${formatter.formatDateAbsolute(anime.startDate)}</p>
+            <p><b>End date</b>: ${formatter.formatDateAbsolute(anime.endDate)}</p>
+            <p><b>Studios</b>: ${formatter.formatStudios(anime.animeStudios)}</p>
+            <p><b>Status</b>: ${anime.status}</p>
+            <p><b>Type</b>: ${formatter.formatShowType(anime.showType)}</p>
         </div>
         <div class="col-md">
-            <p>Categories: ${formatter.formatStrings(anime.categories)}</p>
-            <p>Age rating: ${anime.ageRating}</p>
-            <p>NSFW: ${formatter.formatBoolean(anime.nsfw)}</p>
-            <p>Episodes: ${anime.episodeCount}</p>
-            <p>Episode length: ${anime.episodeLength} minutes</p>
-            <p>Total length: ${formatter.formatDuration(anime.totalLength)}</p>
+            <p><b>Categories</b>: ${formatter.formatStrings(anime.categories)}</p>
+            <p><b>Age rating</b>: ${anime.ageRating}</p>
+            <p><b>NSFW</b>: ${formatter.formatBoolean(anime.nsfw)}</p>
+            <p><b>Episodes</b>: ${anime.episodeCount}</p>
+            <p><b>Episode length</b>: ${anime.episodeLength} minutes</p>
+            <p><b>Total length</b>: ${formatter.formatDuration(anime.totalLength)}</p>
         </div>
     </div>
 
-    <h2 class="mt-5">Trailer</h2>
+    <h2 class="mt-5 mb-2">Trailer</h2>
     <div class="embed-responsive embed-responsive-16by9">
         <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/${anime.youtubeVideoId}"
                 allowfullscreen allow="encrypted-media"></iframe>
     </div>
 
-    <h2 class="mt-5">Episodes</h2>
+    <h2 class="mt-5 mb-2">Episodes</h2>
     <div class="alert alert-light">Work in progress</div>
 </div>
 
