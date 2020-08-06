@@ -173,6 +173,7 @@ body {
 /* Input styles */
 input {
     border: none;
+    background: transparent;
     border-bottom: 1px solid #B8B8B8;
     width: 300px;
     transition-duration: .5s;
@@ -183,6 +184,19 @@ input:active, input:focus {
     outline: none;
     border-bottom: 1px solid #707070;
     transition-duration: .5s;
+}
+
+input.light {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+    color: white;
+}
+
+input.light::placeholder {
+    color: rgba(255, 255, 255, 0.45);
+}
+
+input.light:active, input.light:focus {
+    border-bottom: 1px solid white;
 }
 
 /* Link styles */
@@ -233,10 +247,17 @@ a.link-muted:hover {
     width: 100% !important;
     margin: 0 !important;
     padding: 5px;
+    transition-duration: .3s;
+}
+
+.search-result-item.large {
+    padding: 10px 10px;
+    margin: 3px 0 !important;
 }
 
 .search-result-item:hover {
     background: #EFEFEF;
+    transition-duration: .3s;
 }
 
 label {

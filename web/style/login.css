@@ -53,10 +53,6 @@ input {
     backdrop-filter: blur(32px);
 }
 
-input {
-    background: transparent;
-}
-
 @media (min-width: 576px) {
     .backdrop-overlay {
         width: 60vw;

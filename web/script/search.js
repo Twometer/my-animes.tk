@@ -2,7 +2,7 @@
 
 (function () {
 
-    const endpoint = "/myanimes/search?q=";
+    const endpoint = "/myanimes/search?raw=true&q=";
 
     var searchBox = $("#anime-search");
     var resultBox = $("#anime-search-results");
@@ -36,8 +36,8 @@
 
     window.searchItemClicked = function (i) {
         var element = $(i);
-        var title = element.attr('title');
-        var slug = element.attr('slug');
+        var title = element.data('title');
+        var slug = element.data('slug');
         $("#search-anime-slug").val(slug);
         $("#anime-search").val(title);
     }

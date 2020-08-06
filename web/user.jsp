@@ -36,12 +36,13 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto ml-lg-5">
+        <ul class="navbar-nav ml-lg-5">
             <li class="nav-item active"><a class="nav-link" href="${pageContext.request.contextPath}/dashboard">Dashboard</a>
             </li>
-            <li class="nav-item active"><a class="nav-link" href="#">Animes</a></li>
-            <li class="nav-item active"><a class="nav-link" href="#">Characters</a></li>
         </ul>
+        <form class="form-inline ml-lg-5" action="${pageContext.request.contextPath}/search" autocomplete="off">
+            <input type="search" class="light" name="q" placeholder="search...">
+        </form>
         <ul class="navbar-nav ml-auto">
             <c:choose>
                 <c:when test="${!isAuthenticated}">

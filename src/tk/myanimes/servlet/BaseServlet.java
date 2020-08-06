@@ -20,7 +20,8 @@ public abstract class BaseServlet extends HttpServlet {
         if (!tryAuthenticate(req, resp)) return;
         applyEncoding(req, resp);
         try {
-            req.setAttribute("currentPath", URLEncoder.encode(req.getRequestURI(), StandardCharsets.UTF_8));
+            var fullPath = String.format("%s?%s", req.getRequestURI(), req.getQueryString());
+            req.setAttribute("currentPath", URLEncoder.encode(fullPath, StandardCharsets.UTF_8));
             httpGet(req, resp);
         } catch (Exception e) {
             throw new ServletException(e);
