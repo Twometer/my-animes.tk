@@ -143,7 +143,7 @@
                                                 src="${pageContext.request.contextPath}/icon/star.svg"> ${item.score != -1 ? formatter.formatScore(item.score) : "unrated"}
                         </div>
                         <div class="col-3"><img alt="Watched" class="icon"
-                                                src="${pageContext.request.contextPath}/icon/calendar.svg"> ${formatter.formatDate(item.watchDate)}
+                                                src="${pageContext.request.contextPath}/icon/calendar.svg"> ${formatter.formatDateRelative(item.watchDate)}
                         </div>
                         <div class="col-3"><img alt="Episodes" class="icon"
                                                 src="${pageContext.request.contextPath}/icon/tv.svg"> ${formatter.formatAnimeLength(item.anime)}

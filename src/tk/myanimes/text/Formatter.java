@@ -36,7 +36,11 @@ public class Formatter {
         return DateTimeFormatter.ofPattern("yyyy-MM-dd").withZone(ZoneOffset.UTC).format(instant);
     }
 
-    public String formatDate(Instant instant) {
+    public String formatDateAbsolute(Instant instant) {
+        return DateTimeFormatter.ofPattern("dd MMM yyyy").withZone(ZoneOffset.UTC).format(instant);
+    }
+
+    public String formatDateRelative(Instant instant) {
         var duration = Duration.between(instant, Instant.now()).toSeconds();
 
         if (duration < 0) {

@@ -84,16 +84,16 @@
 
     <h2 class="mt-4">About</h2>
 
-    <p>Start date: ${anime.startDate}</p>
-    <p>End date: ${anime.endDate}</p>
+    <p>Start date: ${formatter.formatDateAbsolute(anime.startDate)}</p>
+    <p>End date: ${formatter.formatDateAbsolute(anime.endDate)}</p>
     <p>Studios: ${formatter.formatStudios(anime.animeStudios)}</p>
     <p>Status: ${anime.status}</p>
     <p>Type: ${anime.showType}</p>
-    <p>Categories: ${formatter.formatStrings(anime.categories)}}</p>
+    <p>Categories: ${formatter.formatStrings(anime.categories)}</p>
     <p>Age rating: ${anime.ageRating}</p>
     <p>NSFW: ${anime.nsfw}</p>
     <p>Episodes: ${anime.episodeCount}</p>
-    <p>Episode length: ${anime.episodeLength}</p>
+    <p>Episode length: ${anime.episodeLength} minutes</p>
     <p>Total length: ${formatter.formatDuration(anime.totalLength)}</p>
 
     <h2>Trailer</h2>
