@@ -15,19 +15,19 @@ public class UserServlet extends BaseServlet {
     protected void httpGet(HttpServletRequest req, HttpServletResponse resp) throws Exception {
         var path = req.getPathInfo();
         if (path == null || path.isEmpty()) {
-            resp.sendError(404);
+            resp.sendError(404, "No username specified");
             return;
         }
 
         var username = path.substring(1);
         if (!Validator.isValidUsername(username)) {
-            resp.sendError(404);
+            resp.sendError(404, "Not a valid username");
             return;
         }
 
         var user = Database.findUserInfo(username);
         if (user == null) {
-            resp.sendError(404);
+            resp.sendError(404, "User does not exist");
             return;
         }
 

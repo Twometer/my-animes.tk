@@ -13,7 +13,7 @@ public class SearchServlet extends BaseServlet {
     protected void httpGet(HttpServletRequest req, HttpServletResponse resp) throws Exception {
         var query = req.getParameter("q");
         if (query == null)
-            resp.sendError(400);
+            resp.sendError(400, "Missing parameter 'q'");
         else {
             req.setAttribute("results", AnimeProvider.instance().searchAnime(query));
             req.getRequestDispatcher("/search.jsp").forward(req, resp);

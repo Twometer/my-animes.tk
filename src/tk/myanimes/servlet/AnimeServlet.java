@@ -15,7 +15,7 @@ public class AnimeServlet extends BaseServlet {
         var path = req.getPathInfo().substring(1);
         var anime = AnimeCache.instance().tryGetFullAnimeInfoBySlug(path);
         if (anime == null)
-            resp.getWriter().println("Not a valid slug");
+            resp.sendError(404, "Slug does not exist");
         else {
             loadLoggedInUserInfo(req);
             req.setAttribute("anime", anime);
