@@ -180,6 +180,12 @@ input {
     padding-bottom: 4px;
 }
 
+@media (max-width: 340px) {
+    input {
+        width: 100%;
+    }
+}
+
 input:active, input:focus {
     outline: none;
     border-bottom: 1px solid #707070;
