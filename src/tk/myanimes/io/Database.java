@@ -160,7 +160,7 @@ public class Database {
         dbAnime.setAgeRating(anime.getAgeRating());
         dbAnime.setNsfw(anime.isNsfw());
         dbAnime.setStartDate(anime.getStartDate().toEpochMilli());
-        dbAnime.setEndDate(anime.getEndDate().toEpochMilli());
+        dbAnime.setEndDate(anime.getEndDate() == null ? anime.getStartDate().toEpochMilli() : anime.getEndDate().toEpochMilli());
         dbAnime.setYoutubeVideoId(anime.getYoutubeVideoId());
         dbAnime.setStatus(anime.getStatus());
         dbAnime.setShowType(anime.getShowType());
