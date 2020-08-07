@@ -3,6 +3,7 @@ package tk.myanimes.servlet;
 import tk.myanimes.anime.AnimeCache;
 import tk.myanimes.io.DataAccess;
 import tk.myanimes.io.Database;
+import tk.myanimes.io.RedirectDispatcher;
 import tk.myanimes.model.UserInfo;
 import tk.myanimes.model.WatchState;
 import tk.myanimes.session.SessionManager;
@@ -133,7 +134,7 @@ public class ListServlet extends BaseServlet {
     }
 
     private void redirectToList(HttpServletRequest req, HttpServletResponse resp, UserInfo user) throws IOException {
-        resp.sendRedirect(req.getContextPath() + "/user/" + user.getName());
+        RedirectDispatcher.toRelative(resp, "/user/" + user.getName());
     }
 
     private long parseRating(HttpServletRequest request, WatchState watchState, String name) {

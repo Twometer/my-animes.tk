@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<jsp:useBean id="rootPath" scope="request" type="java.lang.String"/>
+<jsp:useBean id="basePath" scope="request" type="java.lang.String"/>
 <jsp:useBean id="formatter" scope="request" type="tk.myanimes.text.Formatter"/>
 <jsp:useBean id="query" scope="request" type="java.lang.String"/>
 <jsp:useBean id="results" scope="request" type="java.util.List<tk.myanimes.anime.KitsuAnimeInfo>"/>
@@ -22,8 +22,8 @@
           integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Unica+One&family=Open+Sans:wght@300&family=Exo:wght@300&display=swap"
           rel="stylesheet">
-    <link href="${rootPath}/style/main.css" rel="stylesheet">
-    <link href="${rootPath}/style/list.css" rel="stylesheet">
+    <link href="${basePath}/style/main.css" rel="stylesheet">
+    <link href="${basePath}/style/list.css" rel="stylesheet">
 </head>
 
 <body>
@@ -36,17 +36,17 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-lg-5">
-            <li class="nav-item active"><a class="nav-link" href="${rootPath}/dashboard">Dashboard</a>
+            <li class="nav-item active"><a class="nav-link" href="${basePath}/dashboard">Dashboard</a>
             </li>
         </ul>
-        <form class="form-inline ml-lg-5" action="${rootPath}/search" autocomplete="off">
+        <form class="form-inline ml-lg-5" action="${basePath}/search" autocomplete="off">
             <input type="search" class="light" name="q" placeholder="search...">
         </form>
         <ul class="navbar-nav ml-auto">
             <c:choose>
                 <c:when test="${!isAuthenticated}">
                     <li class="nav-item active"><a class="nav-link"
-                                                   href="${rootPath}/login?src=${currentPath}">Log
+                                                   href="${basePath}/login?src=${currentPath}">Log
                         in</a>
                     </li>
                 </c:when>
@@ -58,12 +58,12 @@
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item"
-                               href="${rootPath}/profile?src=${currentPath}">My Profile</a>
+                               href="${basePath}/profile?src=${currentPath}">My Profile</a>
                             <a class="dropdown-item"
-                               href="${rootPath}/user/${authenticatedUser.name}">My List</a>
+                               href="${basePath}/user/${authenticatedUser.name}">My List</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item"
-                               href="${rootPath}/login?logoff&src=${currentPath}">Log off</a>
+                               href="${basePath}/login?logoff&src=${currentPath}">Log off</a>
                         </div>
                     </li>
                 </c:otherwise>
@@ -75,7 +75,7 @@
 <div class="main-content pt-5">
     <h1 class="mb-5">Search results for <i>${query}</i></h1>
     <c:forEach var="result" items="${results}">
-        <a href="${rootPath}/anime/${result.animeInfo.slug}" class="link-muted">
+        <a href="${basePath}/anime/${result.animeInfo.slug}" class="link-muted">
             <div class="row align-items-center search-result-item large">
                 <div class="col-sm-auto">
                     <img src="${result.animeInfo.thumbnail}" width=80>

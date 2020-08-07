@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<jsp:useBean id="rootPath" scope="request" type="java.lang.String"/>
+<jsp:useBean id="basePath" scope="request" type="java.lang.String"/>
 <jsp:useBean id="showError" scope="request" type="java.lang.Boolean"/>
 <jsp:useBean id="errorMessage" scope="request" type="java.lang.String"/>
 
@@ -76,6 +76,7 @@
 <script crossorigin="anonymous"
         integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
         src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script>window._basePath = '${basePath}';</script>
 <script src="script/search.js"></script>
 
 </html>

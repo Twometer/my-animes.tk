@@ -3,6 +3,7 @@ package tk.myanimes.servlet;
 import tk.myanimes.crypto.Credential;
 import tk.myanimes.crypto.Hash;
 import tk.myanimes.io.Database;
+import tk.myanimes.io.RedirectDispatcher;
 import tk.myanimes.model.UserInfo;
 import tk.myanimes.session.SessionManager;
 import tk.myanimes.text.Validator;
@@ -19,12 +20,12 @@ public class LoginServlet extends BaseServlet {
     protected void httpGet(HttpServletRequest req, HttpServletResponse resp) throws Exception {
         if (req.getParameterMap().containsKey("logoff")) {
             SessionManager.instance().unregisterSession(req);
-            RedirectDispatcher.dispatch(req, resp);
+            RedirectDispatcher.toReturnPage(req, resp);
             return;
         }
 
         if (SessionManager.instance().isAuthenticated(req)) {
-            RedirectDispatcher.dispatch(req, resp);
+            RedirectDispatcher.toReturnPage(req, resp);
             return;
         }
 
@@ -48,7 +49,7 @@ public class LoginServlet extends BaseServlet {
             req.getRequestDispatcher("/login.jsp").forward(req, resp);
         } else {
             SessionManager.instance().registerSession(req, user);
-            RedirectDispatcher.dispatch(req, resp, user);
+            RedirectDispatcher.toReturnPage(req, resp, user);
         }
     }
 

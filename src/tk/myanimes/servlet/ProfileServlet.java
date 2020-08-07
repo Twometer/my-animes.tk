@@ -3,6 +3,7 @@ package tk.myanimes.servlet;
 import tk.myanimes.anime.AnimeCache;
 import tk.myanimes.io.DataAccess;
 import tk.myanimes.io.Database;
+import tk.myanimes.io.RedirectDispatcher;
 import tk.myanimes.session.SessionManager;
 import tk.myanimes.text.Validator;
 
@@ -60,7 +61,7 @@ public class ProfileServlet extends BaseServlet {
         } else log.info("Invalid favorite anime slug!");
 
         Database.storeUserInfo(user);
-        RedirectDispatcher.dispatch(req, resp, user);
+        RedirectDispatcher.toReturnPage(req, resp, user);
     }
 
     private void sendResponse(HttpServletRequest req, HttpServletResponse resp, String error) throws SQLException, ServletException, IOException {

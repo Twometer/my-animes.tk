@@ -4,6 +4,7 @@ import tk.myanimes.crypto.Credential;
 import tk.myanimes.crypto.Hash;
 import tk.myanimes.io.DataAccess;
 import tk.myanimes.io.Database;
+import tk.myanimes.io.RedirectDispatcher;
 import tk.myanimes.model.UserInfo;
 import tk.myanimes.session.SessionManager;
 import tk.myanimes.text.Validator;
@@ -20,7 +21,7 @@ public class RegisterServlet extends BaseServlet {
     @Override
     protected void httpGet(HttpServletRequest req, HttpServletResponse resp) throws Exception {
         if (SessionManager.instance().isAuthenticated(req)) {
-            RedirectDispatcher.dispatch(req, resp);
+            RedirectDispatcher.toReturnPage(req, resp);
             return;
         }
 
@@ -71,7 +72,7 @@ public class RegisterServlet extends BaseServlet {
         Database.storeUserInfo(user);
 
         SessionManager.instance().registerSession(req, user);
-        RedirectDispatcher.dispatch(req, resp, user);
+        RedirectDispatcher.toReturnPage(req, resp, user);
     }
 
     private void sendResponse(HttpServletRequest req, HttpServletResponse resp, String error) throws ServletException, IOException {

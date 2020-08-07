@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<jsp:useBean id="rootPath" scope="request" type="java.lang.String"/>
+<jsp:useBean id="basePath" scope="request" type="java.lang.String"/>
 <jsp:useBean id="showError" scope="request" type="java.lang.Boolean"/>
 <jsp:useBean id="errorMessage" scope="request" type="java.lang.String"/>
 
@@ -46,7 +46,7 @@
         </c:if>
         <div class="submit-ui">
             <button type="submit" class="button primary mr-4">Register</button>
-            <a href="${rootPath}/login">back to login</a>
+            <a href="${basePath}/login">back to login</a>
         </div>
     </form>
 </div>

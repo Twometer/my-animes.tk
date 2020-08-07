@@ -2,7 +2,7 @@
 
 (function () {
 
-    const endpoint = "/myanimes/search?raw=true&q=";
+    const endpoint = _basePath + "/search?raw=true&q=";
 
     var searchBox = $("#anime-search");
     var resultBox = $("#anime-search-results");

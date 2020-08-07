@@ -1,6 +1,8 @@
 package tk.myanimes.servlet;
 
 import tk.myanimes.io.AppConfig;
+import tk.myanimes.io.PathHelper;
+import tk.myanimes.io.RedirectDispatcher;
 import tk.myanimes.model.UserInfo;
 import tk.myanimes.session.SessionManager;
 
@@ -17,7 +19,8 @@ import java.sql.SQLException;
 public abstract class BaseServlet extends HttpServlet {
 
     private String getFullPath(HttpServletRequest req) {
-        var fullPath = req.getRequestURI();
+        var fullPath = PathHelper.joinPath(AppConfig.instance().getBasePath(), req.getServletPath(), req.getPathInfo());
+        System.out.println(fullPath);
         if (req.getQueryString() != null)
             fullPath += "?" + req.getQueryString();
         return fullPath;
@@ -29,7 +32,7 @@ public abstract class BaseServlet extends HttpServlet {
         applyEncoding(req, resp);
         try {
             req.setAttribute("currentPath", URLEncoder.encode(getFullPath(req), StandardCharsets.UTF_8));
-            req.setAttribute("rootPath", AppConfig.instance().getRootPath());
+            req.setAttribute("basePath", AppConfig.instance().getBasePath());
             httpGet(req, resp);
         } catch (Exception e) {
             throw new ServletException(e);
@@ -41,7 +44,7 @@ public abstract class BaseServlet extends HttpServlet {
         if (!tryAuthenticate(req, resp)) return;
         applyEncoding(req, resp);
         try {
-            req.setAttribute("rootPath", AppConfig.instance().getRootPath());
+            req.setAttribute("basePath", AppConfig.instance().getBasePath());
             httpPost(req, resp);
         } catch (Exception e) {
             throw new ServletException(e);
@@ -85,7 +88,7 @@ public abstract class BaseServlet extends HttpServlet {
             return true;
         if (SessionManager.instance().isAuthenticated(req))
             return true;
-        resp.sendRedirect(AppConfig.instance().getRootPath() + "/login");
+        RedirectDispatcher.toRelative(resp, "/login");
         return false;
     }
 

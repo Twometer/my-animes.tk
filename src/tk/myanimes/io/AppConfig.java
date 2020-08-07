@@ -7,26 +7,37 @@ import java.util.Properties;
 public class AppConfig {
 
     private static final AppConfig instance = new AppConfig();
-    private static final String DEFAULT_ROOT_PATH = "/myanimes";
 
-    private final String rootPath;
+    private static final String DEFAULT_BASE_URL = "";
+    private static final String DEFAULT_BASE_PATH = "/myanimes";
+
+    private final String baseUrl;
+
+    private final String basePath;
 
     public AppConfig() {
         Properties properties = new Properties();
         try {
             properties.load(new FileReader(DataAccess.instance().getContext().getFile("myanimes.properties")));
         } catch (IOException e) {
-            rootPath = DEFAULT_ROOT_PATH;
+            basePath = DEFAULT_BASE_PATH;
+            baseUrl = DEFAULT_BASE_URL;
             return;
         }
-        rootPath = properties.getProperty("rootPath", DEFAULT_ROOT_PATH);
+        var basePath = properties.getProperty("basePath", DEFAULT_BASE_PATH);
+        this.basePath = basePath.equals("/") ? "" : basePath;
+        this.baseUrl = properties.getProperty("baseUrl", DEFAULT_BASE_URL);
     }
 
     public static AppConfig instance() {
         return instance;
     }
 
-    public String getRootPath() {
-        return rootPath;
+    public String getBaseUrl() {
+        return baseUrl;
+    }
+
+    public String getBasePath() {
+        return basePath;
     }
 }

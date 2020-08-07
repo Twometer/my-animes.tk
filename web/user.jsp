@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<jsp:useBean id="rootPath" scope="request" type="java.lang.String"/>
+<jsp:useBean id="basePath" scope="request" type="java.lang.String"/>
 <jsp:useBean id="currentPath" scope="request" type="java.lang.String"/>
 <jsp:useBean id="animes" scope="request" type="tk.myanimes.model.AnimeList"/>
 <jsp:useBean id="user" scope="request" type="tk.myanimes.model.UserInfo"/>
@@ -24,8 +24,8 @@
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Unica+One&family=Open+Sans:wght@300&family=Exo:wght@300&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href="${rootPath}/style/main.css" rel="stylesheet">
-    <link href="${rootPath}/style/list.css" rel="stylesheet">
+    <link href="${basePath}/style/main.css" rel="stylesheet">
+    <link href="${basePath}/style/list.css" rel="stylesheet">
 </head>
 
 <body>
@@ -38,17 +38,17 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-lg-5">
-            <li class="nav-item active"><a class="nav-link" href="${rootPath}/dashboard">Dashboard</a>
+            <li class="nav-item active"><a class="nav-link" href="${basePath}/dashboard">Dashboard</a>
             </li>
         </ul>
-        <form class="form-inline ml-lg-5" action="${rootPath}/search" autocomplete="off">
+        <form class="form-inline ml-lg-5" action="${basePath}/search" autocomplete="off">
             <input type="search" class="light" name="q" placeholder="search...">
         </form>
         <ul class="navbar-nav ml-auto">
             <c:choose>
                 <c:when test="${!isAuthenticated}">
                     <li class="nav-item active"><a class="nav-link"
-                                                   href="${rootPath}/login?src=${currentPath}">Log
+                                                   href="${basePath}/login?src=${currentPath}">Log
                         in</a>
                     </li>
                 </c:when>
@@ -60,12 +60,12 @@
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item"
-                               href="${rootPath}/profile?src=${currentPath}">My Profile</a>
+                               href="${basePath}/profile?src=${currentPath}">My Profile</a>
                             <a class="dropdown-item"
-                               href="${rootPath}/user/${authenticatedUser.name}">My List</a>
+                               href="${basePath}/user/${authenticatedUser.name}">My List</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item"
-                               href="${rootPath}/login?logoff&src=${currentPath}">Log off</a>
+                               href="${basePath}/login?logoff&src=${currentPath}">Log off</a>
                         </div>
                     </li>
                 </c:otherwise>
@@ -89,13 +89,13 @@
         </div>
         <div class="col-sm-auto">
             <p><img alt="Animes" class="icon"
-                    src="${rootPath}/icon/film.svg"> ${formatter.formatPlurals(animes.size(), "anime", "animes")}
+                    src="${basePath}/icon/film.svg"> ${formatter.formatPlurals(animes.size(), "anime", "animes")}
             </p>
             <p><img alt="Watchtime" class="icon"
-                    src="${rootPath}/icon/clock.svg"> ${formatter.formatDuration(animes.getTotalDuration())}
+                    src="${basePath}/icon/clock.svg"> ${formatter.formatDuration(animes.getTotalDuration())}
             </p>
             <p><img alt="Location" class="icon"
-                    src="${rootPath}/icon/map-pin.svg"> ${user.location}</p>
+                    src="${basePath}/icon/map-pin.svg"> ${user.location}</p>
         </div>
     </div>
     <c:if test="${user.favoriteAnime != null}">
@@ -106,7 +106,7 @@
             </div>
             <div class="ml-2 col-sm">
                 <h4 class="mb-3"><a class="link-muted"
-                                    href="${rootPath}/anime/${user.favoriteAnime.slug}">${user.favoriteAnime.englishTitle}</a>
+                                    href="${basePath}/anime/${user.favoriteAnime.slug}">${user.favoriteAnime.englishTitle}</a>
                 </h4>
                 <h4 class="mt-3" style="opacity: 0.35">my favorite anime</h4>
             </div>
@@ -139,20 +139,20 @@
                 </div>
                 <div class="ml-2 col-sm">
                     <h3><i class="dot ${item.watchState.toString()}"></i> <a class="link-muted"
-                                                                             href="${rootPath}/anime/${item.anime.slug}">${item.anime.englishTitle}</a>
+                                                                             href="${basePath}/anime/${item.anime.slug}">${item.anime.englishTitle}</a>
                     </h3>
                     <div class="row mt-3">
                         <div class="col-sm-2"><img alt="Rating" class="icon"
-                                                   src="${rootPath}/icon/star.svg"> ${item.score != -1 ? formatter.formatScore(item.score) : "unrated"}
+                                                   src="${basePath}/icon/star.svg"> ${item.score != -1 ? formatter.formatScore(item.score) : "unrated"}
                         </div>
                         <div class="col-sm-3"><img alt="Watched" class="icon"
-                                                   src="${rootPath}/icon/calendar.svg"> ${formatter.formatDateRelative(item.watchDate)}
+                                                   src="${basePath}/icon/calendar.svg"> ${formatter.formatDateRelative(item.watchDate)}
                         </div>
                         <div class="col-sm-3"><img alt="Episodes" class="icon"
-                                                   src="${rootPath}/icon/tv.svg"> ${formatter.formatAnimeLength(item.anime)}
+                                                   src="${basePath}/icon/tv.svg"> ${formatter.formatAnimeLength(item.anime)}
                         </div>
                         <div class="col-sm-auto"><img alt="Studio" class="icon"
-                                                      src="${rootPath}/icon/video.svg"> ${formatter.formatStudios(item.anime.animeStudios)}
+                                                      src="${basePath}/icon/video.svg"> ${formatter.formatStudios(item.anime.animeStudios)}
                         </div>
                     </div>
                 </div>
@@ -162,11 +162,11 @@
                                 data-anime-name="${item.anime.englishTitle}" data-anime-id="${item.anime.id}"
                                 data-mode="edit" data-anime-state="${item.watchState.toString()}"
                                 data-anime-date="${formatter.formatDateSystem(item.watchDate)}">
-                            <img src="${rootPath}/icon/edit.svg">
+                            <img src="${basePath}/icon/edit.svg">
                         </button>
                         <button class="btn" data-toggle="modal" data-target="#delete-anime-modal"
                                 data-anime-name="${item.anime.englishTitle}" data-anime-id="${item.anime.id}">
-                            <img src="${rootPath}/icon/delete.svg">
+                            <img src="${basePath}/icon/delete.svg">
                         </button>
                     </div>
                 </c:if>
@@ -179,7 +179,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-body mx-auto my-5">
-                <form method="post" action="${rootPath}/list" autocomplete="off"
+                <form method="post" action="${basePath}/list" autocomplete="off"
                       style="width: 300px">
                     <input type="hidden" name="action" value="delete">
                     <input type="hidden" id="delete-anime-id" name="animeId" value="">
@@ -203,7 +203,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-body mx-auto my-5">
-                <form method="post" action="${rootPath}/list" autocomplete="off"
+                <form method="post" action="${basePath}/list" autocomplete="off"
                       style="width: 300px">
                     <input id="edit-anime-id" type="hidden" name="animeId" value="-1"/>
                     <input id="property-action" type="hidden" name="action" value="add">
@@ -286,7 +286,8 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
         integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
         crossorigin="anonymous"></script>
-<script src="${rootPath}/script/search.js"></script>
-<script src="${rootPath}/script/list.js"></script>
+<script>window._basePath = '${basePath}';</script>
+<script src="${basePath}/script/search.js"></script>
+<script src="${basePath}/script/list.js"></script>
 
 </html>
