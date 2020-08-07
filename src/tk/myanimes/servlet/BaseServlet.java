@@ -20,7 +20,6 @@ public abstract class BaseServlet extends HttpServlet {
 
     private String getFullPath(HttpServletRequest req) {
         var fullPath = PathHelper.joinPath(AppConfig.instance().getBasePath(), req.getServletPath(), req.getPathInfo());
-        System.out.println(fullPath);
         if (req.getQueryString() != null)
             fullPath += "?" + req.getQueryString();
         return fullPath;
