@@ -2,6 +2,8 @@ package tk.myanimes.model;
 
 public class UserInfo {
 
+    public static final UserInfo EMPTY = new UserInfo();
+
     private long id;
 
     private String name;

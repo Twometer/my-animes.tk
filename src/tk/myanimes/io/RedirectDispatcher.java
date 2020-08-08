@@ -16,8 +16,7 @@ public class RedirectDispatcher {
     }
 
     public static void toReturnPage(HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException {
-        var user = SessionManager.instance().isAuthenticated(req) ? SessionManager.instance().getCurrentUser(req) : null;
-        toReturnPage(req, resp, user);
+        toReturnPage(req, resp, SessionManager.instance().getCurrentUser(req));
     }
 
     public static void toReturnPage(HttpServletRequest req, HttpServletResponse resp, UserInfo user) throws IOException {

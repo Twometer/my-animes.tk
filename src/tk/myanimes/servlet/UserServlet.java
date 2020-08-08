@@ -1,7 +1,6 @@
 package tk.myanimes.servlet;
 
 import tk.myanimes.io.Database;
-import tk.myanimes.text.Formatter;
 import tk.myanimes.text.Validator;
 
 import javax.servlet.annotation.WebServlet;
@@ -31,11 +30,10 @@ public class UserServlet extends BaseServlet {
             return;
         }
 
-        req.setAttribute("formatter", new Formatter());
         req.setAttribute("animes", Database.getAnimeList(user));
         req.setAttribute("user", user);
 
-        loadLoggedInUserInfo(req);
+        loadAuthenticatedUser(req);
         req.getRequestDispatcher("/user.jsp").forward(req, resp);
     }
 

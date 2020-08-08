@@ -51,7 +51,7 @@ public class ListServlet extends BaseServlet {
         }
         var user = SessionManager.instance().getCurrentUser(req);
         Database.removeFromAnimeList(user, Long.parseLong(animeId));
-        redirectToList(req, resp, user);
+        redirectToList(resp, user);
     }
 
     private void handleEditRequest(HttpServletRequest req, HttpServletResponse resp) throws Exception {
@@ -71,7 +71,7 @@ public class ListServlet extends BaseServlet {
         item.setWatchDate(request.watchDate.toEpochMilli());
         item.setWatchState(request.watchState);
         DataAccess.instance().getAnimeListItemDao().update(item);
-        redirectToList(req, resp, user);
+        redirectToList(resp, user);
     }
 
     private void handleAddRequest(HttpServletRequest req, HttpServletResponse resp) throws Exception {
@@ -86,12 +86,12 @@ public class ListServlet extends BaseServlet {
             return;
         }
 
-        var animeInfo = AnimeCache.instance().tryGetFullAnimeInfoBySlug(request.animeSlug);
+        var animeInfo = AnimeCache.instance().tryGetFullAnimeInfo(request.animeSlug);
         if (animeInfo != null) {
             var user = SessionManager.instance().getCurrentUser(req);
             if (!Database.animeListContains(user, animeInfo.getId()))
                 Database.addToAnimeList(user, animeInfo, request.rating, request.watchDate, request.watchState);
-            redirectToList(req, resp, user);
+            redirectToList(resp, user);
             return;
         }
         resp.sendError(400, "Anime does not exist");
@@ -100,18 +100,18 @@ public class ListServlet extends BaseServlet {
     private ListRequest parseListRequest(HttpServletRequest req) {
         var request = new ListRequest();
         request.animeSlug = req.getParameter("animeSlug");
-        var watchDate = req.getParameter("watchDate");
-        var watchState = WatchState.parse(req.getParameter("watchState"));
 
         var animeIdRaw = req.getParameter("animeId");
         if (!Validator.nullOrEmpty(animeIdRaw))
             request.animeId = Long.parseLong(animeIdRaw);
 
+        var watchState = WatchState.parse(req.getParameter("watchState"));
         var storyRating = parseRating(req, watchState, "rating-story");
         var characterRating = parseRating(req, watchState, "rating-characters");
         var artRating = parseRating(req, watchState, "rating-art");
         var enjoymentRating = parseRating(req, watchState, "rating-enjoyment");
 
+        var watchDate = req.getParameter("watchDate");
         if (watchState == WatchState.Queued) // Set date to maximum... not the prettiest solution but well
             watchDate = "9999-12-31";
 
@@ -133,7 +133,7 @@ public class ListServlet extends BaseServlet {
         float rating;
     }
 
-    private void redirectToList(HttpServletRequest req, HttpServletResponse resp, UserInfo user) throws IOException {
+    private void redirectToList(HttpServletResponse resp, UserInfo user) throws IOException {
         RedirectDispatcher.toRelative(resp, "/user/" + user.getName());
     }
 

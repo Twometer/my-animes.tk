@@ -14,7 +14,7 @@ public class DashboardServlet extends BaseServlet {
 
     @Override
     protected void httpGet(HttpServletRequest req, HttpServletResponse resp) throws Exception {
-        loadLoggedInUserInfo(req);
+        loadAuthenticatedUser(req);
         req.getRequestDispatcher("/dashboard.jsp").forward(req, resp);
     }
 

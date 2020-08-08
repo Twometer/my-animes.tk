@@ -31,7 +31,8 @@ public class SessionManager {
     }
 
     public UserInfo getCurrentUser(HttpServletRequest request) throws SQLException {
-        return Database.getUserInfo(users.get(request.getSession().getId()));
+        var user = users.get(request.getSession().getId());
+        return user == null ? null : Database.getUserInfo(user);
     }
 
 }

@@ -53,7 +53,7 @@ public class ProfileServlet extends BaseServlet {
         user.setSetupComplete(true);
 
         if (favoriteAnimeSlug != null && !favoriteAnimeSlug.isBlank()) {
-            var anime = AnimeCache.instance().tryGetFullAnimeInfoBySlug(favoriteAnimeSlug);
+            var anime = AnimeCache.instance().tryGetFullAnimeInfo(favoriteAnimeSlug);
             if (anime != null)
                 user.setFavoriteAnime(anime);
             else
@@ -66,7 +66,7 @@ public class ProfileServlet extends BaseServlet {
 
     private void sendResponse(HttpServletRequest req, HttpServletResponse resp, String error) throws SQLException, ServletException, IOException {
         loadError(req, error);
-        loadLoggedInUserInfo(req);
+        loadAuthenticatedUser(req);
         req.getRequestDispatcher("/profile.jsp").forward(req, resp);
     }
 

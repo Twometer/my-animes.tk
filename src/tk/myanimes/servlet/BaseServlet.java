@@ -5,6 +5,7 @@ import tk.myanimes.io.PathHelper;
 import tk.myanimes.io.RedirectDispatcher;
 import tk.myanimes.model.UserInfo;
 import tk.myanimes.session.SessionManager;
+import tk.myanimes.text.Formatter;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -18,20 +19,15 @@ import java.sql.SQLException;
 
 public abstract class BaseServlet extends HttpServlet {
 
-    private String getFullPath(HttpServletRequest req) {
-        var fullPath = PathHelper.joinPath(AppConfig.instance().getBasePath(), req.getServletPath(), req.getPathInfo());
-        if (req.getQueryString() != null)
-            fullPath += "?" + req.getQueryString();
-        return fullPath;
-    }
+    private static final Formatter FORMATTER = new Formatter();
 
     @Override
     protected final void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (!tryAuthenticate(req, resp)) return;
         applyEncoding(req, resp);
+        if (!tryAuthenticate(req, resp)) return;
+
         try {
-            req.setAttribute("currentPath", URLEncoder.encode(getFullPath(req), StandardCharsets.UTF_8));
-            req.setAttribute("basePath", AppConfig.instance().getBasePath());
+            loadBaseAttributes(req);
             httpGet(req, resp);
         } catch (Exception e) {
             throw new ServletException(e);
@@ -40,10 +36,11 @@ public abstract class BaseServlet extends HttpServlet {
 
     @Override
     protected final void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (!tryAuthenticate(req, resp)) return;
         applyEncoding(req, resp);
+        if (!tryAuthenticate(req, resp)) return;
+
         try {
-            req.setAttribute("basePath", AppConfig.instance().getBasePath());
+            loadBaseAttributes(req);
             httpPost(req, resp);
         } catch (Exception e) {
             throw new ServletException(e);
@@ -62,19 +59,25 @@ public abstract class BaseServlet extends HttpServlet {
         return false;
     }
 
-    protected final void loadLoggedInUserInfo(HttpServletRequest req) throws SQLException {
+    protected final void loadAuthenticatedUser(HttpServletRequest req) throws SQLException {
         if (SessionManager.instance().isAuthenticated(req)) {
             req.setAttribute("isAuthenticated", true);
             req.setAttribute("authenticatedUser", SessionManager.instance().getCurrentUser(req));
         } else {
             req.setAttribute("isAuthenticated", false);
-            req.setAttribute("authenticatedUser", new UserInfo());
+            req.setAttribute("authenticatedUser", UserInfo.EMPTY);
         }
     }
 
     protected final void loadError(HttpServletRequest req, String error) {
         req.setAttribute("showError", error != null);
         req.setAttribute("errorMessage", error != null ? error : "");
+    }
+
+    private void loadBaseAttributes(HttpServletRequest req) {
+        req.setAttribute("currentPath", URLEncoder.encode(getFullPath(req), StandardCharsets.UTF_8));
+        req.setAttribute("basePath", AppConfig.instance().getBasePath());
+        req.setAttribute("formatter", FORMATTER);
     }
 
     private void applyEncoding(HttpServletRequest req, HttpServletResponse resp) throws UnsupportedEncodingException {
@@ -91,5 +94,11 @@ public abstract class BaseServlet extends HttpServlet {
         return false;
     }
 
+    private String getFullPath(HttpServletRequest req) {
+        var fullPath = PathHelper.joinPath(AppConfig.instance().getBasePath(), req.getServletPath(), req.getPathInfo());
+        if (req.getQueryString() != null)
+            fullPath += "?" + req.getQueryString();
+        return fullPath;
+    }
 
 }

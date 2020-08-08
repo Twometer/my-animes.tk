@@ -7,23 +7,19 @@ import tk.myanimes.model.AnimeInfo;
  * It contains the kitsuId (remoteIdentifier) and all info except the categories and the
  * anime studios as those require separate requests to the kitsu API.
  */
-public class KitsuAnimeInfo {
+public class SearchResult {
 
-    private String remoteIdentifier;
+    private final String kitsuId;
 
     private AnimeInfo animeInfo;
 
-    public KitsuAnimeInfo(String remoteIdentifier, AnimeInfo animeInfo) {
-        this.remoteIdentifier = remoteIdentifier;
+    public SearchResult(String kitsuId, AnimeInfo animeInfo) {
+        this.kitsuId = kitsuId;
         this.animeInfo = animeInfo;
     }
 
-    public String getRemoteIdentifier() {
-        return remoteIdentifier;
-    }
-
-    public void setRemoteIdentifier(String remoteIdentifier) {
-        this.remoteIdentifier = remoteIdentifier;
+    public String getKitsuId() {
+        return kitsuId;
     }
 
     public AnimeInfo getAnimeInfo() {
@@ -37,7 +33,7 @@ public class KitsuAnimeInfo {
     @Override
     public String toString() {
         return "SearchResult{" +
-                "remoteIdentifier='" + remoteIdentifier + '\'' +
+                "kitsuId='" + kitsuId + '\'' +
                 ", animeInfo=" + animeInfo +
                 '}';
     }

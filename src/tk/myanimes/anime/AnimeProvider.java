@@ -17,6 +17,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * Interface to the Kitsu API. Should only be used directly for
+ * search results. Other static data should be queried using the Anime Cache
+ * to avoid spamming the Kitsu API
+ */
 public class AnimeProvider {
 
     private static final String USER_AGENT = "Twometer/MyAnimes/ApiClient/1.0";
@@ -29,31 +34,31 @@ public class AnimeProvider {
         return instance;
     }
 
-    public List<KitsuAnimeInfo> searchAnime(String query) throws IOException {
+    public List<SearchResult> searchAnime(String query) throws IOException {
         return searchAnimeByTag("text", query);
     }
 
-    public KitsuAnimeInfo searchAnimeBySlug(String slug) throws IOException {
+    SearchResult searchAnimeBySlug(String slug) throws IOException {
         var results = searchAnimeByTag("slug", slug);
         return results.isEmpty() ? null : results.get(0);
     }
 
-    private List<KitsuAnimeInfo> searchAnimeByTag(String tag, String query) throws IOException {
+    private List<SearchResult> searchAnimeByTag(String tag, String query) throws IOException {
         var baseUrl = String.format("https://kitsu.io/api/edge/anime?filter[%s]=%s", tag, URLEncoder.encode(query, StandardCharsets.UTF_8));
         var reply = parse(request(baseUrl)).getAsJsonArray("data");
-        var results = new ArrayList<KitsuAnimeInfo>();
+        var results = new ArrayList<SearchResult>();
         for (var item : reply)
             results.add(parseKitsuAnimeInfo(item));
         return results;
     }
 
-    public KitsuAnimeInfo searchAnimeById(long animeId) throws IOException {
+    SearchResult searchAnimeById(long animeId) throws IOException {
         var url = "https://kitsu.io/api/edge/anime/" + animeId;
         var reply = parse(request(url)).getAsJsonObject("data");
         return parseKitsuAnimeInfo(reply);
     }
 
-    private KitsuAnimeInfo parseKitsuAnimeInfo(JsonElement dataObject) {
+    private SearchResult parseKitsuAnimeInfo(JsonElement dataObject) {
         var obj = dataObject.getAsJsonObject();
         var attrs = obj.getAsJsonObject("attributes");
 
@@ -81,23 +86,23 @@ public class AnimeProvider {
         anime.setEpisodeLength(getNullableInt(attrs, "episodeLength"));
         anime.setTotalLength(attrs.get("totalLength").getAsInt());
 
-        return new KitsuAnimeInfo(obj.get("id").getAsString(), anime);
+        return new SearchResult(obj.get("id").getAsString(), anime);
     }
 
-    public String getCompanyName(long companyId) throws IOException {
+    String getCompanyName(long companyId) throws IOException {
         var companyUrl = String.format("https://kitsu.io/api/edge/media-productions/%d/company", companyId);
         var reply = parse(request(companyUrl)).getAsJsonObject("data");
         return reply.getAsJsonObject("attributes").get("name").getAsString();
     }
 
-    public String getProducerName(long producerId) throws IOException {
+    String getProducerName(long producerId) throws IOException {
         var companyUrl = String.format("https://kitsu.io/api/edge/anime-productions/%d/producer", producerId);
         var reply = parse(request(companyUrl)).getAsJsonObject("data");
         return reply.getAsJsonObject("attributes").get("name").getAsString();
     }
 
-    public AnimeInfo getFullInfo(KitsuAnimeInfo kitsu) throws IOException, SQLException {
-        var categoryUrl = String.format("https://kitsu.io/api/edge/anime/%s/genres", kitsu.getRemoteIdentifier());
+    AnimeInfo getFullInfo(SearchResult kitsu) throws IOException, SQLException {
+        var categoryUrl = String.format("https://kitsu.io/api/edge/anime/%s/genres", kitsu.getKitsuId());
         var categoryReply = parse(request(categoryUrl)).getAsJsonArray("data");
 
         for (var item : categoryReply) {
@@ -116,8 +121,8 @@ public class AnimeProvider {
     // but with different names and ID namespaces. Kitsu did it that way.
     // I have no idea why they did it that way, and I'm too lazy to write code
     // that handles this BS more elegant.
-    private void parseProducers(KitsuAnimeInfo kitsu) throws IOException, SQLException {
-        var productionsUrl = String.format("https://kitsu.io/api/edge/anime/%s/anime-productions", kitsu.getRemoteIdentifier());
+    private void parseProducers(SearchResult kitsu) throws IOException, SQLException {
+        var productionsUrl = String.format("https://kitsu.io/api/edge/anime/%s/anime-productions", kitsu.getKitsuId());
         var productionsReply = parse(request(productionsUrl)).getAsJsonArray("data");
 
         for (var item : productionsReply) {
@@ -130,8 +135,8 @@ public class AnimeProvider {
         }
     }
 
-    private void parseCompanies(KitsuAnimeInfo kitsu) throws IOException, SQLException {
-        var productionsUrl = String.format("https://kitsu.io/api/edge/anime/%s/productions", kitsu.getRemoteIdentifier());
+    private void parseCompanies(SearchResult kitsu) throws IOException, SQLException {
+        var productionsUrl = String.format("https://kitsu.io/api/edge/anime/%s/productions", kitsu.getKitsuId());
         var productionsReply = parse(request(productionsUrl)).getAsJsonArray("data");
 
         for (var item : productionsReply) {
@@ -151,7 +156,10 @@ public class AnimeProvider {
                 .get()
                 .build();
         try (Response response = client.newCall(request).execute()) {
-            return response.body().string();
+            var body = response.body();
+            if (body == null)
+                throw new IOException("Request returned a null-body");
+            return body.string();
         }
     }
 

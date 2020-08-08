@@ -19,7 +19,7 @@ public class AnimeCache {
         return instance;
     }
 
-    public AnimeInfo tryGetFullAnimeInfoBySlug(String slug) throws IOException, SQLException {
+    public AnimeInfo tryGetFullAnimeInfo(String slug) throws IOException, SQLException {
         var cacheEntries = DataAccess.instance().getAnimeInfoDao().queryForEq("slug", slug);
         if (cacheEntries.size() == 0) {
             log.info("Cache Miss: Full Anime by slug query: " + slug);
@@ -35,19 +35,6 @@ public class AnimeCache {
             return info;
         } else {
             log.info("Cache Hit: Found anime for by-slug query: " + slug);
-            return Database.convertAnime(cacheEntries.get(0));
-        }
-    }
-
-    public AnimeInfo tryGetFullAnimeInfo(KitsuAnimeInfo result) throws SQLException, IOException {
-        var cacheEntries = DataAccess.instance().getAnimeInfoDao().queryForEq("slug", result.getAnimeInfo().getSlug());
-        if (cacheEntries.size() == 0) {
-            log.info("Cache Miss: Full Anime query: " + result.getAnimeInfo().getSlug());
-            var info = AnimeProvider.instance().getFullInfo(result);
-            Database.storeAnimeInfo(info);
-            return info;
-        } else {
-            log.info("Cache Hit: Found anime for " + result.getAnimeInfo().getSlug());
             return Database.convertAnime(cacheEntries.get(0));
         }
     }
