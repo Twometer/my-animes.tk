@@ -30,14 +30,20 @@ public class Formatter {
     }
 
     public String formatStudios(Collection<AnimeStudioInfo> list) {
+        if (list.isEmpty())
+            return "unknown";
         return list.stream().map(AnimeStudioInfo::getName).collect(Collectors.joining(", "));
     }
 
     public String formatDateSystem(Instant instant) {
+        if (instant == null)
+            return "";
         return DateTimeFormatter.ofPattern("yyyy-MM-dd").withZone(ZoneOffset.UTC).format(instant);
     }
 
     public String formatDateAbsolute(Instant instant) {
+        if (instant == null)
+            return "unknown";
         return DateTimeFormatter.ofPattern("dd MMM yyyy").withZone(ZoneOffset.UTC).format(instant);
     }
 
@@ -63,6 +69,10 @@ public class Formatter {
         } else {
             return formatPlurals((int) Math.round(duration / 60.0 / 60.0 / 24.0 / 30.5), "month", "months") + " ago";
         }
+    }
+
+    public String formatString(String str) {
+        return Validator.nullOrEmpty(str) ? "unknown" : str;
     }
 
     public String formatAnimeLength(AnimeInfo animeInfo) {

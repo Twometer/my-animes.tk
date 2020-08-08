@@ -137,7 +137,7 @@
                 </tr>
                 <tr>
                     <th>Age rating:</th>
-                    <td>${anime.ageRating}</td>
+                    <td>${formatter.formatString(anime.ageRating)}</td>
                 </tr>
                 <tr>
                     <th>NSFW:</th>
@@ -148,10 +148,17 @@
     </div>
 
     <h2 class="mt-5 mb-2">Trailer</h2>
-    <div class="embed-responsive embed-responsive-16by9">
-        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/${anime.youtubeVideoId}"
-                allowfullscreen allow="encrypted-media"></iframe>
-    </div>
+    <c:choose>
+        <c:when test="${anime.youtubeVideoId == null || anime.youtubeVideoId.length() == 0}">
+            <div class="alert alert-light">No trailer available</div>
+        </c:when>
+        <c:otherwise>
+            <div class="embed-responsive embed-responsive-16by9">
+                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/${anime.youtubeVideoId}"
+                        allowfullscreen allow="encrypted-media"></iframe>
+            </div>
+        </c:otherwise>
+    </c:choose>
 
     <h2 class="mt-5 mb-2">Episodes</h2>
     <div class="alert alert-light">Work in progress</div>

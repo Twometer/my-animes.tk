@@ -104,6 +104,10 @@ public class Database {
         return convertAnime(dbAnime);
     }
 
+    private static Instant parseNullableInstant(long epochMillis) {
+        return epochMillis < 0 ? null : Instant.ofEpochMilli(epochMillis);
+    }
+
     public static AnimeInfo convertAnime(DbAnimeInfo dbAnime) throws SQLException {
         if (dbAnime == null)
             return null;
@@ -120,8 +124,8 @@ public class Database {
         anime.setCoverPicture(dbAnime.getCoverPicture());
         anime.setAgeRating(dbAnime.getAgeRating());
         anime.setNsfw(dbAnime.isNsfw());
-        anime.setStartDate(Instant.ofEpochMilli(dbAnime.getStartDate()));
-        anime.setEndDate(Instant.ofEpochMilli(dbAnime.getEndDate()));
+        anime.setStartDate(parseNullableInstant(dbAnime.getStartDate()));
+        anime.setEndDate(parseNullableInstant(dbAnime.getEndDate()));
         anime.setYoutubeVideoId(dbAnime.getYoutubeVideoId());
         anime.setStatus(dbAnime.getStatus());
         anime.setShowType(dbAnime.getShowType());
@@ -159,8 +163,8 @@ public class Database {
         dbAnime.setCoverPicture(anime.getCoverPicture());
         dbAnime.setAgeRating(anime.getAgeRating());
         dbAnime.setNsfw(anime.isNsfw());
-        dbAnime.setStartDate(anime.getStartDate().toEpochMilli());
-        dbAnime.setEndDate(anime.getEndDate() == null ? anime.getStartDate().toEpochMilli() : anime.getEndDate().toEpochMilli());
+        dbAnime.setStartDate(anime.getStartDate() == null ? -1 : anime.getStartDate().toEpochMilli());
+        dbAnime.setEndDate(anime.getEndDate() == null ? -1 : anime.getEndDate().toEpochMilli());
         dbAnime.setYoutubeVideoId(anime.getYoutubeVideoId());
         dbAnime.setStatus(anime.getStatus());
         dbAnime.setShowType(anime.getShowType());
