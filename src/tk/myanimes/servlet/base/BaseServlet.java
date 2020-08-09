@@ -1,4 +1,4 @@
-package tk.myanimes.servlet;
+package tk.myanimes.servlet.base;
 
 import tk.myanimes.io.AppConfig;
 import tk.myanimes.io.PathHelper;
@@ -24,7 +24,7 @@ public abstract class BaseServlet extends HttpServlet {
     @Override
     protected final void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         applyEncoding(req, resp);
-        if (!tryAuthenticate(req, resp)) return;
+        if (handleAuthentication(req, resp)) return;
 
         try {
             loadBaseAttributes(req);
@@ -37,7 +37,7 @@ public abstract class BaseServlet extends HttpServlet {
     @Override
     protected final void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         applyEncoding(req, resp);
-        if (!tryAuthenticate(req, resp)) return;
+        if (handleAuthentication(req, resp)) return;
 
         try {
             loadBaseAttributes(req);
@@ -55,8 +55,8 @@ public abstract class BaseServlet extends HttpServlet {
         super.doPost(req, resp);
     }
 
-    protected boolean requiresAuthentication() {
-        return false;
+    protected AuthenticationMode getAuthenticationMode() {
+        return AuthenticationMode.None;
     }
 
     protected final void loadAuthenticatedUser(HttpServletRequest req) throws SQLException {
@@ -85,13 +85,24 @@ public abstract class BaseServlet extends HttpServlet {
         resp.setCharacterEncoding("UTF-8");
     }
 
-    private boolean tryAuthenticate(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        if (!requiresAuthentication())
-            return true;
+    private boolean handleAuthentication(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         if (SessionManager.instance().isAuthenticated(req))
-            return true;
-        RedirectDispatcher.toRelative(resp, "/login");
-        return false;
+            return false;
+
+        // Not authenticated
+        var authenticationMode = getAuthenticationMode();
+        switch (authenticationMode) {
+            case None:
+                return false;
+            case Redirect:
+                RedirectDispatcher.toRelative(resp, "/login");
+                return true;
+            case Deny:
+                resp.sendError(401);
+                return true;
+            default:
+                throw new IllegalStateException("Unknown authentication mode " + authenticationMode);
+        }
     }
 
     private String getFullPath(HttpServletRequest req) {

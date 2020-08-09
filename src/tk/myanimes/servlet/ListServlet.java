@@ -6,6 +6,8 @@ import tk.myanimes.io.Database;
 import tk.myanimes.io.RedirectDispatcher;
 import tk.myanimes.model.UserInfo;
 import tk.myanimes.model.WatchState;
+import tk.myanimes.servlet.base.AuthenticationMode;
+import tk.myanimes.servlet.base.BaseServlet;
 import tk.myanimes.session.SessionManager;
 import tk.myanimes.text.Parser;
 import tk.myanimes.text.Validator;
@@ -21,11 +23,6 @@ public class ListServlet extends BaseServlet {
 
     @Override
     protected void httpPost(HttpServletRequest req, HttpServletResponse resp) throws Exception {
-        if (!SessionManager.instance().isAuthenticated(req)) {
-            resp.sendError(403);
-            return;
-        }
-
         var action = req.getParameter("action");
         if (Validator.nullOrEmpty(action)) {
             resp.sendError(400, "Missing required parameter 'action'");
@@ -135,6 +132,11 @@ public class ListServlet extends BaseServlet {
 
     private void redirectToList(HttpServletResponse resp, UserInfo user) throws IOException {
         RedirectDispatcher.toRelative(resp, "/user/" + user.getName());
+    }
+
+    @Override
+    protected AuthenticationMode getAuthenticationMode() {
+        return AuthenticationMode.Deny;
     }
 
     private long parseRating(HttpServletRequest request, WatchState watchState, String name) {

@@ -5,6 +5,7 @@ import tk.myanimes.crypto.Hash;
 import tk.myanimes.io.Database;
 import tk.myanimes.io.RedirectDispatcher;
 import tk.myanimes.model.UserInfo;
+import tk.myanimes.servlet.base.BaseServlet;
 import tk.myanimes.session.SessionManager;
 import tk.myanimes.text.Validator;
 
@@ -36,7 +37,7 @@ public class LoginServlet extends BaseServlet {
     @Override
     protected void httpPost(HttpServletRequest req, HttpServletResponse resp) throws Exception {
         if (SessionManager.instance().isAuthenticated(req)) {
-            resp.sendError(403);
+            RedirectDispatcher.toReturnPage(req, resp);
             return;
         }
 

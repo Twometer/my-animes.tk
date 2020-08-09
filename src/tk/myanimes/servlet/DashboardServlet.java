@@ -1,5 +1,8 @@
 package tk.myanimes.servlet;
 
+import tk.myanimes.servlet.base.AuthenticationMode;
+import tk.myanimes.servlet.base.BaseServlet;
+
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -8,8 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 public class DashboardServlet extends BaseServlet {
 
     @Override
-    protected boolean requiresAuthentication() {
-        return true;
+    protected AuthenticationMode getAuthenticationMode() {
+        return AuthenticationMode.Redirect;
     }
 
     @Override

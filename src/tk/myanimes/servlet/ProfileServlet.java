@@ -4,6 +4,8 @@ import tk.myanimes.anime.AnimeCache;
 import tk.myanimes.io.DataAccess;
 import tk.myanimes.io.Database;
 import tk.myanimes.io.RedirectDispatcher;
+import tk.myanimes.servlet.base.AuthenticationMode;
+import tk.myanimes.servlet.base.BaseServlet;
 import tk.myanimes.session.SessionManager;
 import tk.myanimes.text.Validator;
 
@@ -71,7 +73,8 @@ public class ProfileServlet extends BaseServlet {
     }
 
     @Override
-    protected boolean requiresAuthentication() {
-        return true;
+    protected AuthenticationMode getAuthenticationMode() {
+        return AuthenticationMode.Redirect;
     }
+
 }

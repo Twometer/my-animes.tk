@@ -1,6 +1,7 @@
 package tk.myanimes.servlet;
 
 import tk.myanimes.io.Database;
+import tk.myanimes.servlet.base.BaseServlet;
 import tk.myanimes.text.Validator;
 
 import javax.servlet.annotation.WebServlet;

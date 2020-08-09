@@ -1,6 +1,7 @@
 package tk.myanimes.servlet;
 
 import tk.myanimes.anime.AnimeProvider;
+import tk.myanimes.servlet.base.BaseServlet;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
