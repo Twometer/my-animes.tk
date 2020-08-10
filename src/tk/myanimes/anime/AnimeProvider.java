@@ -44,6 +44,7 @@ public class AnimeProvider {
     }
 
     private List<SearchResult> searchAnimeByTag(String tag, String query) throws IOException {
+        System.out.println("Searching animes by tag...");
         var baseUrl = String.format("https://kitsu.io/api/edge/anime?filter[%s]=%s", tag, URLEncoder.encode(query, StandardCharsets.UTF_8));
         var reply = parse(request(baseUrl)).getAsJsonArray("data");
         var results = new ArrayList<SearchResult>();
@@ -73,6 +74,7 @@ public class AnimeProvider {
         anime.setCategories(new ArrayList<>());
         anime.setSynopsis(attrs.get("synopsis").getAsString());
         anime.setAnimeStudios(new ArrayList<>());
+        anime.setEpisodes(new ArrayList<>());
         anime.setThumbnail(attrs.getAsJsonObject("posterImage").get("tiny").getAsString());
         anime.setCoverPicture(attrs.getAsJsonObject("posterImage").get("small").getAsString());
         anime.setAgeRating(getNullableString(attrs, "ageRatingGuide"));
@@ -102,6 +104,7 @@ public class AnimeProvider {
     }
 
     AnimeInfo getFullInfo(SearchResult kitsu) throws IOException, SQLException {
+        System.out.println("Downloading full anime info...");
         var categoryUrl = String.format("https://kitsu.io/api/edge/anime/%s/genres", kitsu.getKitsuId());
         var categoryReply = parse(request(categoryUrl)).getAsJsonArray("data");
 
@@ -114,7 +117,45 @@ public class AnimeProvider {
         if (kitsu.getAnimeInfo().getAnimeStudios().size() == 0)
             parseProducers(kitsu);
 
+        parseEpisodes(kitsu);
+
         return kitsu.getAnimeInfo();
+    }
+
+    private void parseEpisodes(SearchResult kitsu) throws IOException {
+        parseEpisodes(kitsu, String.format("https://kitsu.io/api/edge/anime/%s/episodes", kitsu.getKitsuId()));
+    }
+
+    private void parseEpisodes(SearchResult kitsu, String url) throws IOException {
+        System.out.println("Parsing episodes: " + url);
+        var episodesReply = parse(request(url));
+
+        var data = episodesReply.getAsJsonArray("data");
+        for (var item : data) {
+            var attrs = item.getAsJsonObject().getAsJsonObject("attributes");
+            if (attrs.get("canonicalTitle").isJsonNull()) {
+                kitsu.getAnimeInfo().getEpisodes().clear();
+                return;
+            }
+            var thumbnailObj = attrs.get("thumbnail");
+            String thumbnail = null;
+            if (!thumbnailObj.isJsonNull())
+                thumbnail = thumbnailObj.getAsJsonObject().get("original").getAsString();
+            var eps = new AnimeEpisode(
+                    attrs.get("seasonNumber").getAsInt(),
+                    attrs.get("number").getAsInt(),
+                    attrs.get("canonicalTitle").getAsString(),
+                    attrs.get("synopsis").getAsString(),
+                    Parser.parseDate(getNullableString(attrs, "airdate")),
+                    attrs.get("length").getAsInt(),
+                    thumbnail
+            );
+            kitsu.getAnimeInfo().getEpisodes().add(eps);
+        }
+
+        var links = episodesReply.getAsJsonObject("links");
+        if (links.has("next"))
+            parseEpisodes(kitsu, links.get("next").getAsString());
     }
 
     // Yes, this is twice the same code for the EXACT same data
@@ -122,6 +163,7 @@ public class AnimeProvider {
     // I have no idea why they did it that way, and I'm too lazy to write code
     // that handles this BS more elegant.
     private void parseProducers(SearchResult kitsu) throws IOException, SQLException {
+        System.out.println("Downloading producers");
         var productionsUrl = String.format("https://kitsu.io/api/edge/anime/%s/anime-productions", kitsu.getKitsuId());
         var productionsReply = parse(request(productionsUrl)).getAsJsonArray("data");
 
@@ -136,6 +178,7 @@ public class AnimeProvider {
     }
 
     private void parseCompanies(SearchResult kitsu) throws IOException, SQLException {
+        System.out.println("Downloading companies");
         var productionsUrl = String.format("https://kitsu.io/api/edge/anime/%s/productions", kitsu.getKitsuId());
         var productionsReply = parse(request(productionsUrl)).getAsJsonArray("data");
 

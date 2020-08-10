@@ -112,7 +112,21 @@
     </c:choose>
 
     <h2 class="mt-5 mb-2">Episodes</h2>
-    <div class="alert alert-light">Work in progress</div>
+    <c:choose>
+        <c:when test="${anime.episodes.size() == 0}">
+            <div class="alert alert-light">No episode info available</div>
+        </c:when>
+        <c:otherwise>
+            <c:forEach var="episode" items="${anime.episodes}">
+                <p>
+                    <img src="${episode.thumbnail}" width="100">
+                <h2>S${episode.seasonNumber}E${episode.episodeNumber}: ${episode.canonicalTitle}</h2>
+                ${episode.synopsis}
+                (Length: ${episode.length})
+                </p>
+            </c:forEach>
+        </c:otherwise>
+    </c:choose>
 </div>
 
 </body>

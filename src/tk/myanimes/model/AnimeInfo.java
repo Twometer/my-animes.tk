@@ -20,6 +20,8 @@ public class AnimeInfo {
 
     private Collection<AnimeStudioInfo> animeStudios;
 
+    private Collection<AnimeEpisode> episodes;
+
     private String thumbnail;
 
     private String coverPicture;
@@ -126,6 +128,14 @@ public class AnimeInfo {
 
     public void setAnimeStudios(Collection<AnimeStudioInfo> animeStudios) {
         this.animeStudios = animeStudios;
+    }
+
+    public Collection<AnimeEpisode> getEpisodes() {
+        return episodes;
+    }
+
+    public void setEpisodes(Collection<AnimeEpisode> episodes) {
+        this.episodes = episodes;
     }
 
     public String getThumbnail() {

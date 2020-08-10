@@ -120,6 +120,7 @@ public class Database {
         anime.setCategories(new ArrayList<>());
         anime.setSynopsis(dbAnime.getSynopsis());
         anime.setAnimeStudios(new ArrayList<>());
+        anime.setEpisodes(new ArrayList<>());
         anime.setThumbnail(dbAnime.getThumbnail());
         anime.setCoverPicture(dbAnime.getCoverPicture());
         anime.setAgeRating(dbAnime.getAgeRating());
@@ -138,6 +139,9 @@ public class Database {
 
         for (var category : DataAccess.instance().getAnimeCategoryDao().queryForEq("animeId", anime.getId()))
             anime.getCategories().add(category.getCategoryName());
+
+        for (var episode : DataAccess.instance().getAnimeEpisodeDao().queryForEq("animeId", anime.getId()))
+            anime.getEpisodes().add(new AnimeEpisode(episode.getSeasonNumber(), episode.getEpisodeNumber(), episode.getCanonicalTitle(), episode.getSynopsis(), parseNullableInstant(episode.getAirDate()), episode.getLength(), episode.getThumbnail()));
 
         for (var studio : DataAccess.instance().getAnimeStudioDao().queryForEq("animeId", anime.getId())) {
             String name;
@@ -198,6 +202,20 @@ public class Database {
             dbStudio.setLocation(studio.getLocation());
             dbStudio.setStudioId(studio.getId());
             DataAccess.instance().getAnimeStudioDao().create(dbStudio);
+        }
+
+        deleteByAnimeId(DataAccess.instance().getAnimeEpisodeDao(), dbAnime.getId());
+        for (var eps : anime.getEpisodes()) {
+            DataAccess.instance().getAnimeEpisodeDao().create(new DbAnimeEpisode(
+                    anime.getId(),
+                    eps.getSeasonNumber(),
+                    eps.getEpisodeNumber(),
+                    eps.getCanonicalTitle(),
+                    eps.getSynopsis(),
+                    eps.getAirDate() == null ? -1 : eps.getAirDate().toEpochMilli(),
+                    eps.getLength(),
+                    eps.getThumbnail()
+            ));
         }
     }
 
