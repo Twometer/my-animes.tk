@@ -6,17 +6,9 @@ A simple and beautiful website to share your love for anime with the world
 
  [my profile](https://my-animes.tk/user/Twometer)
 
-
 ---
 
 ### Credits
 Powered by the [Kitsu API](https://github.com/hummingbird-me)
 
 Icons by [Feather](https://feathericons.com)
-
-Libraries used:
-- GSON
-- JSTL
-- OkHttp
-- Ormlite
-- Xerial SQLite
