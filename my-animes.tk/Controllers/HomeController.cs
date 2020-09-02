@@ -9,6 +9,7 @@ using my_animes.tk.Models;
 
 namespace my_animes.tk.Controllers
 {
+    [Route("~/{action=Index}")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

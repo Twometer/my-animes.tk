@@ -47,6 +47,5 @@ namespace my_animes.tk.Database.Entities
 
 
         public DateTime EntryExpirationDate { get; set; }
-
     }
 }

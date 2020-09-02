@@ -13,7 +13,6 @@ namespace my_animes.tk.Database.Entities
 
         public byte[] PasswordHash { get; set; }
 
-
         public string Location { get; set; }
 
         public string Biography { get; set; }
