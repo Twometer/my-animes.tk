@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace my_animes.tk.Database.Entities
+namespace my_animes.tk.Database.Entities.Animes
 {
     public class Anime
     {
@@ -15,7 +13,7 @@ namespace my_animes.tk.Database.Entities
 
         public IEnumerable<AnimeTitle> Titles { get; set; }
 
-        public IEnumerable<string> Categories { get; set; }
+        public IEnumerable<AnimeGenre> Genres { get; set; }
 
         public IEnumerable<AnimeStudio> Studios { get; set; }
 
@@ -44,6 +42,12 @@ namespace my_animes.tk.Database.Entities
         public AnimeStatus Status { get; set; }
 
         public AnimeType Type { get; set; }
+
+        public IEnumerable<AnimeEpisode> Episodes { get; set; }
+
+        public IEnumerable<AnimeCharacter> Characters { get; set; }
+
+        public IEnumerable<AnimeStreamingLink> StreamingLinks { get; set; }
 
 
         public DateTime EntryExpirationDate { get; set; }

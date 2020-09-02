@@ -1,7 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using my_animes.tk.Configuration;
-using my_animes.tk.Database.Entities;
+using my_animes.tk.Database.Entities.Animes;
+using my_animes.tk.Database.Entities.Profile;
 
 namespace my_animes.tk.Database
 {
@@ -9,13 +10,26 @@ namespace my_animes.tk.Database
     {
         private readonly IOptions<DatabaseOptions> options;
 
-        public DbSet<User> Users { get; set; } = null;
+        public DbSet<User> Users { get; set; }
 
-        public DbSet<Anime> Animes { get; set; } = null;
-        
-        public DbSet<AnimeStudio> AnimeStudios { get; set; } = null;
-        
-        public DbSet<AnimeTitle> AnimeTitles { get; set; } = null;
+        public DbSet<UserFollowing> Followings { get; set; }
+
+        public DbSet<AnimeListItem> AnimeListItems { get; set; }
+
+        public DbSet<Anime> Animes { get; set; }
+
+        public DbSet<AnimeTitle> AnimeTitles { get; set; }
+
+        public DbSet<AnimeGenre> AnimeGenres { get; set; }
+
+        public DbSet<AnimeStudio> AnimeStudios { get; set; }
+
+        public DbSet<AnimeEpisode> AnimeEpisodes { get; set; }
+
+        public DbSet<AnimeCharacter> AnimeCharacters { get; set; }
+
+        public DbSet<AnimeStreamingLink> AnimeStreamingLinks { get; set; }
+
 
         public DatabaseContext(IOptions<DatabaseOptions> options)
         {
@@ -32,6 +46,7 @@ namespace my_animes.tk.Database
         {
             base.OnModelCreating(modelBuilder);
 
+            // TODO fully build model!
             var user = modelBuilder.Entity<User>();
             user.HasKey(u => u.Id);
             user.Property(u => u.Name).IsRequired();
@@ -41,7 +56,7 @@ namespace my_animes.tk.Database
             anime.HasKey(a => a.Id);
             anime.HasIndex(a => a.Slug).IsUnique();
             anime.Property(a => a.CanonicalTitle).IsRequired();
-            
+
 
             var title = modelBuilder.Entity<AnimeTitle>();
             title.HasKey(t => t.Id);
