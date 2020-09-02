@@ -49,14 +49,22 @@ namespace myanimes.Database
             // TODO fully build model!
             var user = modelBuilder.Entity<User>();
             user.HasKey(u => u.Id);
-            user.Property(u => u.Name).IsRequired();
+            user.HasAlternateKey(u => u.Name);
             user.Property(u => u.PasswordHash).IsRequired();
+
+            var userFollowing = modelBuilder.Entity<UserFollowing>();
+            userFollowing.HasKey(f => f.Id);
+
+            var animeListItem = modelBuilder.Entity<AnimeListItem>();
+            animeListItem.HasOne(i => i.User).WithMany(u => u.AnimeList).HasForeignKey(i => i.UserId);
+            // animeListItem.HasOne(i => i.Anime);
 
             var anime = modelBuilder.Entity<Anime>();
             anime.HasKey(a => a.Id);
-            anime.HasIndex(a => a.Slug).IsUnique();
+            anime.HasAlternateKey(a => a.Slug);
             anime.Property(a => a.CanonicalTitle).IsRequired();
-
+            anime.HasMany(a => a.Titles).WithOne(t => t.Anime);
+            anime.HasMany(a => a.Genres); // incomplete??
 
             var title = modelBuilder.Entity<AnimeTitle>();
             title.HasKey(t => t.Id);
