@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <RootNamespace>my_animes.tk</RootNamespace>
+    <RootNamespace>myanimes</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
