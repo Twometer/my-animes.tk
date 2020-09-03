@@ -1,4 +1,8 @@
-# my-animes.tk
+<p align="center">
+  <img width="72" height="72" src="https://github.com/Twometer/my-animes.tk/blob/master/myanimes/wwwroot/Icon.png?raw=true">
+  <h1 align="center">myanimes</h1>
+</p>
+
 A simple and beautiful website to share your love for anime with the world
 
 #### Some links for you :3
