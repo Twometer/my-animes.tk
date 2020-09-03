@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="72" height="72" src="https://github.com/Twometer/my-animes.tk/blob/master/myanimes/wwwroot/Icon.png?raw=true">
+  <img width="72" height="72" src="myanimes/wwwroot/Icon.png?raw=true">
   <h1 align="center">myanimes</h1>
 </p>
 
