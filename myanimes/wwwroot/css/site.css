@@ -1,71 +1,92 @@
-﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-for details on configuring this project to bundle and minify static web assets. */
-
-a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+﻿/* Base Styles
+-------------------------------------------------- */
+* {
+    --primary-color: #876FFF;
+    --watching-color: #6FFFAD;
+    --watched-color: #87BBFF;
+    --paused-color: #FFCA6F;
+    --cancelled-color: #FF6F6F;
+    --queued-color: #B8B8B8;
+    --footer-height: 40px;
+    --common-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2);
 }
 
-/* Provide sufficient contrast against white background */
+/* Navbar Styles
+-------------------------------------------------- */
+.navbar {
+    background-color: var(--primary-color);
+    box-shadow: var(--common-shadow);
+}
+
+.navbar-brand {
+    font-family: 'Unica One', sans-serif;
+    font-size: 30px;
+    padding: 0;
+    margin: 0;
+    user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+}
+
+.nav-item {
+    font-family: Exo, 'Open Sans', sans-serif;
+    font-size: 18px;
+}
+
+.nav-link {
+    color: rgba(255, 255, 255, 0.7) !important;
+    transition-duration: .3s;
+}
+
+    .nav-link:hover {
+        color: rgba(255, 255, 255, 1.0) !important;
+        transition-duration: .3s;
+    }
+
+/* Link styles
+-------------------------------------------------- */
 a {
-  color: #0366d6;
+    text-decoration: none;
+    color: var(--primary-color) !important;
+    cursor: pointer;
+    border-bottom: 1px solid transparent;
+    transition-duration: .5s;
 }
 
-.btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
-}
+    a:hover {
+        border-bottom: 1px solid var(--primary-color);
+        text-decoration: none;
+        transition-duration: .5s;
+    }
 
-.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
-}
+    a.link-muted {
+        color: inherit !important;
+        transition: none;
+    }
 
-/* Sticky footer styles
--------------------------------------------------- */
-html {
-  font-size: 14px;
-}
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.border-top {
-  border-top: 1px solid #e5e5e5;
-}
-.border-bottom {
-  border-bottom: 1px solid #e5e5e5;
-}
-
-.box-shadow {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
-}
-
-button.accept-policy {
-  font-size: 1rem;
-  line-height: inherit;
-}
+        a.link-muted:hover {
+            border-bottom: none !important;
+            transition: none;
+        }
 
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+    /* Margin bottom by footer height */
+    margin-bottom: var(--footer-height);
 }
+
 .footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  line-height: 60px; /* Vertically center the text there */
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: var(--footer-height); /* Vertically center the text there */
+    border-top: 1px solid #e5e5e5;
 }
