@@ -1,4 +1,7 @@
-﻿namespace myanimes.Database.Entities.Animes
+﻿using myanimes.Database.Entities.Mappings;
+using System.Collections.Generic;
+
+namespace myanimes.Database.Entities.Animes
 {
     public class AnimeStudio
     {
@@ -7,6 +10,8 @@
         public string Slug { get; set; }
 
         public string Name { get; set; }
+
+        public IEnumerable<StudioMapping> StudioMappings { get; set; }
     }
 
 }

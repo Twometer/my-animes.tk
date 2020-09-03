@@ -1,5 +1,6 @@
 ﻿using myanimes.Database.Entities.Animes;
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace myanimes.Database.Entities.Profile
 {
@@ -7,16 +8,14 @@ namespace myanimes.Database.Entities.Profile
     {
         public int Id { get; set; }
 
-
         public int UserId { get; set; }
 
         public User User { get; set; }
 
-
+        [ForeignKey("Anime")]
         public int AnimeId { get; set; }
 
         public Anime Anime { get; set; }
-
         
         public WatchState WatchState { get; set; }
 

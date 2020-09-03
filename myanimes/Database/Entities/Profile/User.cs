@@ -1,6 +1,7 @@
 ﻿using myanimes.Database.Entities.Animes;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace myanimes.Database.Entities.Profile
 {
@@ -20,10 +21,15 @@ namespace myanimes.Database.Entities.Profile
 
         public string ProfilePictureUrl { get; set; }
         
+        [ForeignKey("FavoriteAnime")]
+        public int FavoriteAnimeId { get; set; }
+
         public Anime FavoriteAnime { get; set; }
 
         public IEnumerable<AnimeListItem> AnimeList { get; set; }
 
-        public IEnumerable<UserFollowing> Following { get; set; }
+        public IEnumerable<FollowerMapping> Followers { get; set; }
+
+        public IEnumerable<FollowerMapping> Following { get; set; }
     }
 }

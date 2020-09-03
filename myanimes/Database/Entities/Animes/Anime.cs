@@ -1,4 +1,5 @@
-﻿using System;
+﻿using myanimes.Database.Entities.Mappings;
+using System;
 using System.Collections.Generic;
 
 namespace myanimes.Database.Entities.Animes
@@ -13,9 +14,9 @@ namespace myanimes.Database.Entities.Animes
 
         public IEnumerable<AnimeTitle> Titles { get; set; }
 
-        public IEnumerable<AnimeGenre> Genres { get; set; }
+        public IEnumerable<GenreMapping> Genres { get; set; }
 
-        public IEnumerable<AnimeStudio> Studios { get; set; }
+        public IEnumerable<StudioMapping> Studios { get; set; }
 
         public DateTime StartDate { get; set; }
 
