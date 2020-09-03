@@ -25,7 +25,6 @@ namespace myanimes
 
             services.AddOptions<DatabaseOptions>().Bind(Configuration.GetSection("Database"));
 
-            services.AddRouting();
             services.AddDbContext<DatabaseContext>();
             services.AddSingleton<KitsuService>();
         }
@@ -42,15 +41,10 @@ namespace myanimes
                 app.UseExceptionHandler("/Home/Error");
             }
             app.UseStaticFiles();
-
             app.UseRouting();
-
             app.UseAuthorization();
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            app.UseAuthentication();
+            app.UseEndpoints(endpoints => endpoints.MapControllers());
         }
     }
 }
