@@ -17,7 +17,7 @@ namespace myanimes.Database
 
         public DbSet<AnimeListItem> AnimeListItems { get; set; }
 
-        public DbSet<Anime> Animes { get; set; }
+        public DbSet<AnimeDbo> Animes { get; set; }
 
         public DbSet<GenreMapping> GenreMappings { get; set; }
 
@@ -69,7 +69,7 @@ namespace myanimes.Database
             animeListItem.Property(i => i.DateModified).IsRequired();
             animeListItem.Property(i => i.DateWatched).IsRequired();
 
-            var anime = modelBuilder.Entity<Anime>();
+            var anime = modelBuilder.Entity<AnimeDbo>();
             anime.HasKey(a => a.Id);
             anime.HasIndex(a => a.Slug).IsUnique();
             anime.Property(a => a.CanonicalTitle).IsRequired();

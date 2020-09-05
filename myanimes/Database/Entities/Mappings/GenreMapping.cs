@@ -6,7 +6,7 @@ namespace myanimes.Database.Entities.Mappings
     {
         public int AnimeId { get; set; }
 
-        public Anime Anime { get; set; }
+        public AnimeDbo Anime { get; set; }
 
         public int GenreId { get; set; }
 

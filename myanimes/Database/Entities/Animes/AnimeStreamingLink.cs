@@ -8,7 +8,7 @@ namespace myanimes.Database.Entities.Animes
 
         public int AnimeId { get; set; }
 
-        public Anime Anime { get; set; }
+        public AnimeDbo Anime { get; set; }
 
         public string Url { get; set; }
 

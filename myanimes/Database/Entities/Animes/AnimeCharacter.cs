@@ -6,7 +6,7 @@
 
         public int AnimeId { get; set; }
 
-        public Anime Anime { get; set; }
+        public AnimeDbo Anime { get; set; }
 
         public string Slug { get; set; }
 

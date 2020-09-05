@@ -15,7 +15,7 @@ namespace myanimes.Database.Entities.Profile
         [ForeignKey("Anime")]
         public int AnimeId { get; set; }
 
-        public Anime Anime { get; set; }
+        public AnimeDbo Anime { get; set; }
         
         public WatchState WatchState { get; set; }
 
