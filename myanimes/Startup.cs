@@ -27,6 +27,7 @@ namespace myanimes
 
             services.AddDbContext<DatabaseContext>();
             services.AddSingleton<KitsuService>();
+            services.AddSingleton<CacheService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
