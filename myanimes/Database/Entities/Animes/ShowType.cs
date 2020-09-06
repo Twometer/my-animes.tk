@@ -1,6 +1,6 @@
 ﻿namespace myanimes.Database.Entities.Animes
 {
-    public enum AnimeType
+    public enum ShowType
     {
         ONA,
         OVA,

@@ -9,7 +9,7 @@ namespace myanimes.Database
             return null; // TODO
         }
 
-        public static Anime ToAnime(this AnimeDbo animeDbo)
+        public static Anime ToAnime(this AnimeDbo animeDbo, DatabaseContext ctx)
         {
             return null; // TODO
         }

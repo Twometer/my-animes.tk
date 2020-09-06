@@ -4,8 +4,8 @@ namespace myanimes.Database.Entities.Animes
 {
     public class Anime : AnimeBase
     {
-        public IEnumerable<AnimeGenre> Genres { get; set; }
+        public IEnumerable<Genre> Genres { get; set; }
 
-        public IEnumerable<AnimeStudio> Studios { get; set; }
+        public IEnumerable<Studio> Studios { get; set; }
     }
 }

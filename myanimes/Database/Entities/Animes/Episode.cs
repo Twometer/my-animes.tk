@@ -2,7 +2,7 @@
 
 namespace myanimes.Database.Entities.Animes
 {
-    public class AnimeEpisode
+    public class Episode
     {
         public int Id { get; set; }
 

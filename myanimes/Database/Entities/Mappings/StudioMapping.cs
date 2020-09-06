@@ -10,6 +10,6 @@ namespace myanimes.Database.Entities.Mappings
 
         public int StudioId { get; set; }
 
-        public AnimeStudio Studio { get; set; }
+        public Studio Studio { get; set; }
     }
 }

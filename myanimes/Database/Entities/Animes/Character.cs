@@ -1,6 +1,6 @@
 ﻿namespace myanimes.Database.Entities.Animes
 {
-    public class AnimeCharacter
+    public class Character
     {
         public int Id { get; set; }
 

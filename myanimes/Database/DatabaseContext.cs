@@ -23,17 +23,17 @@ namespace myanimes.Database
 
         public DbSet<StudioMapping> StudioMappings { get; set; }
 
-        public DbSet<AnimeTitle> AnimeTitles { get; set; }
+        public DbSet<Title> Titles { get; set; }
 
-        public DbSet<AnimeGenre> AnimeGenres { get; set; }
+        public DbSet<Genre> Genres { get; set; }
 
-        public DbSet<AnimeStudio> AnimeStudios { get; set; }
+        public DbSet<Studio> Studios { get; set; }
 
-        public DbSet<AnimeEpisode> AnimeEpisodes { get; set; }
+        public DbSet<Episode> Episodes { get; set; }
 
-        public DbSet<AnimeCharacter> AnimeCharacters { get; set; }
+        public DbSet<Character> Characters { get; set; }
 
-        public DbSet<AnimeStreamingLink> AnimeStreamingLinks { get; set; }
+        public DbSet<StreamingLink> StreamingLinks { get; set; }
 
 
         public DatabaseContext(IOptions<DatabaseOptions> options)
@@ -91,30 +91,30 @@ namespace myanimes.Database
             studioMapping.HasOne(m => m.Anime).WithMany(a => a.Studios).HasForeignKey(m => m.AnimeId);
             studioMapping.HasOne(m => m.Studio).WithMany(s => s.StudioMappings).HasForeignKey(m => m.StudioId);
 
-            var title = modelBuilder.Entity<AnimeTitle>();
+            var title = modelBuilder.Entity<Title>();
             title.HasKey(t => t.Id);
             title.Property(t => t.Language).IsRequired();
-            title.Property(t => t.Title).IsRequired();
+            title.Property(t => t.Text).IsRequired();
 
-            var genre = modelBuilder.Entity<AnimeGenre>();
+            var genre = modelBuilder.Entity<Genre>();
             genre.HasKey(g => g.Id);
             genre.HasIndex(g => g.Slug).IsUnique();
             genre.Property(g => g.Name).IsRequired();
 
-            var studio = modelBuilder.Entity<AnimeStudio>();
+            var studio = modelBuilder.Entity<Studio>();
             studio.HasKey(s => s.Id);
             studio.HasIndex(s => s.Slug).IsUnique();
             studio.Property(s => s.Name).IsRequired();
 
-            var episode = modelBuilder.Entity<AnimeEpisode>();
+            var episode = modelBuilder.Entity<Episode>();
             episode.HasKey(e => e.Id);
 
-            var character = modelBuilder.Entity<AnimeCharacter>();
+            var character = modelBuilder.Entity<Character>();
             character.HasKey(c => c.Id);
             character.HasIndex(c => c.Slug).IsUnique();
             character.Property(c => c.Name).IsRequired();
 
-            var streamingLink = modelBuilder.Entity<AnimeStreamingLink>();
+            var streamingLink = modelBuilder.Entity<StreamingLink>();
             streamingLink.HasKey(l => l.Id);
             streamingLink.Property(l => l.Url).IsRequired();
             streamingLink.Property(l => l.SubbedLanguages).HasConversion(ValueConverters.SplitStringConverter);

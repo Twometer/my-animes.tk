@@ -1,6 +1,6 @@
 ﻿namespace myanimes.Database.Entities.Animes
 {
-    public enum AnimeStatus
+    public enum ShowStatus
     {
         Airing,
         Finished,

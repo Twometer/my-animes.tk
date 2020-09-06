@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace myanimes.Database.Entities.Animes
 {
-    public class AnimeGenre
+    public class Genre
     {
         public int Id { get; set; }
 

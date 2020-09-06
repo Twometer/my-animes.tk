@@ -11,7 +11,7 @@ namespace myanimes.Database.Entities.Animes
 
         public string CanonicalTitle { get; set; }
 
-        public IEnumerable<AnimeTitle> Titles { get; set; }
+        public IEnumerable<Title> Titles { get; set; }
 
         public DateTime StartDate { get; set; }
 
@@ -35,14 +35,14 @@ namespace myanimes.Database.Entities.Animes
 
         public int TotalLength { get; set; }
 
-        public AnimeStatus Status { get; set; }
+        public ShowStatus Status { get; set; }
 
-        public AnimeType Type { get; set; }
+        public ShowType Type { get; set; }
 
-        public IEnumerable<AnimeEpisode> Episodes { get; set; }
+        public IEnumerable<Episode> Episodes { get; set; }
 
-        public IEnumerable<AnimeCharacter> Characters { get; set; }
+        public IEnumerable<Character> Characters { get; set; }
 
-        public IEnumerable<AnimeStreamingLink> StreamingLinks { get; set; }
+        public IEnumerable<StreamingLink> StreamingLinks { get; set; }
     }
 }

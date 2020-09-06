@@ -10,6 +10,6 @@ namespace myanimes.Database.Entities.Mappings
 
         public int GenreId { get; set; }
 
-        public AnimeGenre Genre { get; set; }
+        public Genre Genre { get; set; }
     }
 }

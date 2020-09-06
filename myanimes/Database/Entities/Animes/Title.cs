@@ -1,6 +1,6 @@
 ﻿namespace myanimes.Database.Entities.Animes
 {
-    public class AnimeTitle
+    public class Title
     {
         public int Id { get; set; }
 
@@ -10,6 +10,6 @@
 
         public string Language { get; set; }
 
-        public string Title { get; set; }
+        public string Text { get; set; }
     }
 }
