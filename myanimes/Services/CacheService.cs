@@ -1,23 +1,44 @@
-﻿using myanimes.Database;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using myanimes.Database;
 using myanimes.Database.Entities.Animes;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace myanimes.Services
 {
     public class CacheService
     {
-        private DatabaseContext databaseContext;
+        private readonly ILogger<CacheService> logger;
 
-        private KitsuService kitsuService;
+        private readonly DatabaseContext database;
 
-        public CacheService(DatabaseContext databaseContext, KitsuService kitsuService)
+        private readonly KitsuService kitsu;
+
+        public CacheService(ILogger<CacheService> logger, DatabaseContext database, KitsuService kitsu)
         {
-            this.databaseContext = databaseContext;
-            this.kitsuService = kitsuService;
+            this.logger = logger;
+            this.database = database;
+            this.kitsu = kitsu;
         }
 
-        public Anime GetAnime(string slug)
+        public async Task<Anime> GetAnime(string slug)
         {
-            return null; // TODO
+            var animes = database.Animes.AsQueryable().Where(a => a.Slug == slug);
+            if (await animes.CountAsync() == 0)
+            {
+                logger.LogDebug("Cache miss while querying anime '{0}'", slug);
+                var webAnime = await kitsu.GetAnime(slug);
+                var dbAnime = await webAnime.ToAnimeDbo(database);
+                await database.Animes.AddAsync(dbAnime);
+                return webAnime;
+            }
+            else
+            {
+                logger.LogDebug("Cache hit while querying anime '{0}'", slug);
+                var dbAnime = await animes.SingleAsync();
+                return await dbAnime.ToAnime(database);
+            }
         }
     }
 }
