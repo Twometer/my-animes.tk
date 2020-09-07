@@ -1,4 +1,5 @@
 ﻿using myanimes.Models;
+using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
@@ -34,7 +35,7 @@ namespace myanimes.Services
             return null; // TODO
         }
 
-        private async Task<string> HttpGet(string url)
+        private async Task<JObject> HttpGet(string url)
         {
             var request = WebRequest.CreateHttp(url);
             request.Method = "GET";
@@ -44,7 +45,7 @@ namespace myanimes.Services
             using var response = await request.GetResponseAsync();
             using var stream = response.GetResponseStream();
             using var reader = new StreamReader(stream);
-            return await reader.ReadToEndAsync();
+            return JObject.Parse(await reader.ReadToEndAsync());
         }
     }
 }
