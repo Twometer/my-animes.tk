@@ -1,4 +1,6 @@
-﻿namespace myanimes.Database.Entities.Profile
+﻿using myanimes.Database.Entities.Profile;
+
+namespace myanimes.Database.Entities.Mappings
 {
     public class FollowerMapping
     {

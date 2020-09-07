@@ -1,4 +1,4 @@
-﻿namespace myanimes.Database.Entities.Animes
+﻿namespace myanimes.Models
 {
     public enum ShowStatus
     {

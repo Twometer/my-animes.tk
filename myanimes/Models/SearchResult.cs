@@ -1,7 +1,7 @@
 ﻿using myanimes.Database.Entities.Animes;
 using System.Collections.Generic;
 
-namespace myanimes.Services
+namespace myanimes.Models
 {
     public class SearchResult
     {

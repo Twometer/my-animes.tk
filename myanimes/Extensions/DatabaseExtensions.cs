@@ -1,7 +1,9 @@
-﻿using myanimes.Database.Entities.Animes;
+﻿using myanimes.Database;
+using myanimes.Database.Entities.Animes;
+using myanimes.Models;
 using System.Threading.Tasks;
 
-namespace myanimes.Database
+namespace myanimes.Extensions
 {
     public static class DatabaseExtensions
     {

@@ -1,4 +1,4 @@
-﻿using myanimes.Database.Entities.Animes;
+﻿using myanimes.Models;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;

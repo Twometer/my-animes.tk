@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using myanimes.Database.Entities.Animes;
+using System.Collections.Generic;
 
-namespace myanimes.Database.Entities.Animes
+namespace myanimes.Models
 {
     public class Anime : AnimeBase
     {

@@ -1,7 +1,8 @@
-﻿using System;
+﻿using myanimes.Database.Entities.Animes;
+using System;
 using System.Collections.Generic;
 
-namespace myanimes.Database.Entities.Animes
+namespace myanimes.Models
 {
     public class AnimeBase
     {

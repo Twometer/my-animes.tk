@@ -1,4 +1,4 @@
-﻿using myanimes.Database.Entities.Animes;
+﻿using myanimes.Models;
 using System.Linq;
 
 namespace myanimes.Extensions

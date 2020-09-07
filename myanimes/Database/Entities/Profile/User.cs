@@ -1,4 +1,5 @@
 ﻿using myanimes.Database.Entities.Animes;
+using myanimes.Database.Entities.Mappings;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
