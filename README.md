@@ -3,7 +3,7 @@
   <h1 align="center">myanimes</h1>
 </p>
 
-A simple and beautiful website to share your love for anime with the world
+<p align="center">A simple and beautiful place to share your favorite animes with the world.</p>
 
 #### Some links for you :3
  [homepage](https://my-animes.tk/)
