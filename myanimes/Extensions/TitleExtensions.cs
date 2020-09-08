@@ -11,6 +11,14 @@ namespace myanimes.Extensions
         private const string EnJp = "en_jp";
         private const string JaJp = "ja_jp";
 
+        private static string GetTitle(this AnimeBase anime, string language)
+        {
+            foreach (var title in anime.Titles)
+                if (title.Language == language)
+                    return title.Text;
+            return null;
+        }
+
         public static string GetEnglishTitle(this AnimeBase anime)
         {
             foreach (var title in anime.Titles)
@@ -21,8 +29,12 @@ namespace myanimes.Extensions
 
         public static string GetJapaneseTitle(this AnimeBase anime)
         {
+            var jpTitle = anime.GetTitle(JaJp);
+            if (jpTitle != null)
+                return jpTitle;
+
             foreach (var title in anime.Titles)
-                if (title.Language == JaJp || title.Language.EndsWith(GenericJapanese))
+                if (title.Language.EndsWith(GenericJapanese))
                     return title.Text;
             return anime.CanonicalTitle;
         }
@@ -32,9 +44,9 @@ namespace myanimes.Extensions
             if (anime.CanonicalTitle != anime.GetEnglishTitle())
                 return anime.CanonicalTitle;
 
-            foreach (var title in anime.Titles)
-                if (title.Language == EnJp)
-                    return title.Text;
+            var enJpTitle = anime.GetTitle(EnJp);
+            if (enJpTitle != null)
+                return enJpTitle;
 
             return anime.Titles.First().Text;
         }
