@@ -1,0 +1,10 @@
+﻿@model Anime
+
+@{
+    ViewData["Title"] = Model.CanonicalTitle;
+}
+
+<div class="text-center">
+    <h1 class="display-4">@Model.CanonicalTitle</h1>
+    @Model.ToString()
+</div>
