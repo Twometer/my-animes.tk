@@ -1,4 +1,5 @@
-﻿@model Anime
+﻿@using myanimes.Extensions
+@model Anime
 
 @{
     ViewData["Title"] = Model.CanonicalTitle;
@@ -6,5 +7,27 @@
 
 <div class="text-center">
     <h1 class="display-4">@Model.CanonicalTitle</h1>
-    @Model.ToString()
+    <p>EnglishTitle: @Model.GetEnglishTitle()</p>
+    <p>AlternateTitle: @Model.GetAlternateTitle()</p>
+    <p>JapaneseTitle: @Model.GetJapaneseTitle()</p>
+    <p>Slug: @Model.Slug</p>
+    <p>Titles: @string.Join(',', Model.Titles.Select(t => t.Text))</p>
+    <p>StartDate: @Model.StartDate</p>
+    <p>EndDate: @Model.EndDate</p>
+    <p>Synopsis: @Model.Synopsis</p>
+    <p>CoverImageUrl: @Model.CoverImageUrl</p>
+    <p>ThumbnailUrl: @Model.ThumbnailUrl</p>
+    <p>TrailerYoutubeId: @Model.TrailerYoutubeId</p>
+    <p>AgeRating: @Model.AgeRating</p>
+    <p>Nsfw: @Model.Nsfw</p>
+    <p>EpisodeCount: @Model.EpisodeCount</p>
+    <p>EpisodeLength: @Model.EpisodeLength</p>
+    <p>TotalLength: @Model.TotalLength</p>
+    <p>Status: @Model.Status</p>
+    <p>Type: @Model.Type</p>
+    <p>Episodes: @string.Join(',', Model.Episodes.Select(e => e.Title))</p>
+    <p>Characters: @string.Join(',', Model.Characters.Select(c => c.Name))</p>
+    <p>StreamingLinks: @string.Join(',', Model.StreamingLinks.Select(l => l.Url))</p>
+    <p>Genres: @string.Join(',', Model.Genres.Select(g => g.Name))</p>
+    <p>Studios: @string.Join(',', Model.Studios.Select(g => g.Name))</p>
 </div>

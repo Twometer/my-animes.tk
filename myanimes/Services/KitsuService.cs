@@ -1,4 +1,5 @@
 ﻿using myanimes.Database.Entities.Animes;
+using myanimes.Extensions;
 using myanimes.Models;
 using Newtonsoft.Json.Linq;
 using System;
@@ -35,50 +36,55 @@ namespace myanimes.Services
             var included = json["included"] as JArray;
 
             var animeEpisodes = included.Where(o => o.Value<string>("type") == "episodes")
+                .Select(o => o["attributes"])
                 .Select(e => new Episode
                 {
-                    Title = e.Value<string>("title"),
-                    Synopsis = e.Value<string>("synopsis"),
-                    SeasonNumber = e.Value<int>("seasonNumber"),
-                    EpisodeNumber = e.Value<int>("number"),
-                    Length = e.Value<int>("length"),
-                    ThumbnailUrl = e["thumbnail"].Value<string>("original"),
-                    AirDate = e.Value<DateTime>("airdate")
+                    Title = e.ValueOrDefault<string>("canonicalTitle"),
+                    Synopsis = e.ValueOrDefault<string>("synopsis"), 
+                    SeasonNumber = e.ValueOrDefault<int>("seasonNumber"),
+                    EpisodeNumber = e.ValueOrDefault<int>("relativeNumber"),
+                    Length = e.ValueOrDefault<int>("length"),
+                    ThumbnailUrl = e["thumbnail"].ValueOrDefault<string>("original"),
+                    AirDate = e.ValueOrDefault<DateTime>("airdate")
                 });
 
             var animeCharacters = included.Where(o => o.Value<string>("type") == "characters")
+                .Select(o => o["attributes"])
                 .Select(c => new Character
                 {
-                    Name = c.Value<string>("name"),
-                    Slug = c.Value<string>("slug"),
-                    Description = c.Value<string>("description"),
-                    ImageUrl = c["image"].Value<string>("original")
+                    Name = c.ValueOrDefault<string>("name"),
+                    Slug = c.ValueOrDefault<string>("slug"),
+                    Description = c.ValueOrDefault<string>("description"),
+                    ImageUrl = c["image"].ValueOrDefault<string>("original")
                 });
 
             var animeStreamingLinks = included.Where(o => o.Value<string>("type") == "streamingLinks")
+                .Select(o => o["attributes"])
                 .Select(l => new StreamingLink
                 {
-                    Url = l.Value<string>("url"),
+                    Url = l.ValueOrDefault<string>("url"),
                     SubbedLanguages = (l["subs"] as JArray)?.Select(c => c.Value<string>()),
                     DubbedLanguages = (l["dubs"] as JArray)?.Select(c => c.Value<string>())
                 });
 
             var animeGenres = included.Where(o => o.Value<string>("type") == "genres")
+                .Select(o => o["attributes"])
                 .Select(g => new Genre
                 {
-                    Name = g.Value<string>("name"),
-                    Slug = g.Value<string>("slug")
+                    Name = g.ValueOrDefault<string>("name"),
+                    Slug = g.ValueOrDefault<string>("slug")
                 });
 
             var animeStudios = included.Where(o => o.Value<string>("type") == "producers")
+                .Select(o => o["attributes"])
                 .Select(s => new Studio
                 {
-                    Name = s.Value<string>("name"),
-                    Slug = s.Value<string>("slug")
+                    Name = s.ValueOrDefault<string>("name"),
+                    Slug = s.ValueOrDefault<string>("slug")
                 });
 
             var anime = new Anime
-            {  
+            {
                 Episodes = animeEpisodes,
                 Characters = animeCharacters,
                 StreamingLinks = animeStreamingLinks,
@@ -86,6 +92,12 @@ namespace myanimes.Services
                 Studios = animeStudios
             };
             ReadCoreAnimeInfo(anime, attributes);
+
+            if (anime.EpisodeCount == 0)
+                anime.EpisodeCount = anime.Episodes.Count();
+
+            if (anime.TotalLength == 0)
+                anime.TotalLength = anime.EpisodeCount * anime.EpisodeLength;
 
             return anime;
         }
@@ -95,16 +107,14 @@ namespace myanimes.Services
             var encodedQuery = WebUtility.UrlEncode(query);
             var json = await HttpGet($"https://kitsu.io/api/edge/anime?filter[text]={encodedQuery}&fields[anime]=slug,titles,posterImage");
 
-            return (json["data"] as JArray)?.Select(item =>
-            {
-                var attributes = item["attributes"];
-                return new SearchResult
+            return (json["data"] as JArray)?
+                .Select(o => o["attributes"])
+                .Select(item => new SearchResult
                 {
-                    Slug = attributes.Value<string>("slug"),
-                    Titles = ReadTitles(attributes),
-                    Thumbnail = attributes["posterImage"].Value<string>("tiny")
-                };
-            });
+                    Slug = item.Value<string>("slug"),
+                    Titles = ReadTitles(item),
+                    Thumbnail = item["posterImage"].ValueOrDefault<string>("tiny")
+                });
         }
 
         private async Task<JObject> HttpGet(string url)
@@ -128,16 +138,16 @@ namespace myanimes.Services
             anime.StartDate = attributes.Value<DateTime>("startDate");
             anime.EndDate = attributes.Value<DateTime>("endDate");
             anime.Synopsis = attributes.Value<string>("synopsis");
-            anime.CoverImageUrl = attributes["coverImage"].Value<string>("small");
-            anime.ThumbnailUrl = attributes["coverImage"].Value<string>("tiny");
+            anime.CoverImageUrl = attributes["coverImage"].ValueOrDefault<string>("small");
+            anime.ThumbnailUrl = attributes["coverImage"].ValueOrDefault<string>("tiny");
             anime.TrailerYoutubeId = attributes.Value<string>("youtubeVideoId");
             anime.AgeRating = attributes.Value<string>("ageRatingGuide");
             anime.Nsfw = attributes.Value<bool>("nsfw");
             anime.EpisodeCount = attributes.Value<int>("episodeCount");
             anime.EpisodeLength = attributes.Value<int>("episodeLength");
             anime.TotalLength = attributes.Value<int>("totalLength");
-            anime.Status = attributes.Value<ShowStatus>("status");
-            anime.Type = attributes.Value<ShowType>("subtype");
+            anime.Status = attributes.Value<string>("status").ToEnum<ShowStatus>();
+            anime.Type = attributes.Value<string>("subtype").ToEnum<ShowType>();
         }
 
         private IEnumerable<Title> ReadTitles(JToken attributes)
@@ -146,7 +156,7 @@ namespace myanimes.Services
                 .Select(t => new Title
                 {
                     Language = t.Name,
-                    Text = t.Value<string>()
+                    Text = t.Value.Value<string>()
                 });
         }
     }
