@@ -22,7 +22,7 @@
     <h2>Info</h2>
     <div class="row">
         <div class="col-md">
-            <table>
+            <table class="anime-info-table">
                 <tr>
                     <th>Alternative title:</th>
                     <td>@Model.GetAlternateTitle()</td>
@@ -50,7 +50,7 @@
             </table>
         </div>
         <div class="col-md">
-            <table>
+            <table class="anime-info-table">
                 <tr>
                     <th>Genres:</th>
                     <td>@string.Join(", ", Model.Genres.Select(g => g.Name))</td>

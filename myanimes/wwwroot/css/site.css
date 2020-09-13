@@ -11,6 +11,12 @@
     --common-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2);
 }
 
+body {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 300;
+    color: #707070;
+}
+
 /* Navbar Styles
 -------------------------------------------------- */
 .navbar {
@@ -90,3 +96,20 @@ body {
     line-height: var(--footer-height); /* Vertically center the text there */
     border-top: 1px solid #e5e5e5;
 }
+
+
+/* Anime page styles
+-------------------------------------------------- */
+.anime-info-table {
+    width: 100%;
+}
+
+    .anime-info-table > th, td {
+        padding-bottom: 1rem;
+        align-content: center;
+    }
+
+    .anime-info-table > td {
+        text-align: left;
+        padding-left: 10px;
+    }
