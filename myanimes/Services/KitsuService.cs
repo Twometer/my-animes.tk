@@ -138,8 +138,8 @@ namespace myanimes.Services
             anime.StartDate = attributes.Value<DateTime>("startDate");
             anime.EndDate = attributes.Value<DateTime>("endDate");
             anime.Synopsis = attributes.Value<string>("synopsis");
-            anime.CoverImageUrl = attributes["coverImage"].ValueOrDefault<string>("small");
-            anime.ThumbnailUrl = attributes["coverImage"].ValueOrDefault<string>("tiny");
+            anime.PosterImageUrl = attributes["posterImage"].ValueOrDefault<string>("small");
+            anime.ThumbnailUrl = attributes["posterImage"].ValueOrDefault<string>("tiny");
             anime.TrailerYoutubeId = attributes.Value<string>("youtubeVideoId");
             anime.AgeRating = attributes.Value<string>("ageRatingGuide");
             anime.Nsfw = attributes.Value<bool>("nsfw");

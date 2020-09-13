@@ -5,29 +5,124 @@
     ViewData["Title"] = Model.CanonicalTitle;
 }
 
-<div class="text-center">
-    <h1 class="display-4">@Model.CanonicalTitle</h1>
-    <p>EnglishTitle: @Model.GetEnglishTitle()</p>
-    <p>AlternateTitle: @Model.GetAlternateTitle()</p>
-    <p>JapaneseTitle: @Model.GetJapaneseTitle()</p>
-    <p>Slug: @Model.Slug</p>
-    <p>Titles: @string.Join(',', Model.Titles.Select(t => t.Text))</p>
-    <p>StartDate: @Model.StartDate</p>
-    <p>EndDate: @Model.EndDate</p>
-    <p>Synopsis: @Model.Synopsis</p>
-    <p>CoverImageUrl: @Model.CoverImageUrl</p>
-    <p>ThumbnailUrl: @Model.ThumbnailUrl</p>
-    <p>TrailerYoutubeId: @Model.TrailerYoutubeId</p>
-    <p>AgeRating: @Model.AgeRating</p>
-    <p>Nsfw: @Model.Nsfw</p>
-    <p>EpisodeCount: @Model.EpisodeCount</p>
-    <p>EpisodeLength: @Model.EpisodeLength</p>
-    <p>TotalLength: @Model.TotalLength</p>
-    <p>Status: @Model.Status</p>
-    <p>Type: @Model.Type</p>
-    <p>Episodes: @string.Join(',', Model.Episodes.Select(e => e.Title))</p>
-    <p>Characters: @string.Join(',', Model.Characters.Select(c => c.Name))</p>
-    <p>StreamingLinks: @string.Join(',', Model.StreamingLinks.Select(l => l.Url))</p>
-    <p>Genres: @string.Join(',', Model.Genres.Select(g => g.Name))</p>
-    <p>Studios: @string.Join(',', Model.Studios.Select(g => g.Name))</p>
+<div>
+    <div class="row align-items-center">
+        <div class="col-lg-auto mr-4-lg">
+            <img class="shadow" src="@Model.PosterImageUrl" width=200 alt="Poster image">
+        </div>
+        <div class="col-lg ml-lg-5">
+            <h1>@Model.GetEnglishTitle()</h1>
+            <h4>@Model.GetJapaneseTitle()</h4>
+            <p class="mt-3">
+                @Model.Synopsis
+            </p>
+        </div>
+    </div>
+
+    <h2>Info</h2>
+    <div class="row">
+        <div class="col-md">
+            <table>
+                <tr>
+                    <th>Alternative title:</th>
+                    <td>@Model.GetAlternateTitle()</td>
+                </tr>
+                <tr>
+                    <th>Status:</th>
+                    <td>@Model.Status</td>
+                </tr>
+                <tr>
+                    <th>Type:</th>
+                    <td>@Model.Type</td>
+                </tr>
+                <tr>
+                    <th>Studios:</th>
+                    <td>@string.Join(", ", Model.Studios.Take(3).Select(g => g.Name))</td>
+                </tr>
+                <tr>
+                    <th>Start date:</th>
+                    <td>@Model.StartDate</td>
+                </tr>
+                <tr>
+                    <th>End date:</th>
+                    <td>@Model.EndDate</td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-md">
+            <table>
+                <tr>
+                    <th>Genres:</th>
+                    <td>@string.Join(", ", Model.Genres.Select(g => g.Name))</td>
+                </tr>
+                <tr>
+                    <th>Episodes:</th>
+                    <td>@Model.EpisodeCount</td>
+                </tr>
+                <tr>
+                    <th>Episode length:</th>
+                    <td>@Model.EpisodeLength</td>
+                </tr>
+                <tr>
+                    <th>Total length:</th>
+                    <td>@Model.TotalLength</td>
+                </tr>
+                <tr>
+                    <th>Age rating:</th>
+                    <td>@Model.AgeRating</td>
+                </tr>
+                <tr>
+                    <th>NSFW:</th>
+                    <td>@Model.Nsfw</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    @if (Model.EpisodeCount > 0)
+    {
+        <h2>Episodes</h2>
+        @foreach (var ep in Model.Episodes)
+        {
+            <p>
+                <img src="@ep.ThumbnailUrl" />
+                <h3>@ep.SeasonNumber/@ep.EpisodeNumber: @ep.Title (@ep.AirDate)</h3>
+                @ep.Synopsis
+            </p>
+        }
+    }
+
+    @if (Model.Characters.Count() > 0)
+    {
+        <h2>Characters</h2>
+        @foreach (var c in Model.Characters)
+        {
+            <p>
+                <img src="@c.ImageUrl" />
+                <h3>@c.Name</h3>
+                @c.Description
+            </p>
+        }
+    }
+
+    @if (Model.StreamingLinks.Count() > 0)
+    {
+        <h2>Streaming providers</h2>
+        <ul>
+            @foreach (var l in Model.StreamingLinks)
+            {
+                <li><a href="@l.Url">@l.Url</a> (Subbed: @string.Join(", ", l.SubbedLanguages), Dubbed: @string.Join(", ", l.DubbedLanguages))</li>
+            }
+        </ul>
+    }
+
+    @if (!string.IsNullOrEmpty(Model.TrailerYoutubeId))
+    {
+        <h2>Trailer</h2>
+        <div class="embed-responsive embed-responsive-16by9">
+            <iframe class="embed-responsive-item" src="https://youtube.com/embed/@Model.TrailerYoutubeId"
+                    allowfullscreen allow="encrypted-media"></iframe>
+        </div>
+    }
+
 </div>

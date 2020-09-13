@@ -20,7 +20,7 @@ namespace myanimes.Models
 
         public string Synopsis { get; set; }
 
-        public string CoverImageUrl { get; set; }
+        public string PosterImageUrl { get; set; }
 
         public string ThumbnailUrl { get; set; }
 
