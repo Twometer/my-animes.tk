@@ -107,12 +107,25 @@
 @if (Model.StreamingLinks.Count() > 0)
 {
     <h2 class="section-header">Streaming providers</h2>
-    <ul>
-        @foreach (var l in Model.StreamingLinks)
-        {
-            <li><a href="@l.Url">@l.Url</a> (Subbed: @string.Join(", ", l.SubbedLanguages), Dubbed: @string.Join(", ", l.DubbedLanguages))</li>
-        }
-    </ul>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Link</th>
+                <th scope="col">Subs</th>
+                <th scope="col">Dubs</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var l in Model.StreamingLinks)
+            {
+                <tr>
+                    <td><a href="@l.Url">@l.Url</a></td>
+                    <td>@string.Join(", ", l.SubbedLanguages)</td>
+                    <td>@string.Join(", ", l.DubbedLanguages)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
 }
 
 @if (!string.IsNullOrEmpty(Model.TrailerYoutubeId))
