@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace myanimes.Services
@@ -54,7 +55,7 @@ namespace myanimes.Services
                 {
                     Name = c.ValueOrDefault<string>("name"),
                     Slug = c.ValueOrDefault<string>("slug"),
-                    Description = c.ValueOrDefault<string>("description"),
+                    Description = c.ValueOrDefault<string>("description").StripHtml(),
                     ImageUrl = c["image"].ValueOrDefault<string>("original")
                 });
 
