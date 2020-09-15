@@ -40,11 +40,11 @@
             </tr>
             <tr>
                 <th>Start date:</th>
-                <td>@Model.StartDate</td>
+                <td>@Model.StartDate.ToShortDateString()</td>
             </tr>
             <tr>
                 <th>End date:</th>
-                <td>@Model.EndDate</td>
+                <td>@Model.EndDate.ToShortDateString()</td>
             </tr>
         </table>
     </div>
@@ -81,27 +81,36 @@
 @if (Model.EpisodeCount > 0)
 {
     <h2 class="section-header">Episodes</h2>
-    @foreach (var ep in Model.Episodes)
-    {
-        <p>
-            <img src="@ep.ThumbnailUrl" width="150" />
-            <h3>@ep.SeasonNumber/@ep.EpisodeNumber: @ep.Title (@ep.AirDate)</h3>
-            @ep.Synopsis
-        </p>
-    }
+    <div class="card-grid">
+        @foreach (var ep in Model.Episodes)
+        {
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="@ep.ThumbnailUrl" alt="Episode image">
+                <div class="card-body">
+                    <h5 class="card-title">@ep.Title</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">S @ep.SeasonNumber E @ep.EpisodeNumber from @ep.AirDate.ToShortDateString()</h6>
+                    <p class="card-text">@ep.Synopsis</p>
+                </div>
+            </div>
+        }
+    </div>
 }
 
 @if (Model.Characters.Count() > 0)
 {
     <h2 class="section-header">Characters</h2>
-    @foreach (var c in Model.Characters)
-    {
-        <p>
-            <img src="@c.ImageUrl" />
-            <h3>@c.Name</h3>
-            @c.Description
-        </p>
-    }
+    <div class="card-grid">
+        @foreach (var c in Model.Characters)
+        {
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="@c.ImageUrl" alt="Character image">
+                <div class="card-body">
+                    <h5 class="card-title">@c.Name</h5>
+                    <p class="card-text">@c.Description</p>
+                </div>
+            </div>
+        }
+    </div>
 }
 
 @if (Model.StreamingLinks.Count() > 0)
