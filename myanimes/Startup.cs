@@ -46,6 +46,10 @@ namespace myanimes
             app.UseAuthorization();
             app.UseAuthentication();
             app.UseEndpoints(endpoints => endpoints.MapControllers());
+
+            using var scope = app.ApplicationServices.CreateScope();
+            using var context = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
+            context.Database.EnsureCreated();
         }
     }
 }

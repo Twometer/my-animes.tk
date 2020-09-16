@@ -45,5 +45,29 @@ namespace myanimes.Models
         public IEnumerable<Character> Characters { get; set; }
 
         public IEnumerable<StreamingLink> StreamingLinks { get; set; }
+
+        public void CopyBaseProperties(AnimeBase other)
+        {
+            Id = other.Id;
+            Slug = other.Slug;
+            CanonicalTitle = other.CanonicalTitle;
+            Titles = other.Titles;
+            StartDate = other.StartDate;
+            EndDate = other.EndDate;
+            Synopsis = other.Synopsis;
+            PosterImageUrl = other.PosterImageUrl;
+            ThumbnailUrl = other.ThumbnailUrl;
+            TrailerYoutubeId = other.TrailerYoutubeId;
+            AgeRating = other.AgeRating;
+            Nsfw = other.Nsfw;
+            EpisodeCount = other.EpisodeCount;
+            EpisodeLength = other.EpisodeLength;
+            TotalLength = other.TotalLength;
+            Status = other.Status;
+            Type = other.Type;
+            Episodes = other.Episodes;
+            Characters = other.Characters;
+            StreamingLinks = other.StreamingLinks;
+        }
     }
 }

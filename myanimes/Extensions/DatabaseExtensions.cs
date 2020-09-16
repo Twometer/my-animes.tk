@@ -9,12 +9,18 @@ namespace myanimes.Extensions
     {
         public static async Task<AnimeDbo> ToAnimeDbo(this Anime anime, DatabaseContext ctx)
         {
-            return null; // TODO
+            var animeDbo = new AnimeDbo();
+            animeDbo.CopyBaseProperties(anime);
+
+            return animeDbo; // TODO
         }
 
         public static async Task<Anime> ToAnime(this AnimeDbo animeDbo, DatabaseContext ctx)
         {
-            return null; // TODO
+            var anime = new Anime();
+            anime.CopyBaseProperties(animeDbo);
+
+            return anime; // TODO
         }
     }
 }

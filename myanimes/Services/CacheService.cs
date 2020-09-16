@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using myanimes.Database;
+using myanimes.Database.Entities.Mappings;
 using myanimes.Extensions;
 using myanimes.Models;
 using System.Linq;
