@@ -47,7 +47,7 @@ namespace myanimes.Services
                     Length = e.ValueOrDefault<int>("length"),
                     ThumbnailUrl = e["thumbnail"].ValueOrDefault<string>("original"),
                     AirDate = e.ValueOrDefault<DateTime>("airdate")
-                });
+                }).ToList();
 
             var animeCharacters = included.Where(o => o.Value<string>("type") == "characters")
                 .Select(o => o["attributes"])
@@ -57,16 +57,16 @@ namespace myanimes.Services
                     Slug = c.ValueOrDefault<string>("slug"),
                     Description = c.ValueOrDefault<string>("description").StripHtml(),
                     ImageUrl = c["image"].ValueOrDefault<string>("original")
-                });
+                }).ToList();
 
             var animeStreamingLinks = included.Where(o => o.Value<string>("type") == "streamingLinks")
                 .Select(o => o["attributes"])
                 .Select(l => new StreamingLink
                 {
                     Url = l.ValueOrDefault<string>("url"),
-                    SubbedLanguages = (l["subs"] as JArray)?.Select(c => c.Value<string>()),
-                    DubbedLanguages = (l["dubs"] as JArray)?.Select(c => c.Value<string>())
-                });
+                    SubbedLanguages = (l["subs"] as JArray)?.Select(c => c.Value<string>()).ToList(),
+                    DubbedLanguages = (l["dubs"] as JArray)?.Select(c => c.Value<string>()).ToList()
+                }).ToList();
 
             var animeGenres = included.Where(o => o.Value<string>("type") == "genres")
                 .Select(o => o["attributes"])
@@ -74,7 +74,7 @@ namespace myanimes.Services
                 {
                     Name = g.ValueOrDefault<string>("name"),
                     Slug = g.ValueOrDefault<string>("slug")
-                });
+                }).ToList();
 
             var animeStudios = included.Where(o => o.Value<string>("type") == "producers")
                 .Select(o => o["attributes"])
@@ -82,7 +82,7 @@ namespace myanimes.Services
                 {
                     Name = s.ValueOrDefault<string>("name"),
                     Slug = s.ValueOrDefault<string>("slug")
-                });
+                }).ToList();
 
             var anime = new Anime
             {
@@ -158,7 +158,7 @@ namespace myanimes.Services
                 {
                     Language = t.Name,
                     Text = t.Value.Value<string>()
-                });
+                }).ToList();
         }
     }
 }
