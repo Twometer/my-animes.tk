@@ -29,14 +29,6 @@ namespace myanimes.Services
         {
             var dbAnime = await database.Animes.AsQueryable()
                 .Where(a => a.Slug == slug)
-                .Include(a => a.Genres)
-                .ThenInclude(g => g.Genre)
-                .Include(a => a.Studios)
-                .ThenInclude(s => s.Studio)
-                .Include(a => a.Titles)
-                .Include(a => a.Episodes)
-                .Include(a => a.Characters)
-                .Include(a => a.StreamingLinks)
                 .SingleOrDefaultAsync();
 
             if (dbAnime == null)
@@ -49,24 +41,34 @@ namespace myanimes.Services
             else
             {
                 logger.LogDebug("Cache hit while querying anime '{0}'", slug);
-                return DatabaseToAnime(dbAnime);
+                return await DatabaseToAnime(dbAnime);
             }
         }
 
-        private Anime DatabaseToAnime(AnimeDbo animeDbo)
+        private async Task<Anime> DatabaseToAnime(AnimeDbo animeDbo)
         {
             var anime = new Anime();
             anime.CopyBaseProperties(animeDbo);
-            anime.Genres = animeDbo.Genres.Select(m => m.Genre);
-            anime.Studios = animeDbo.Studios.Select(s => s.Studio);
-            anime.Episodes = anime.Episodes.OrderBy(e => e.EpisodeNumber);
+
+            anime.Genres = await database.GenreMappings.Where(m => m.AnimeId == anime.Id)
+                .Join(database.Genres, m => m.GenreId, g => g.Id, (m, g) => g).ToListAsync();
+
+            anime.Studios = await database.StudioMappings.Where(m => m.AnimeId == anime.Id)
+                .Join(database.Studios, m => m.StudioId, s => s.Id, (m, s) => s).ToListAsync();
+
+            anime.Titles = await database.Titles.Where(t => t.AnimeId == anime.Id).ToListAsync();
+            anime.Episodes = await database.Episodes.Where(e => e.AnimeId == anime.Id)
+                .OrderBy(e => e.SeasonNumber).ThenBy(e => e.EpisodeNumber).ToListAsync();
+            anime.Characters = await database.Characters.Where(c => c.AnimeId == anime.Id).ToListAsync();
+            anime.StreamingLinks = await database.StreamingLinks.Where(l => l.AnimeId == anime.Id).ToListAsync();
+
             return anime;
         }   
 
         private async Task AnimeToDatabase(Anime anime)
         {
             var animeDbo = new AnimeDbo();
-            animeDbo.CopyBaseProperties(anime);
+            animeDbo.CopyBaseAndNavigationProperties(anime);
 
             var addResult = database.Animes.Add(animeDbo);
             await database.SaveChangesAsync();

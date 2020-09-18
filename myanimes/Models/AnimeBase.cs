@@ -51,7 +51,6 @@ namespace myanimes.Models
             Id = other.Id;
             Slug = other.Slug;
             CanonicalTitle = other.CanonicalTitle;
-            Titles = other.Titles;
             StartDate = other.StartDate;
             EndDate = other.EndDate;
             Synopsis = other.Synopsis;
@@ -65,6 +64,12 @@ namespace myanimes.Models
             TotalLength = other.TotalLength;
             Status = other.Status;
             Type = other.Type;
+        }
+
+        public void CopyBaseAndNavigationProperties(AnimeBase other)
+        {
+            CopyBaseProperties(other);
+            Titles = other.Titles;
             Episodes = other.Episodes;
             Characters = other.Characters;
             StreamingLinks = other.StreamingLinks;
