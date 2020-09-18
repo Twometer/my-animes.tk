@@ -46,33 +46,33 @@ namespace myanimes.Models
 
         public IEnumerable<StreamingLink> StreamingLinks { get; set; }
 
-        public void CopyBaseProperties(AnimeBase other)
+        public void CopyBaseProperties(AnimeBase source)
         {
-            Id = other.Id;
-            Slug = other.Slug;
-            CanonicalTitle = other.CanonicalTitle;
-            StartDate = other.StartDate;
-            EndDate = other.EndDate;
-            Synopsis = other.Synopsis;
-            PosterImageUrl = other.PosterImageUrl;
-            ThumbnailUrl = other.ThumbnailUrl;
-            TrailerYoutubeId = other.TrailerYoutubeId;
-            AgeRating = other.AgeRating;
-            Nsfw = other.Nsfw;
-            EpisodeCount = other.EpisodeCount;
-            EpisodeLength = other.EpisodeLength;
-            TotalLength = other.TotalLength;
-            Status = other.Status;
-            Type = other.Type;
+            Id = source.Id;
+            Slug = source.Slug;
+            CanonicalTitle = source.CanonicalTitle;
+            StartDate = source.StartDate;
+            EndDate = source.EndDate;
+            Synopsis = source.Synopsis;
+            PosterImageUrl = source.PosterImageUrl;
+            ThumbnailUrl = source.ThumbnailUrl;
+            TrailerYoutubeId = source.TrailerYoutubeId;
+            AgeRating = source.AgeRating;
+            Nsfw = source.Nsfw;
+            EpisodeCount = source.EpisodeCount;
+            EpisodeLength = source.EpisodeLength;
+            TotalLength = source.TotalLength;
+            Status = source.Status;
+            Type = source.Type;
         }
 
-        public void CopyBaseAndNavigationProperties(AnimeBase other)
+        public void CopyBaseAndNavigationProperties(AnimeBase source)
         {
-            CopyBaseProperties(other);
-            Titles = other.Titles;
-            Episodes = other.Episodes;
-            Characters = other.Characters;
-            StreamingLinks = other.StreamingLinks;
+            CopyBaseProperties(source);
+            Titles = source.Titles;
+            Episodes = source.Episodes;
+            Characters = source.Characters;
+            StreamingLinks = source.StreamingLinks;
         }
     }
 }

@@ -27,11 +27,9 @@ namespace myanimes.Services
 
         public async Task<Anime> GetAnime(string slug)
         {
-            var dbAnime = await database.Animes.AsQueryable()
-                .Where(a => a.Slug == slug)
-                .SingleOrDefaultAsync();
+            var dbAnime = await database.Animes.SingleOrDefaultAsync(a => a.Slug == slug);
 
-            if (dbAnime == null)
+            if (dbAnime == default)
             {
                 logger.LogDebug("Cache miss while querying anime '{0}'", slug);
                 var anime = await kitsu.GetAnime(slug);
@@ -48,7 +46,7 @@ namespace myanimes.Services
         private async Task<Anime> DatabaseToAnime(AnimeDbo animeDbo)
         {
             var anime = new Anime();
-            anime.CopyBaseProperties(animeDbo);
+            anime.CopyBaseProperties(source: animeDbo);
 
             anime.Genres = await database.GenreMappings.Where(m => m.AnimeId == anime.Id)
                 .Join(database.Genres, m => m.GenreId, g => g.Id, (m, g) => g).ToListAsync();
@@ -68,7 +66,7 @@ namespace myanimes.Services
         private async Task AnimeToDatabase(Anime anime)
         {
             var animeDbo = new AnimeDbo();
-            animeDbo.CopyBaseAndNavigationProperties(anime);
+            animeDbo.CopyBaseAndNavigationProperties(source: anime);
 
             database.Animes.Add(animeDbo);
 
