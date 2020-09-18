@@ -63,63 +63,28 @@ namespace myanimes.Services
             anime.StreamingLinks = await database.StreamingLinks.Where(l => l.AnimeId == anime.Id).ToListAsync();
 
             return anime;
-        }   
+        }
 
         private async Task AnimeToDatabase(Anime anime)
         {
             var animeDbo = new AnimeDbo();
             animeDbo.CopyBaseAndNavigationProperties(anime);
 
-            var addResult = database.Animes.Add(animeDbo);
-            await database.SaveChangesAsync();
-
-            var animeId = addResult.Entity.Id;
+            database.Animes.Add(animeDbo);
 
             foreach (var genre in anime.Genres)
             {
-                genre.Id = await GetOrAddGenre(genre);
-                var mapping = new GenreMapping { AnimeId = animeId, GenreId = genre.Id };
-                database.GenreMappings.Add(mapping);
+                var genreDbo = await database.Genres.SingleOrDefaultAsync(g => g.Slug == genre.Slug);
+                database.GenreMappings.Add(new GenreMapping { Anime = animeDbo, Genre = genreDbo ?? genre });
             }
 
             foreach (var studio in anime.Studios)
             {
-                studio.Id = await GetOrAddStudio(studio);
-                var mapping = new StudioMapping { AnimeId = animeId, StudioId = studio.Id };
-                database.StudioMappings.Add(mapping);
+                var studioDbo = await database.Studios.SingleOrDefaultAsync(s => s.Slug == studio.Slug);
+                database.StudioMappings.Add(new StudioMapping { Anime = animeDbo, Studio = studioDbo ?? studio });
             }
 
             await database.SaveChangesAsync();
-        }
-
-        private async Task<int> GetOrAddGenre(Genre genre)
-        {
-            var dbGenre = await database.Genres.AsQueryable()
-                .Where(g => g.Slug == genre.Slug)
-                .SingleOrDefaultAsync();
-
-            if (dbGenre == default)
-            {
-                dbGenre = database.Genres.Add(genre).Entity;
-                await database.SaveChangesAsync();
-            }
-
-            return dbGenre.Id;
-        }
-
-        private async Task<int> GetOrAddStudio(Studio studio)
-        {
-            var dbStudio = await database.Studios.AsQueryable()
-                .Where(s => s.Slug == studio.Slug)
-                .SingleOrDefaultAsync();
-
-            if (dbStudio == default)
-            {
-                dbStudio = database.Studios.Add(studio).Entity;
-                await database.SaveChangesAsync();
-            }
-
-            return dbStudio.Id;
         }
     }
 }
