@@ -53,7 +53,6 @@ namespace myanimes.Database
             user.HasKey(u => u.Id);
             user.HasIndex(u => u.Name).IsUnique();
             user.Property(u => u.PasswordHash).IsRequired();
-            user.Property(u => u.JoinDate).IsRequired();
             user.HasMany(u => u.AnimeList).WithOne(i => i.User).HasForeignKey(i => i.UserId);
 
             var followerMapping = modelBuilder.Entity<FollowerMapping>();
@@ -64,14 +63,10 @@ namespace myanimes.Database
             var animeListItem = modelBuilder.Entity<AnimeListItem>();
             animeListItem.HasKey(i => i.Id);
             animeListItem.HasOne(i => i.User).WithMany(u => u.AnimeList).HasForeignKey(i => i.UserId);
-            animeListItem.Property(i => i.WatchState).IsRequired();
-            animeListItem.Property(i => i.DateAdded).IsRequired();
-            animeListItem.Property(i => i.DateModified).IsRequired();
-            animeListItem.Property(i => i.DateWatched).IsRequired();
 
             var anime = modelBuilder.Entity<AnimeDbo>();
             anime.HasKey(a => a.Id);
-            anime.HasIndex(a => a.Slug).IsUnique();
+            anime.HasAlternateKey(a => a.Slug);
             anime.Property(a => a.CanonicalTitle).IsRequired();
             anime.HasMany(a => a.Titles).WithOne(t => t.Anime).HasForeignKey(t => t.AnimeId);
             anime.Property(a => a.Status).IsRequired();
@@ -79,7 +74,6 @@ namespace myanimes.Database
             anime.HasMany(a => a.Episodes).WithOne(e => e.Anime).HasForeignKey(e => e.AnimeId);
             anime.HasMany(a => a.Characters).WithOne(c => c.Anime).HasForeignKey(c => c.AnimeId);
             anime.HasMany(a => a.StreamingLinks).WithOne(l => l.Anime).HasForeignKey(l => l.AnimeId);
-            anime.Property(a => a.EntryExpirationDate).IsRequired();
 
             var genreMapping = modelBuilder.Entity<GenreMapping>();
             genreMapping.HasKey(m => new { m.AnimeId, m.GenreId });
@@ -98,12 +92,12 @@ namespace myanimes.Database
 
             var genre = modelBuilder.Entity<Genre>();
             genre.HasKey(g => g.Id);
-            genre.HasIndex(g => g.Slug).IsUnique();
+            genre.HasAlternateKey(g => g.Slug);
             genre.Property(g => g.Name).IsRequired();
 
             var studio = modelBuilder.Entity<Studio>();
             studio.HasKey(s => s.Id);
-            studio.HasIndex(s => s.Slug).IsUnique();
+            studio.HasAlternateKey(s => s.Slug);
             studio.Property(s => s.Name).IsRequired();
 
             var episode = modelBuilder.Entity<Episode>();
@@ -111,7 +105,7 @@ namespace myanimes.Database
 
             var character = modelBuilder.Entity<Character>();
             character.HasKey(c => c.Id);
-            character.HasIndex(c => c.Slug).IsUnique();
+            character.HasAlternateKey(c => c.Slug);
             character.Property(c => c.Name).IsRequired();
 
             var streamingLink = modelBuilder.Entity<StreamingLink>();

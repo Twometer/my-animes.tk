@@ -88,7 +88,7 @@
                 <img class="card-img-top" src="@ep.ThumbnailUrl" alt="Episode image">
                 <div class="card-body">
                     <h5 class="card-title">@ep.Title</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">S @ep.SeasonNumber E @ep.EpisodeNumber from @ep.AirDate.ToShortDateString()</h6>
+                    <h6 class="card-subtitle mb-2 text-muted">@{ Write($"S{ep.SeasonNumber}E{ep.EpisodeNumber}"); } from @ep.AirDate.ToShortDateString()</h6>
                     <p class="card-text">@ep.Synopsis</p>
                 </div>
             </div>
