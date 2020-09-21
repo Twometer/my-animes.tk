@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using myanimes.Models.View;
 using myanimes.Services;
 
 namespace myanimes.Controllers
@@ -17,7 +18,7 @@ namespace myanimes.Controllers
         public async Task<IActionResult> Index(string slug)
         {
             var anime = await cache.GetAnime(slug);
-            return View(anime);
+            return View(new AnimeViewModel(anime));
         }
     }
 }

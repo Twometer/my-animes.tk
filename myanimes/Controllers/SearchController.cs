@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using myanimes.Models;
+using myanimes.Models.View;
 using myanimes.Services;
 using System.Threading.Tasks;
 

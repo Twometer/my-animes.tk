@@ -1,6 +1,6 @@
 using System;
 
-namespace myanimes.Models
+namespace myanimes.Models.View
 {
     public class ErrorViewModel
     {

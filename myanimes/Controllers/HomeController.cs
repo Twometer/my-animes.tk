@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using myanimes.Models;
+using myanimes.Models.View;
 
 namespace myanimes.Controllers
 {

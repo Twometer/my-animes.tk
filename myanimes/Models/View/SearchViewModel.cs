@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace myanimes.Models
+namespace myanimes.Models.View
 {
     public class SearchViewModel
     {
