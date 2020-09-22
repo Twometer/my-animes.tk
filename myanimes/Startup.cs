@@ -27,6 +27,7 @@ namespace myanimes
 
             services.AddDbContext<DatabaseContext>();
             services.AddSingleton<KitsuService>();
+            services.AddSingleton<CryptoService>();
             services.AddScoped<CacheService>();
         }
 
@@ -49,6 +50,7 @@ namespace myanimes
 
             using var scope = app.ApplicationServices.CreateScope();
             using var context = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
+            // context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
         }
     }
