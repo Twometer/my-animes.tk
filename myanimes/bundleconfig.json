@@ -2,7 +2,11 @@
   {
     "outputFileName": "wwwroot/css/site.min.css",
     "inputFiles": [
-      "wwwroot/css/site.css"
+      "wwwroot/css/BaseStyles.css",
+      "wwwroot/css/FormStyles.css",
+      "wwwroot/css/NavbarStyles.css",
+      "wwwroot/css/HeadlessPageStyles.css",
+      "wwwroot/css/AnimePageStyles.css"
     ]
   },
   {

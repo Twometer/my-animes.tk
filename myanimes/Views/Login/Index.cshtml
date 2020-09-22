@@ -1,6 +1,24 @@
-﻿@{ 
+﻿@{
     ViewData["Title"] = "Login";
     Layout = "HeadlessLayout";
 }
 
-Login content here
+<div class="backdrop-image" style="background-image: url('/LoginWallpaper.jpg');"></div>
+<div class="backdrop-overlay"></div>
+
+<div class="hl-container">
+    <form class="hl-content" method="post">
+        <h1 class="hl-header">myanimes</h1>
+        <h2 class="hl-header">Welcome back!</h2>
+        <p>
+            <input class="hl-input" name="username" placeholder="username" type="text" required>
+        </p>
+        <p>
+            <input class="hl-input" name="password" placeholder="password" type="password" required>
+        </p>
+        <div class="submit-ui mt-5">
+            <button type="submit" class="button primary wide mr-4">Log in</button>
+            <a asp-area="" asp-controller="Register" asp-action="Index">new here?</a>
+        </div>
+    </form>
+</div>
