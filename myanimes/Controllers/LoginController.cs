@@ -1,9 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using myanimes.Database;
 using myanimes.Models.Request;
 using myanimes.Models.Response;
 using myanimes.Services;
+using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace myanimes.Controllers
@@ -36,6 +40,10 @@ namespace myanimes.Controllers
             {
                 return BadRequest(new LoginResponseModel("Invalid username or password"));
             }
+
+            var claims = new List<Claim> { new Claim(ClaimTypes.Name, user.Name) };
+            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
 
             return new LoginResponseModel("ok");
         }

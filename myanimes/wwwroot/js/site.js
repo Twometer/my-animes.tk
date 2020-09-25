@@ -49,19 +49,34 @@
     }
 
     function handleResponse($form, data, status) {
-        var response = data.responseJSON;
         var errorBox = $form.find(".error-message");
 
-        if (!response) {
+        if (!data) {
             errorBox.html("Internal server error");
             console.error("Cannot read response:", status);
         } else if (status !== "success") {
-            var message = response.message;
+            var message = data.message;
             errorBox.html(message);
             console.error(message);
         } else {
             console.log("Okay!");
+            dispatchRedirect();
         }
+    }
+
+    function dispatchRedirect() {
+        var urlParams = new URLSearchParams(window.location.search);
+        var myParam = urlParams.get('ReturnUrl');
+
+        
+        var path = "";
+        if (myParam && myParam !== "") {
+            path = myParam;
+        } else {            
+            path = "/";
+        }
+
+        window.location.href = window.location.protocol + "//" + window.location.host + path;
     }
 
     $("form").each(function () {

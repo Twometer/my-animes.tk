@@ -25,9 +25,9 @@ namespace myanimes.Database.Entities.Profile
         public string ProfilePictureUrl { get; set; }
         
         [ForeignKey("FavoriteAnime")]
-        public int FavoriteAnimeId { get; set; }
+        public int? FavoriteAnimeId { get; set; }
 
-        public AnimeDbo FavoriteAnime { get; set; }
+        public AnimeDbo? FavoriteAnime { get; set; }
 
         public IEnumerable<AnimeListItem> AnimeList { get; set; }
 

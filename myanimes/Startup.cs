@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -25,6 +26,12 @@ namespace myanimes
 
             services.AddOptions<DatabaseOptions>().Bind(Configuration.GetSection("Database"));
 
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, o =>
+            {
+                o.LoginPath = "/login";
+            });
+
             services.AddDbContext<DatabaseContext>();
             services.AddSingleton<KitsuService>();
             services.AddSingleton<CryptoService>();
@@ -50,7 +57,7 @@ namespace myanimes
 
             using var scope = app.ApplicationServices.CreateScope();
             using var context = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
-            // context.Database.EnsureDeleted();
+            //context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
         }
     }
