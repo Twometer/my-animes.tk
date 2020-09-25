@@ -1,4 +1,14 @@
-﻿/* Link styles
+﻿/* General form styles
+-------------------------------------------------- */
+.error-message {
+    color: var(--cancelled-color);
+}
+
+.submit-ui > a {
+    vertical-align: top;
+}
+
+/* Link styles
 -------------------------------------------------- */
 a {
     text-decoration: none;

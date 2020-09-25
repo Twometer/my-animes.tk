@@ -4,6 +4,7 @@
     "inputFiles": [
       "wwwroot/css/BaseStyles.css",
       "wwwroot/css/FormStyles.css",
+      "wwwroot/css/LoaderStyles.css",
       "wwwroot/css/NavbarStyles.css",
       "wwwroot/css/HeadlessPageStyles.css",
       "wwwroot/css/AnimePageStyles.css"
