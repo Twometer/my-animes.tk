@@ -1,5 +1,9 @@
 ﻿/* Headless page styles
 -------------------------------------------------- */
+body.hl-body {
+    overflow: hidden;
+}
+
 h1.hl-header {
     font-family: 'Unica One', sans-serif;
     color: var(--primary-color);

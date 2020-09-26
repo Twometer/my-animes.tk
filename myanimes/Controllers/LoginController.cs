@@ -31,7 +31,7 @@ namespace myanimes.Controllers
 
         [HttpPost]
         [ActionName("Index")]
-        public async Task<ActionResult<LoginResponseModel>> IndexPost([FromBody] LoginRequestModel request)
+        public async Task<ActionResult<LoginResponseModel>> IndexApi([FromBody] LoginRequestModel request)
         {
             var user = await database.Users.SingleOrDefaultAsync(u => u.Name == request.Username);
 
