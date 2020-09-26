@@ -7,6 +7,7 @@ using Microsoft.Extensions.Hosting;
 using myanimes.Configuration;
 using myanimes.Database;
 using myanimes.Services;
+using System;
 
 namespace myanimes
 {
@@ -26,15 +27,19 @@ namespace myanimes
 
             services.AddOptions<DatabaseOptions>().Bind(Configuration.GetSection("Database"));
 
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, o =>
+            services.AddRouting();
+            services.AddAuthentication(AuthenticationService.Scheme)
+                .AddCookie(AuthenticationService.Scheme, options =>
             {
-                o.LoginPath = "/login";
+                options.LoginPath = "/login";
+                options.AccessDeniedPath = "/login";
+                options.ExpireTimeSpan = TimeSpan.FromDays(30);
             });
 
             services.AddDbContext<DatabaseContext>();
             services.AddSingleton<KitsuService>();
             services.AddSingleton<CryptoService>();
+            services.AddSingleton<AuthenticationService>();
             services.AddScoped<CacheService>();
         }
 
@@ -51,8 +56,8 @@ namespace myanimes
             }
             app.UseStaticFiles();
             app.UseRouting();
-            app.UseAuthorization();
             app.UseAuthentication();
+            app.UseAuthorization();
             app.UseEndpoints(endpoints => endpoints.MapControllers());
 
             using var scope = app.ApplicationServices.CreateScope();

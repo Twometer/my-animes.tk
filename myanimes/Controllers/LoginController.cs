@@ -1,13 +1,9 @@
-﻿using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using myanimes.Database;
 using myanimes.Models.Request;
 using myanimes.Models.Response;
 using myanimes.Services;
-using System.Collections.Generic;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace myanimes.Controllers
@@ -19,10 +15,13 @@ namespace myanimes.Controllers
 
         private readonly CryptoService crypto;
 
-        public LoginController(DatabaseContext database, CryptoService crypto)
+        private readonly AuthenticationService auth;
+
+        public LoginController(DatabaseContext database, CryptoService crypto, AuthenticationService auth)
         {
             this.database = database;
             this.crypto = crypto;
+            this.auth = auth;
         }
 
         public IActionResult Index()
@@ -41,10 +40,8 @@ namespace myanimes.Controllers
                 return BadRequest(new LoginResponseModel("Invalid username or password"));
             }
 
-            var claims = new List<Claim> { new Claim(ClaimTypes.Name, user.Name) };
-            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
-
+            await auth.SignInAsync(HttpContext, user);
+         
             return new LoginResponseModel("ok");
         }
 

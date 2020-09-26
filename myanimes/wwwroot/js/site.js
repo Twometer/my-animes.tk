@@ -48,8 +48,10 @@
         });
     }
 
-    function handleResponse($form, data, status) {
+    function handleResponse($form, dataObj, status) {
         var errorBox = $form.find(".error-message");
+
+        var data = dataObj.responseJSON || dataObj;
 
         if (!data) {
             errorBox.html("Internal server error");
