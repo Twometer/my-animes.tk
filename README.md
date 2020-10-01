@@ -1,11 +1,14 @@
-# my-animes.tk
-A simple and beautiful website to share your love for anime with the world
+<p align="center">
+  <img width="72" height="72" src="myanimes/wwwroot/Icon.png?raw=true">
+  <h1 align="center">myanimes</h1>
+</p>
+
+<p align="center">A simple and beautiful place to share your favorite animes with the world.</p>
 
 #### Some links for you :3
  [homepage](https://my-animes.tk/)
 
  [my profile](https://my-animes.tk/user/Twometer)
-
 
 ---
 
@@ -13,10 +16,3 @@ A simple and beautiful website to share your love for anime with the world
 Powered by the [Kitsu API](https://github.com/hummingbird-me)
 
 Icons by [Feather](https://feathericons.com)
-
-Libraries used:
-- GSON
-- JSTL
-- OkHttp
-- Ormlite
-- Xerial SQLite

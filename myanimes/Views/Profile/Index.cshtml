@@ -1,0 +1,36 @@
+﻿@{
+    ViewData["Title"] = "Profile";
+    Layout = "HeadlessLayout";
+}
+
+<div class="backdrop-image" style="background-image: url('/ProfileWallpaper.jpg');"></div>
+<div class="backdrop-overlay"></div>
+
+<div class="hl-container">
+    <form class="hl-content" method="post">
+        <h1 class="hl-header">Your Profile</h1>
+        <h2 class="hl-header">Tell us something about yourself</h2>
+        <p>
+            <input class="hl-input" name="username" placeholder="username" type="text" required>
+        </p>
+        <p>
+            <input class="hl-input" name="bio" placeholder="about you" type="text" required>
+        </p>
+        <p>
+            <input class="hl-input" name="profilePictureUrl" placeholder="profile picture link" type="url">
+        </p>
+        <p>
+            <input class="hl-input" name="location" placeholder="location" type="text">
+        </p>
+        <p>
+            <input class="hl-input anime-search" placeholder="favorite anime" type="text">
+        </p>
+        <p>
+            <span class="error-message"></span>
+        </p>
+        <div class="submit-ui mt-5">
+            <button type="submit" class="button primary wide mr-4">Apply</button>
+            <a onclick="history.back()">cancel</a>
+        </div>
+    </form>
+</div>

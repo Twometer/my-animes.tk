@@ -1,0 +1,41 @@
+﻿/* Search Styles
+-------------------------------------------------- */
+.anime-search {
+    margin-bottom: 0 !important;
+}
+
+.anime-search-container {
+    position: relative;
+}
+
+.anime-search-results {
+    position: absolute;
+    background-color: white;
+    top: 100%;
+    left: 0;
+    right: 0;
+    width: 300px;
+    z-index: 9999;
+    box-shadow: var(--common-shadow);
+    overflow-y: auto;
+    max-height: 250px;
+}
+
+.anime-search-status {
+    padding: 10px;
+    text-align: center;
+}
+
+.anime-search-item {
+    cursor: pointer;
+    user-select: none !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 5px;
+    transition-duration: .3s;
+}
+
+    .anime-search-item:hover {
+        background: #EFEFEF;
+        transition-duration: .3s;
+    }

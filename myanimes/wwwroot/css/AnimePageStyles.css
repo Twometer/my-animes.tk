@@ -1,0 +1,22 @@
+﻿/* Anime page styles
+-------------------------------------------------- */
+.anime-info-table {
+    width: 100%;
+    border-collapse: separate !important;
+    border-spacing: 0 .75rem !important;
+}
+
+    .anime-info-table > td {
+        text-align: left;
+        padding-left: 10px;
+    }
+
+    .anime-info-table > th, .anime-info-table > td {
+        align-content: center;
+    }
+
+.card-grid {
+    display: grid;
+    grid-gap: 4rem;
+    grid-template-columns: repeat(auto-fill, 18rem);
+}

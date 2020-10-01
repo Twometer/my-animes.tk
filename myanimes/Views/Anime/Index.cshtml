@@ -1,0 +1,147 @@
+﻿@using myanimes.Extensions
+@model AnimeViewModel
+
+@{
+    ViewData["Title"] = Model.Anime.CanonicalTitle;
+}
+
+<div class="row align-items-center mt-5">
+    <div class="col-lg-auto mr-4-lg">
+        <img class="shadow" src="@Model.Anime.PosterImageUrl" width=200 alt="Poster image">
+    </div>
+    <div class="col-lg ml-lg-5">
+        <h1>@Model.Anime.GetEnglishTitle()</h1>
+        <h4>@Model.Anime.GetJapaneseTitle()</h4>
+        <p class="mt-3">
+            @Model.Anime.Synopsis
+        </p>
+    </div>
+</div>
+
+<h2 class="section-header">Info</h2>
+<div class="row">
+    <div class="col-md">
+        <table class="anime-info-table">
+            <tr>
+                <th>Alternative title:</th>
+                <td>@Model.Anime.GetAlternateTitle()</td>
+            </tr>
+            <tr>
+                <th>Status:</th>
+                <td>@Model.Anime.Status</td>
+            </tr>
+            <tr>
+                <th>Type:</th>
+                <td>@Model.Anime.Type</td>
+            </tr>
+            <tr>
+                <th>Studios:</th>
+                <td>@string.Join(", ", Model.Anime.Studios.Take(3).Select(g => g.Name))</td>
+            </tr>
+            <tr>
+                <th>Start date:</th>
+                <td>@Model.Anime.StartDate.ToShortDateString()</td>
+            </tr>
+            <tr>
+                <th>End date:</th>
+                <td>@Model.Anime.EndDate.ToShortDateString()</td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-md">
+        <table class="anime-info-table">
+            <tr>
+                <th>Genres:</th>
+                <td>@string.Join(", ", Model.Anime.Genres.Select(g => g.Name))</td>
+            </tr>
+            <tr>
+                <th>Episodes:</th>
+                <td>@Model.Anime.EpisodeCount</td>
+            </tr>
+            <tr>
+                <th>Episode length:</th>
+                <td>@Model.Anime.EpisodeLength</td>
+            </tr>
+            <tr>
+                <th>Total length:</th>
+                <td>@Model.Anime.TotalLength</td>
+            </tr>
+            <tr>
+                <th>Age rating:</th>
+                <td>@Model.Anime.AgeRating</td>
+            </tr>
+            <tr>
+                <th>NSFW:</th>
+                <td>@Model.Anime.Nsfw</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+@if (Model.Anime.EpisodeCount > 0)
+{
+    <h2 class="section-header">Episodes</h2>
+    <div class="card-grid">
+        @foreach (var ep in Model.Anime.Episodes)
+        {
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="@ep.ThumbnailUrl" alt="Episode image">
+                <div class="card-body">
+                    <h5 class="card-title">@ep.Title</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">@{ Write($"S{ep.SeasonNumber}E{ep.EpisodeNumber}"); } from @ep.AirDate.ToShortDateString()</h6>
+                    <p class="card-text">@ep.Synopsis</p>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+@if (Model.Anime.Characters.Count() > 0)
+{
+    <h2 class="section-header">Characters</h2>
+    <div class="card-grid">
+        @foreach (var c in Model.Anime.Characters)
+        {
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="@c.ImageUrl" alt="Character image">
+                <div class="card-body">
+                    <h5 class="card-title">@c.Name</h5>
+                    <p class="card-text">@c.Description</p>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+@if (Model.Anime.StreamingLinks.Count() > 0)
+{
+    <h2 class="section-header">Streaming providers</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Link</th>
+                <th scope="col">Subs</th>
+                <th scope="col">Dubs</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var l in Model.Anime.StreamingLinks)
+            {
+                <tr>
+                    <td><a href="@l.Url">@l.Url</a></td>
+                    <td>@string.Join(", ", l.SubbedLanguages)</td>
+                    <td>@string.Join(", ", l.DubbedLanguages)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@if (!string.IsNullOrEmpty(Model.Anime.TrailerYoutubeId))
+{
+    <h2 class="section-header">Trailer</h2>
+    <div class="embed-responsive embed-responsive-16by9">
+        <iframe class="embed-responsive-item" src="https://youtube.com/embed/@Model.Anime.TrailerYoutubeId"
+                allowfullscreen allow="encrypted-media"></iframe>
+    </div>
+}

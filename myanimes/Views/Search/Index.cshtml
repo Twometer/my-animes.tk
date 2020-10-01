@@ -1,0 +1,12 @@
+﻿@model SearchViewModel
+
+@{
+    ViewData["Title"] = Model.Query;
+}
+
+@foreach (var result in Model.SearchResults)
+{
+    <p>
+        <a asp-area="" asp-controller="Anime" asp-action="Index" asp-route-slug="@result.Slug">@result.Titles.First().Text</a>
+    </p>
+}

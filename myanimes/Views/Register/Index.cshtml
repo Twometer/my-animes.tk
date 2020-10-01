@@ -1,0 +1,30 @@
+﻿@{
+    ViewData["Title"] = "Register";
+    Layout = "HeadlessLayout";
+}
+
+<div class="backdrop-image" style="background-image: url('/RegisterWallpaper.jpg');"></div>
+<div class="backdrop-overlay"></div>
+
+<div class="hl-container">
+    <form class="hl-content" method="post" autocomplete="off">
+        <h1 class="hl-header">myanimes</h1>
+        <h2 class="hl-header">Nice to meet you!</h2>
+        <p>
+            <input class="hl-input" name="username" placeholder="username" type="text" required>
+        </p>
+        <p>
+            <input class="hl-input" name="password" placeholder="password" type="password" required>
+        </p>
+        <p>
+            <input class="hl-input" name="passwordConfirm" placeholder="confirm password" type="password" required>
+        </p>
+        <p>
+            <span class="error-message"></span>
+        </p>
+        <div class="submit-ui mt-5">
+            <button type="submit" class="button primary mr-4">Register</button>
+            <a asp-area="" asp-controller="Login" asp-action="Index">back to login</a>
+        </div>
+    </form>
+</div>
