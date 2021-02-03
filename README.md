@@ -5,10 +5,11 @@
 
 <p align="center">A simple and beautiful place to share your favorite animes with the world.</p>
 
-#### Some links for you :3
- [homepage](https://my-animes.tk/)
+### Public server :3
+ [my-animes.tk](https://my-animes.tk/)
 
- [my profile](https://my-animes.tk/user/Twometer)
+### Host it yourself
+If you don't want to use the public server, you can host the website yourself. It requires node.js 14 and MongoDB. Build instructions for each component can be found in the corresponding folders
 
 ---
 
