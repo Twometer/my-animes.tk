@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="72" height="72" src="myanimes/wwwroot/Icon.png?raw=true">
+  <img width="72" height="72" src="art/icon.png?raw=true">
   <h1 align="center">myanimes</h1>
 </p>
 
