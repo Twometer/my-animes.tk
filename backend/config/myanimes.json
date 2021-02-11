@@ -1,0 +1,13 @@
+{
+    "http": {
+        "port": 8090,
+        "cors": "http://localhost:8080"
+    },
+    "session": {
+        "secure": false,
+        "secret": "asdf"
+    },
+    "db": {
+        "url": "mongodb://localhost:27017/myanimes"
+    }
+}
