@@ -1,4 +1,4 @@
-# frontend
+# myanimes Frontend
 
 ## Project setup
 ```
