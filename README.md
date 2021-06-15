@@ -5,13 +5,6 @@
 
 <p align="center">A simple and beautiful place to share your favorite animes with the world.</p>
 
-### ⚠️ Deprecation notice
-The version that is currently on the server can be found on the `tomcat` branch.
-
-Continuing to maintain this website and rebuilding it with new technologies does no longer make sense, and it is recommended to move information to the Kitsu website (the site that hosts the API myanimes was based on)
-
-The public server will be shut down by 1/3/2021.
-
 ### Public server :3
  [my-animes.tk](https://my-animes.tk/)
 
