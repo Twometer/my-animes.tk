@@ -24,9 +24,9 @@ export enum WatchState {
 }
 
 export interface UserProfile {
-    bio: String,
-    imageUrl: string,
-    location: string,
+    aboutMe: String,
+    imageUrl: String,
+    location: String,
     favoriteAnime: String,
     favoriteCharacter: String
 }
