@@ -27,7 +27,7 @@ export interface UserProfile {
     aboutMe: String,
     imageUrl: String,
     location: String,
-    favoriteAnime: String,
+    favoriteAnimeId: String,
     favoriteCharacter: String
 }
 
@@ -45,13 +45,13 @@ export interface AnimeTitle {
 }
 
 export interface AnimeEpisode {
+    title: String,
     episodeNo: Number,
     seasonNo: Number,
-    title: String,
-    synopsis: String,
     length: Number,
+    airedOn: Date,
     thumbnailUrl: String,
-    airedOn: Date
+    synopsis: String
 }
 
 export interface AnimeCharacter {
