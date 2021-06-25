@@ -124,7 +124,11 @@ async function getAnime(id: string): Promise<model.Anime | null> {
 
 function stripInternals(db: model.Anime): model.Anime {
     let raw = <any>db;
-    raw.__v = undefined;
+    delete raw.__v
+    for (let title of raw.titles) delete title._id
+    for (let ep of raw.episodes) delete ep._id
+    for (let ch of raw.characters) delete ch._id
+    for (let sl of raw.streamingLinks) delete sl._id
     return db;
 }
 
@@ -146,7 +150,7 @@ export async function load(id: string): Promise<model.Anime | null> {
                 await dbAnime.save();
             }
 
-            return stripInternals(dbAnime);
+            return stripInternals(dbAnime.toObject());
 
         case cache.State.NeverCached:
             let anime = await getAnime(id);
