@@ -5,6 +5,7 @@ export default Config.from({
     CORS_ORIGIN: "http://localhost:8080",
     SESSION_SECURE: false,
     SESSION_SECRET: "secret",
+    ANIME_TTL: 14,
     DB_URL: "mongodb://localhost:27017/myanimes",
-    CACHE_DAYS: 14
+    REDIS_URL: "redis://localhost/"
 }).read()

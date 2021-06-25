@@ -1,10 +1,12 @@
 import * as db from './database'
 import * as model from './model'
+import * as cache from "./cache";
 import axios from "axios";
 import config from "./config";
 import {daysFromNow} from "./util";
 import striptags from "striptags";
 import {decode} from "html-entities";
+import * as log from 'cutelog.js'
 
 async function getRawAnime(slug: string): Promise<any> {
     let encodedSlug = encodeURIComponent(slug);
@@ -101,7 +103,7 @@ function convertRawAnime(raw: any): model.Anime | null {
         episodes,
         characters,
         streamingLinks,
-        _entryExpiringOn: daysFromNow(config.CACHE_DAYS)
+        _entryExpiringOn: daysFromNow(config.ANIME_TTL)
     }
 }
 
@@ -116,28 +118,52 @@ function convertRawTitles(raw: any): model.AnimeTitle[] {
     return titles;
 }
 
+async function getAnime(id: string): Promise<model.Anime | null> {
+    return convertRawAnime(await getRawAnime(id));
+}
+
+function stripInternals(db: model.Anime): model.Anime {
+    let raw = <any>db;
+    raw.__v = undefined;
+    return db;
+}
+
 export async function load(id: string): Promise<model.Anime | null> {
-    id = id.toLowerCase();
+    id = id.toLowerCase().trim();
 
-    let dbAnime = await db.Anime.findById(id);
-    let expired = dbAnime != null && dbAnime._entryExpiringOn.getTime() < Date.now();
+    let cacheKey = `anime::${id}`;
+    let cachedState = await cache.get(cacheKey);
 
-    if (dbAnime == null || expired) {
-        let newAnime = convertRawAnime(await getRawAnime(id));
-        if (newAnime == null)
+    switch (cachedState) {
+        case cache.State.Present:
+            let dbAnime = (await db.Anime.findById(id))!!;
+            let expired = dbAnime._entryExpiringOn.getTime() < Date.now();
+
+            if (expired) {
+                log.info(`Renewing cached data on anime ${id}`)
+                let newData = await getAnime(id);
+                Object.assign(dbAnime, newData);
+                await dbAnime.save();
+            }
+
+            return stripInternals(dbAnime);
+
+        case cache.State.NeverCached:
+            let anime = await getAnime(id);
+            if (anime == null) {
+                await cache.set(cacheKey, cache.State.Nonexistent);
+            } else {
+                await new db.Anime(anime).save();
+                await cache.set(cacheKey, cache.State.Present);
+            }
+
+            return anime;
+
+        case cache.State.Nonexistent:
             return null;
-
-        if (dbAnime != null) {
-            Object.assign(dbAnime, newAnime)
-            await dbAnime.save();
-        } else {
-            await new db.Anime(newAnime).save();
-            return newAnime;
-        }
     }
 
-    dbAnime.__v = undefined;
-    return dbAnime;
+    throw Error(`Cache failure: Unexpected state ${cachedState} for anime ${id}`)
 }
 
 export async function search(query: string): Promise<model.SearchResult[]> {
@@ -148,7 +174,6 @@ export async function search(query: string): Promise<model.SearchResult[]> {
     let results: model.SearchResult[] = [];
     for (let result of response.data) {
         let attributes = result.attributes;
-        console.log(attributes);
         results.push({
             _id: attributes.slug,
             titles: convertRawTitles(attributes.titles),
