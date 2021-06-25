@@ -27,7 +27,9 @@
     "cutelog.js": "^1.0.2",
     "express": "^4.17.1",
     "express-session": "^1.17.2",
+    "html-entities": "^2.3.2",
     "mongoose": "^5.12.14",
+    "striptags": "^3.2.0",
     "uuid": "^8.3.2"
   },
   "devDependencies": {

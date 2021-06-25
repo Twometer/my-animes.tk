@@ -3,11 +3,17 @@ import * as model from './model'
 import axios from "axios";
 import config from "./config";
 import {daysFromNow} from "./util";
+import striptags from "striptags";
+import {decode} from "html-entities";
 
 async function getRawAnime(slug: string): Promise<any> {
     let encodedSlug = encodeURIComponent(slug);
     let url = `https://kitsu.io/api/edge/anime?filter[slug]=${encodedSlug}&include=genres,productions.company,animeProductions.producer,episodes,streamingLinks,characters.character`
     return (await axios.get(url)).data
+}
+
+function processText(html: string): string {
+    return decode(striptags(html)).trim();
 }
 
 function convertEnum<T>(raw: any, type: any): T {
@@ -36,7 +42,7 @@ function convertRawAnime(raw: any): model.Anime | null {
                 length: i.length,
                 airedOn: i.airdate,
                 thumbnailUrl: i.thumbnail?.original,
-                synopsis: i.synopsis,
+                synopsis: processText(i.synopsis),
             };
         })
 
@@ -45,7 +51,7 @@ function convertRawAnime(raw: any): model.Anime | null {
         .map<model.AnimeCharacter>(i => {
             return {
                 name: i.name,
-                description: i.description,
+                description: processText(i.description),
                 pictureUrl: i.image?.original
             }
         })
@@ -82,7 +88,7 @@ function convertRawAnime(raw: any): model.Anime | null {
         studios,
         airingStartedOn: attributes.startDate,
         airingEndedOn: attributes.endDate,
-        synopsis: attributes.synopsis,
+        synopsis: processText(attributes.synopsis),
         posterUrl: attributes.posterImage?.small,
         thumbnailUrl: attributes.posterImage?.tiny,
         trailerYoutubeId: attributes.youtubeVideoId,
@@ -104,7 +110,7 @@ function convertRawTitles(raw: any): model.AnimeTitle[] {
     for (let key of Object.keys(raw)) {
         titles.push({
             language: key,
-            value: raw[key]
+            value: processText(raw[key])
         })
     }
     return titles;
