@@ -10,6 +10,15 @@ async function getRawAnime(slug: string): Promise<any> {
     return (await axios.get(url)).data
 }
 
+function convertEnum<T>(raw: any, type: any): T {
+    for (let enumMember of Object.keys(type)) {
+        if (enumMember.toLowerCase() == raw.toLowerCase()) {
+            return type[enumMember];
+        }
+    }
+    throw Error(`Cannot convert value ${raw} into enum ${type.constructor.name}`)
+}
+
 function convertRawAnime(raw: any): model.Anime {
     let attributes: any = raw.data[0].attributes;
     let included: any[] = raw.included;
@@ -78,8 +87,8 @@ function convertRawAnime(raw: any): model.Anime {
         nsfw: attributes.nsfw,
         episodeLength: attributes.episodeLength,
         totalLength: attributes.totalLength,
-        status: attributes.status,
-        type: attributes.subtype,
+        status: convertEnum(attributes.status, model.AnimeStatus),
+        type: convertEnum(attributes.subtype, model.AnimeType),
         episodes,
         characters,
         streamingLinks,
@@ -120,17 +129,18 @@ export async function load(id: string): Promise<model.Anime | null> {
 
 export async function search(query: string): Promise<model.SearchResult[]> {
     let encodedQuery = encodeURIComponent(query);
-    let url = `https://kitsu.io/api/edge/anime?filter[text]=${encodedQuery}&fields[anime]=slug,titles,posterImage`
+    let url = `https://kitsu.io/api/edge/anime?filter[text]=${encodedQuery}&fields[anime]=slug,titles,posterImage,subtype`
     let response = (await axios.get(url)).data;
 
     let results: model.SearchResult[] = [];
     for (let result of response.data) {
         let attributes = result.attributes;
+        console.log(attributes);
         results.push({
             _id: attributes.slug,
             titles: convertRawTitles(attributes.titles),
             thumbnailUrl: attributes.posterImage.tiny,
-            type: attributes.subtype
+            type: convertEnum(attributes.subtype, model.AnimeType)
         })
     }
 
