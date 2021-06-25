@@ -1,3 +1,19 @@
+export interface UserProfile {
+    aboutMe: String,
+    imageUrl: String,
+    location: String,
+    favoriteAnimeId: String,
+    favoriteCharacter: String
+}
+
+export interface User {
+    _id: String,
+    username: String,
+    password: String,
+    createdOn: Date,
+    profile: UserProfile
+}
+
 export enum AnimeStatus {
     Airing,
     Finished,
@@ -13,30 +29,6 @@ export enum AnimeType {
     Movie,
     Music,
     Special
-}
-
-export enum WatchState {
-    Watching,
-    Watched,
-    Paused,
-    Dropped,
-    Queued
-}
-
-export interface UserProfile {
-    aboutMe: String,
-    imageUrl: String,
-    location: String,
-    favoriteAnimeId: String,
-    favoriteCharacter: String
-}
-
-export interface User {
-    _id: String,
-    username: String,
-    password: String,
-    createdOn: Date,
-    profile: UserProfile
 }
 
 export interface AnimeTitle {
@@ -88,6 +80,21 @@ export interface Anime {
     characters: AnimeCharacter[],
     streamingLinks: AnimeStreamingLink[],
     _entryExpiringOn: Date
+}
+
+export interface SearchResult {
+    _id: String,
+    titles: AnimeTitle[],
+    thumbnailUrl: String,
+    type: AnimeType
+}
+
+export enum WatchState {
+    Watching,
+    Watched,
+    Paused,
+    Dropped,
+    Queued
 }
 
 export interface WatchlistEntry {
