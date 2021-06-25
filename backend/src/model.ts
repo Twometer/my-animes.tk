@@ -33,7 +33,7 @@ export enum AnimeType {
 
 export interface AnimeTitle {
     language: String;
-    content: String;
+    value: String;
 }
 
 export interface AnimeEpisode {

@@ -19,7 +19,10 @@ function convertEnum<T>(raw: any, type: any): T {
     throw Error(`Cannot convert value ${raw} into enum ${type.constructor.name}`)
 }
 
-function convertRawAnime(raw: any): model.Anime {
+function convertRawAnime(raw: any): model.Anime | null {
+    if (raw.data.length == 0)
+        return null;
+
     let attributes: any = raw.data[0].attributes;
     let included: any[] = raw.included;
 
@@ -32,7 +35,7 @@ function convertRawAnime(raw: any): model.Anime {
                 seasonNo: i.seasonNumber,
                 length: i.length,
                 airedOn: i.airdate,
-                thumbnailUrl: i.thumbnail.original,
+                thumbnailUrl: i.thumbnail?.original,
                 synopsis: i.synopsis,
             };
         })
@@ -43,7 +46,7 @@ function convertRawAnime(raw: any): model.Anime {
             return {
                 name: i.name,
                 description: i.description,
-                pictureUrl: i.image.original
+                pictureUrl: i.image?.original
             }
         })
 
@@ -57,7 +60,7 @@ function convertRawAnime(raw: any): model.Anime {
             }
         })
 
-    let genres = included.filter(i => i.type == 'genre')
+    let genres = included.filter(i => i.type == 'genres')
         .map<string>(i => {
             return i.attributes.name
         })
@@ -80,8 +83,8 @@ function convertRawAnime(raw: any): model.Anime {
         airingStartedOn: attributes.startDate,
         airingEndedOn: attributes.endDate,
         synopsis: attributes.synopsis,
-        posterUrl: attributes.posterImage.small,
-        thumbnailUrl: attributes.posterImage.tiny,
+        posterUrl: attributes.posterImage?.small,
+        thumbnailUrl: attributes.posterImage?.tiny,
         trailerYoutubeId: attributes.youtubeVideoId,
         ageRating: attributes.ageRatingGuide,
         nsfw: attributes.nsfw,
@@ -101,13 +104,15 @@ function convertRawTitles(raw: any): model.AnimeTitle[] {
     for (let key of Object.keys(raw)) {
         titles.push({
             language: key,
-            content: raw[key]
+            value: raw[key]
         })
     }
     return titles;
 }
 
 export async function load(id: string): Promise<model.Anime | null> {
+    id = id.toLowerCase();
+
     let dbAnime = await db.Anime.findById(id);
     let expired = dbAnime != null && dbAnime._entryExpiringOn.getTime() < Date.now();
 
@@ -121,6 +126,7 @@ export async function load(id: string): Promise<model.Anime | null> {
             await dbAnime.save();
         } else {
             await new db.Anime(newAnime).save();
+            return newAnime;
         }
     }
 
