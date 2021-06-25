@@ -136,6 +136,7 @@ export async function load(id: string): Promise<model.Anime | null> {
         }
     }
 
+    dbAnime.__v = undefined;
     return dbAnime;
 }
 

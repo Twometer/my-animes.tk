@@ -5,6 +5,10 @@ import cors from "cors";
 import session from "express-session";
 import MongoStore from "connect-mongo";
 
+// Endpoints
+import anime from "./endpoints/anime"
+import search from "./endpoints/search";
+
 const webapp = new Webapp(config.HTTP_PORT);
 
 webapp.setup(app => {
@@ -22,5 +26,8 @@ webapp.setup(app => {
         store: MongoStore.create({mongoUrl: config.DB_URL})
     }))
 })
+
+anime(webapp);
+search(webapp);
 
 export default webapp;
