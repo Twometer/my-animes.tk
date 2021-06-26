@@ -6,11 +6,14 @@ import session from "express-session";
 import MongoStore from "connect-mongo";
 
 // Endpoints
-import anime from "./endpoints/anime"
-import search from "./endpoints/search";
+import registerAnime from "./endpoints/anime"
+import registerSearch from "./endpoints/search";
+import registerSession from "./endpoints/session";
+import registerUser from './endpoints/user'
 
 const webapp = new Webapp(config.HTTP_PORT);
 
+// Configure web app
 webapp.setup(app => {
     app.set('trust proxy', 1);
     app.use(express.json())
@@ -27,7 +30,10 @@ webapp.setup(app => {
     }))
 })
 
-anime(webapp);
-search(webapp);
+// Register endpoints
+registerAnime(webapp);
+registerSearch(webapp);
+registerSession(webapp);
+registerUser(webapp);
 
 export default webapp;
