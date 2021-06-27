@@ -28,12 +28,11 @@ webapp.setup(app => {
         saveUninitialized: false,
         store: MongoStore.create({mongoUrl: config.DB_URL})
     }))
-})
 
-// Register endpoints
-registerAnime(webapp);
-registerSearch(webapp);
-registerSession(webapp);
-registerUser(webapp);
+    registerAnime(webapp);
+    registerSearch(webapp);
+    registerSession(webapp);
+    registerUser(webapp);
+})
 
 export default webapp;
