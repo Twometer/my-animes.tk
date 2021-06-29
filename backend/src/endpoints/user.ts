@@ -20,7 +20,11 @@ export default function (webapp: Webapp) {
 
     // Get the profile for the given username
     route.get('/:username/profile', async (req, resp) => {
+        let user = await db.User.findOne({username: req.params.username})
+        if (user == null)
+            return error(resp, 404)
 
+        return resp.json(user.profile);
     })
 
     // Update the profile for the given username [Requires auth]
