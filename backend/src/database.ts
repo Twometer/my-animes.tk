@@ -44,8 +44,8 @@ export const Anime = createModel<model.Anime>('Anime', {
     nsfw: Boolean,
     episodeLength: Number,
     totalLength: Number,
-    status: {type: Number, enum: model.AnimeStatus},
-    type: {type: Number, enum: model.AnimeType},
+    status: {type: String, enum: model.AnimeStatus},
+    type: {type: String, enum: model.AnimeType},
     episodes: [{
         title: String,
         episodeNo: Number,
