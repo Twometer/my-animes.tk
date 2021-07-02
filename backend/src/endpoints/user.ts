@@ -26,7 +26,8 @@ const WatchlistEntryRequest = new Request({
     animeId: String,
     state: String,
     startedOn: String,
-    finishedOn: String
+    finishedOn: String,
+    rewatchCount: Number
 })
 
 export default function (webapp: Webapp) {

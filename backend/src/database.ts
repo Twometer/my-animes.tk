@@ -66,5 +66,6 @@ export const WatchlistEntry = createModel<model.WatchlistEntry>('WatchlistEntry'
     animeId: String,
     state: {type: String, enum: model.WatchState},
     startedOn: Date,
-    finishedOn: Date
+    finishedOn: Date,
+    rewatchCount: Number
 })

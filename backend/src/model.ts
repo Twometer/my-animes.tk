@@ -103,5 +103,6 @@ export interface WatchlistEntry {
     animeId: String,
     state: WatchState,
     startedOn?: Date,
-    finishedOn?: Date
+    finishedOn?: Date,
+    rewatchCount: Number
 }
