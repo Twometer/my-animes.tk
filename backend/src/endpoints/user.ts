@@ -116,14 +116,17 @@ export default function (webapp: Webapp) {
         let body = ChangePasswordRequest.parse(req.body, resp);
         if (body == null) return;
 
+        if (req.body.newPassword.trim().length < 8)
+            return error(resp, 400, 'New password must be 8 characters long')
+
         let user = await db.User.findOne({username: req.params.username});
         if (user == null) return error(resp, 404);
 
-        let hashedInput = await hash(body.newPassword, body.username);
+        let hashedInput = await hash(body.oldPassword, body.username);
         if (user.password != hashedInput)
             return error(resp, 401, 'Invalid credentials');
 
-        user.password = hashedInput;
+        user.password = await hash(body.newPassword, body.username);
         return resp.sendStatus(204);
     });
 
