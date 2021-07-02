@@ -1,6 +1,6 @@
 export interface UserProfile {
     aboutMe: String,
-    imageUrl: String,
+    avatarUrl: String,
     location: String,
     favoriteAnimeId: String,
     favoriteCharacter: String
@@ -15,20 +15,20 @@ export interface User {
 }
 
 export enum AnimeStatus {
-    Airing,
-    Finished,
-    ToBeAnnounced,
-    Unreleased,
-    Upcoming
+    Airing = "airing",
+    Finished = "finished",
+    ToBeAnnounced = "toBeAnnounced",
+    Unreleased = "unreleased",
+    Upcoming = "upcoming"
 }
 
 export enum AnimeType {
-    ONA,
-    OVA,
-    TV,
-    Movie,
-    Music,
-    Special
+    ONA = "ona",
+    OVA = "ova",
+    TV = "tv",
+    Movie = "movie",
+    Music = "music",
+    Special = "special"
 }
 
 export interface AnimeTitle {
@@ -90,11 +90,11 @@ export interface SearchResult {
 }
 
 export enum WatchState {
-    Watching,
-    Watched,
-    Paused,
-    Dropped,
-    Queued
+    Watching = "watching",
+    Watched = "watched",
+    Paused = "paused",
+    Dropped = "dropped",
+    Queued = "queued"
 }
 
 export interface WatchlistEntry {
