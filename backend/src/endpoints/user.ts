@@ -96,11 +96,18 @@ export default function (webapp: Webapp) {
         if (user == null)
             return error(resp, 404)
 
-        if (user.profile.avatarUrl == "") {
-            user.profile.avatarUrl = `https://eu.ui-avatars.com/api/?name=${user.username}&background=876FFF&color=ffffff&size=194`
+        let response = <any>user.toObject().profile;
+
+        // Automatically generate an avatar if it's not set
+        if (response.avatarUrl == "") {
+            response.avatarUrl = `https://eu.ui-avatars.com/api/?name=${user.username}&background=876FFF&color=ffffff&size=194`
         }
 
-        return resp.json(user.profile);
+        // Get the anime data for the favorite anime
+        response.favoriteAnime = makeTinyAnime(await kitsu.load(response.favoriteAnimeId));
+        delete response.favoriteAnimeId;
+
+        return resp.json(response);
     })
 
     // Update the profile for the given username [Requires auth]
