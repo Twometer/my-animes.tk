@@ -30,6 +30,23 @@ const WatchlistEntryRequest = new Request({
     rewatchCount: Number
 })
 
+function makeTinyAnime(anime: any): any {
+    return {
+        _id: anime._id,
+        canonicalTitle: anime.canonicalTitle,
+        titles: anime.titles,
+        genres: anime.genres,
+        studios: anime.studios,
+        airingStartedOn: anime.airingStartedOn,
+        airingFinishedOn: anime.airingFinishedOn,
+        thumbnailUrl: anime.thumbnailUrl,
+        episodeNumber: anime.episodes.length,
+        episodeLength: anime.episodeLength,
+        status: anime.status,
+        type: anime.type
+    }
+}
+
 export default function (webapp: Webapp) {
     const route = webapp.route('/api/user')
 
@@ -139,9 +156,10 @@ export default function (webapp: Webapp) {
         let watchlist = await db.WatchlistEntry.find({userId: user._id});
         let response = [];
 
+        await db.WatchlistEntry
         for (let item of watchlist) {
             response.push({
-                anime: await kitsu.load(<string>item.animeId),
+                anime: makeTinyAnime(await kitsu.load(<string>item.animeId)),
                 state: item.state,
                 startedOn: item.startedOn,
                 finishedOn: item.finishedOn,
