@@ -137,7 +137,19 @@ export default function (webapp: Webapp) {
         if (user == null) return error(resp, 404);
 
         let watchlist = await db.WatchlistEntry.find({userId: user._id});
-        return resp.json(watchlist);
+        let response = [];
+
+        for (let item of watchlist) {
+            response.push({
+                anime: await kitsu.load(<string>item.animeId),
+                state: item.state,
+                startedOn: item.startedOn,
+                finishedOn: item.finishedOn,
+                rewatchCount: item.rewatchCount
+            })
+        }
+
+        return resp.json(response);
     });
 
     // Add a new anime to the watchlist [Requires auth]
