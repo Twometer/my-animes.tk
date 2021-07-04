@@ -1,0 +1,49 @@
+version: "3.7"
+
+services:
+    redis:
+        image: redis:latest
+        container_name: myanimes-redis
+        volumes:
+            - ./data/redis:/data
+        networks:
+            default:
+        restart: on-failure
+    mongo:
+        image: mongo:latest
+        container_name: myanimes-mongo
+        volumes:
+            - ./data/mongo:/data/db
+        networks:
+            default:
+        restart: on-failure
+    backend:
+        build:
+            context: ./backend
+        container_name: myanimes-backend
+        networks:
+            default:
+            nginx-proxy:
+        restart: on-failure
+        depends_on:
+            - redis
+            - mongo
+        environment:
+            - HTTP_PORT=80
+            - CORS_ORIGIN=http://localhost:8080
+            - SESSION_SECURE=false
+            - SESSION_SECRET=secret
+            - ANIME_TTL=14
+            - DB_URL=mongodb://myanimes-mongo:27017/myanimes
+            - REDIS_URL=redis://myanimes-redis
+    frontend:
+        build:
+            context: ./frontend
+        container_name: myanimes-frontend
+        networks:
+            nginx-proxy:
+
+networks:
+    default:
+    nginx-proxy:
+#        external: true
