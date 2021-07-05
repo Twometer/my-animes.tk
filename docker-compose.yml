@@ -46,4 +46,4 @@ services:
 networks:
     default:
     nginx-proxy:
-#        external: true
+        external: true
