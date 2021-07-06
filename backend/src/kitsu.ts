@@ -93,6 +93,7 @@ function convertRawAnime(raw: any): model.Anime | null {
         synopsis: processText(attributes.synopsis),
         posterUrl: attributes.posterImage?.small,
         thumbnailUrl: attributes.posterImage?.tiny,
+        coverImageUrl: attributes.coverImage?.original,
         trailerYoutubeId: attributes.youtubeVideoId,
         ageRating: attributes.ageRatingGuide,
         nsfw: attributes.nsfw,

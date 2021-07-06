@@ -39,6 +39,7 @@ export const Anime = createModel<model.Anime>('Anime', {
     synopsis: String,
     posterUrl: String,
     thumbnailUrl: String,
+    coverImageUrl: String,
     trailerYoutubeId: String,
     ageRating: String,
     nsfw: Boolean,
@@ -67,5 +68,6 @@ export const WatchlistEntry = createModel<model.WatchlistEntry>('WatchlistEntry'
     state: {type: String, enum: model.WatchState},
     startedOn: Date,
     finishedOn: Date,
-    rewatchCount: Number
+    rewatchCount: Number,
+    currentEpisode: Number
 })

@@ -69,6 +69,7 @@ export interface Anime {
     synopsis: String,
     posterUrl: String,
     thumbnailUrl: String,
+    coverImageUrl: String,
     trailerYoutubeId: String,
     ageRating: String,
     nsfw: Boolean,
