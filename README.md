@@ -5,7 +5,7 @@
 <p align="center">A simple and beautiful place to track and share your love for anime :3</p>
 
 ### Public server
-[my-animes.tk](https://my-animes.tk/)
+[myanimes.io](https://myanimes.io/)
 
 ### Host it yourself
 
