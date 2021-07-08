@@ -1,6 +1,6 @@
 <template>
     <nav id="nav" class="navbar navbar-expand-md navbar-dark">
-        <div class="container-fluid">
+        <div class="container-fluid justify-content-between w-80">
             <router-link class="navbar-brand" to="/">myanimes</router-link>
 
             <button
@@ -15,9 +15,8 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <div class="collapse navbar-collapse" id="navbarContent">
+            <div class="collapse navbar-collapse justify-content-evenly" id="navbarContent">
                 <navbar-search />
-
                 <ul class="navbar-nav">
                     <li class="nav-item">
                         <router-link class="nav-link" to="/login">
@@ -40,25 +39,26 @@
     font-family: 'Open Sans', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
+    color: #707070;
+    font-weight: 100;
 }
 
 #nav {
     background: var(--primary-color);
-    box-shadow: 0px 0px 12px 1px rgba(0, 0, 0, 0.3);
-    padding: 0;
-}
-
-#nav > div {
-    width: 80%;
+    box-shadow: 0px -20px 8px 20px rgba(0, 0, 0, 0.35);
+    padding: 0.4rem 0;
 }
 
 .navbar-brand {
     font-family: 'Unica One';
     font-size: 1.8rem;
-    margin-top: 0.5rem;
-    margin-bottom: 0.4rem;
+    padding: 0;
+    padding-top: 2px;
+}
+
+.w-80 {
+    width: 80%;
+    margin: auto;
 }
 </style>
 
