@@ -35,7 +35,7 @@ export const Anime = createModel<model.Anime>('Anime', {
     genres: [String],
     studios: [String],
     airingStartedOn: Date,
-    airingFinishedOn: Date,
+    airingEndedOn: Date,
     synopsis: String,
     posterUrl: String,
     thumbnailUrl: String,
