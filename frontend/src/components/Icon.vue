@@ -1,8 +1,7 @@
 <template>
     <img
         :height="size"
-        :style="{ color: 'white' }"
-        src="@/assets/icons/search.svg"
+        :src="require(`../assets/icons/${name}.svg`)"
     />
 </template>
 

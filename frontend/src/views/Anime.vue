@@ -19,7 +19,7 @@
                     <h2>ダーリン・イン・ザ・フランキス</h2>
                 </section>
 
-                Add to list
+                <button>Add to list</button>
             </div>
         </section>
         <section class="anime-synopsis w-80">
@@ -41,11 +41,24 @@
         <div class="row w-80">
             <div class="col">
                 <h3>Episodes</h3>
-                When the sakura blooms
-                https://media.kitsu.io/episodes/thumbnails/234664/original.jpg?1597700799
+                <div
+                    class="anime-block anime-episode"
+                    :style="{
+                        'background-image': `url('https://media.kitsu.io/episodes/thumbnails/234664/original.jpg?1597700799')`,
+                    }"
+                >
+                    <div class="anime-block-title">Episode title here</div>
+                </div>
 
                 <h3 class="mt-5">Characters</h3>
-                Zero Two
+                <div
+                    class="anime-block anime-character"
+                    :style="{
+                        'background-image': `url('https://s4.anilist.co/file/anilistcdn/character/large/b124381-pkTKi6HHNuVR.png')`,
+                    }"
+                >
+                    <div class="anime-block-title">Zero Two</div>
+                </div>
             </div>
             <div class="col-auto">
                 <div class="details-pane">
@@ -79,15 +92,29 @@
                     <h4>NSFW</h4>
                     No
                 </div>
+                <div
+                    class="anime-trailer"
+                    :style="{
+                        'background-image': `url('https://i.ytimg.com/vi/Q4jDgDSV6Kk/hqdefault.jpg')`,
+                    }"
+                >
+                    <a href="#" class="anime-trailer-link">
+                        <icon name="youtube" size="30" />&nbsp;&nbsp;Watch
+                        trailer
+                    </a>
+                </div>
             </div>
         </div>
     </section>
 </template>
 
 <script>
+import Icon from '../components/Icon.vue';
 export default {
     name: 'Anime',
-    components: {},
+    components: {
+        Icon,
+    },
 };
 </script>
 
@@ -114,6 +141,7 @@ h4 {
     margin-top: 1rem;
     margin-bottom: 0.25rem;
 }
+
 .anime-overview {
     width: 100%;
     box-shadow: 0px -3px 4px 0px rgba(0, 0, 0, 0.1);
@@ -141,8 +169,10 @@ h4 {
     height: 360px;
     margin-top: -220px;
     border-radius: 5px;
+    background-size: cover;
     box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.3);
 }
+
 .anime-synopsis {
     margin-top: 2rem;
     padding-bottom: 2rem;
@@ -151,6 +181,7 @@ h4 {
     padding-top: 1rem;
     background-color: #f9f9f9;
 }
+
 .details-pane {
     box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.15);
     background: white;
@@ -160,8 +191,80 @@ h4 {
     padding: 1.75rem 1.5rem;
     width: 320px;
 }
-.col, .col-auto {
+
+.col,
+.col-auto {
     padding-left: 0;
     padding-right: 0;
+}
+
+.anime-trailer {
+    width: 100%;
+    height: 110px;
+    border-radius: 5px;
+    background-position: center;
+    background-size: cover;
+    margin-bottom: 2rem;
+}
+.anime-trailer-link {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+    backdrop-filter: blur(40px);
+    text-align: center;
+    line-height: 110px;
+    color: white;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 25px;
+}
+
+.anime-block {
+    border-radius: 5px;
+    display: flex;
+    flex-flow: row;
+    align-items: flex-end;
+    background-position: center;
+    background-size: cover;
+}
+.anime-block-title {
+    color: white;
+    backdrop-filter: brightness(65%) blur(5px);
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    padding: 6px 8px;
+    width: 100%;
+}
+.anime-episode {
+    width: 325px;
+    height: 180px;
+    transition-duration: .3s;
+}
+.anime-episode:hover {
+    cursor: pointer;
+    opacity: .9;
+    transition-duration: .3s;
+}
+.anime-character {
+    width: 150px;
+    height: 230px;
+}
+
+button {
+    display: block;
+    border: 1px solid var(--primary-color);
+    background: white;
+    padding: 3px 18px;
+    border-radius: 5px;
+    box-shadow: 0px 1.5px 6px 0px rgba(0, 0, 0, 0.3);
+    font-family: Exo;
+    font-size: 18px;
+    transition-duration: .3s;
+    color: var(--text-color);
+}
+button:hover {
+    background: #efefef;
+    transition-duration: .3s;
 }
 </style>

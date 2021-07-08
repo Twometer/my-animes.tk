@@ -33,13 +33,14 @@
 <style>
 :root {
     --primary-color: #876fff;
+    --text-color: #707070;
 }
 
 #app {
     font-family: 'Open Sans', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    color: #707070;
+    color: var(--text-color);
     font-weight: 100;
 }
 
@@ -69,4 +70,4 @@ export default {
         NavbarSearch,
     },
 };
-</script>NavbarSearch
+</script>
