@@ -61,6 +61,10 @@
     width: 80%;
     margin: auto;
 }
+
+::selection {
+    background: #dedeff;
+}
 </style>
 
 <script>
