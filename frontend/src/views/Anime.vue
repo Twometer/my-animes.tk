@@ -124,38 +124,44 @@
         </section>
 
         <!-- Character information dialog -->
-        <transition name="fade">
-            <div class="dialog" v-if="selectedCharacter != null">
-                <div class="dialog-content">
-                    <img :src="selectedCharacter.pictureUrl">
-                    <h1>{{ selectedCharacter.name }}</h1>
-                    {{ selectedCharacter.description }}
-                    <button v-on:click="selectedCharacter = null">Close</button>
-                </div>
-            </div>
-        </transition>
+        <modal :open="selectedCharacter != null">
+            <img :src="selectedCharacter.pictureUrl" />
+            <h1>{{ selectedCharacter.name }}</h1>
+            {{ selectedCharacter.description }}
+            <button v-on:click="selectedCharacter = null">Close</button>
+        </modal>
 
         <!-- Episode information dialog -->
-        <transition name="fade">
-            <div class="dialog" v-if="selectedEpisode != null">
-                <div class="dialog-content">
-                    <h1>S{{ selectedEpisode.seasonNo }} E{{ selectedEpisode.episodeNo }}: {{ selectedEpisode.title }}</h1>
-                    <h2>Aired {{ reformatDate(selectedEpisode.airedOn) }}</h2>
-                    <p>{{ selectedEpisode.synopsis }}</p>
-                    <button v-on:click="selectedEpisode = null">Close</button>
-                </div>
+        <modal :open="selectedEpisode != null" :borderless="true">
+            <fluid-image
+                class="episode-detail-thumbnail"
+                :src="selectedEpisode.thumbnailUrl"
+            />
+            <div class="p-4">
+                <h1>
+                    S{{ selectedEpisode.seasonNo }} E{{
+                        selectedEpisode.episodeNo
+                    }}: {{ selectedEpisode.title }}
+                </h1>
+                <h2>Aired {{ reformatDate(selectedEpisode.airedOn) }}</h2>
+                <p>{{ selectedEpisode.synopsis }}</p>
+                <button v-on:click="selectedEpisode = null">Close</button>
             </div>
-        </transition>
+        </modal>
     </div>
 </template>
 
 <script>
+import FluidImage from '../components/FluidImage.vue';
+import Modal from '../components/Modal.vue';
 import Icon from '../components/Icon.vue';
 import Api from '../services/api';
 export default {
     name: 'Anime',
     components: {
         Icon,
+        Modal,
+        FluidImage,
     },
     data() {
         return {
@@ -326,6 +332,7 @@ h4 {
 .anime-banner {
     background-position: center;
     background-color: #eeeeee;
+    background-size: cover;
     width: 100%;
     height: 350px;
 }
@@ -456,30 +463,10 @@ button:hover {
     transition-duration: 0.3s;
 }
 
-.dialog {
-    position: fixed;
-    backdrop-filter: blur(8px) brightness(50%);
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-}
-.dialog-content {
-    background-color: white;
-    width: 40%;
-    margin: auto;
-    margin-top: 5rem;
-    padding: 24px;
-    border-radius: 4px;
-}
-
-.fade-enter-active,
-.fade-leave-active {
-    transition-duration: 0.3s;
-}
-.fade-enter-from,
-.fade-leave-to {
-    padding-top: 3%;
-    opacity: 0;
+.episode-detail-thumbnail {
+    width: 100%;
+    height: 15rem;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
 }
 </style>
