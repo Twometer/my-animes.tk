@@ -30,21 +30,24 @@
         <section class="anime-details">
             <div class="row w-80">
                 <div class="col">
-                    <h3>Episodes</h3>
-                    <div
-                        class="anime-block anime-episode"
-                        v-for="episode in anime.episodes"
-                        :key="episode.episodeNo"
-                        :style="{
-                            'background-image': `url('${
-                                episode.thumbnailUrl == null
-                                    ? anime.coverImageUrl
-                                    : episode.thumbnailUrl
-                            }')`,
-                        }"
-                    >
-                        <div class="anime-block-title">
-                            {{ episode.title }}
+                    <div v-if="anime.type !== 'movie'">
+                        <h3>Episodes</h3>
+                        <div
+                            class="anime-block anime-episode"
+                            v-for="episode in anime.episodes"
+                            :data-no="episode.episodeNo"
+                            :key="episode.episodeNo"
+                            :style="{
+                                'background-image': `url('${
+                                    episode.thumbnailUrl == null
+                                        ? anime.coverImageUrl
+                                        : episode.thumbnailUrl
+                                }')`,
+                            }"
+                        >
+                            <div class="anime-block-title">
+                                {{ episode.title }}
+                            </div>
                         </div>
                     </div>
 
@@ -52,6 +55,7 @@
                     <div
                         class="anime-block anime-character"
                         v-for="character in anime.characters"
+                        :data-name="character.name"
                         :key="character.name"
                         :style="{
                             'background-image': `url('${
@@ -118,6 +122,30 @@
                 </div>
             </div>
         </section>
+
+        <!-- Character information dialog -->
+        <transition name="fade">
+            <div class="dialog" v-if="selectedCharacter != null">
+                <div class="dialog-content">
+                    <img :src="selectedCharacter.pictureUrl">
+                    <h1>{{ selectedCharacter.name }}</h1>
+                    {{ selectedCharacter.description }}
+                    <button v-on:click="selectedCharacter = null">Close</button>
+                </div>
+            </div>
+        </transition>
+
+        <!-- Episode information dialog -->
+        <transition name="fade">
+            <div class="dialog" v-if="selectedEpisode != null">
+                <div class="dialog-content">
+                    <h1>S{{ selectedEpisode.seasonNo }} E{{ selectedEpisode.episodeNo }}: {{ selectedEpisode.title }}</h1>
+                    <h2>Aired {{ reformatDate(selectedEpisode.airedOn) }}</h2>
+                    <p>{{ selectedEpisode.synopsis }}</p>
+                    <button v-on:click="selectedEpisode = null">Close</button>
+                </div>
+            </div>
+        </transition>
     </div>
 </template>
 
@@ -133,6 +161,8 @@ export default {
         return {
             loading: true,
             anime: null,
+            selectedCharacter: null,
+            selectedEpisode: null,
         };
     },
     computed: {
@@ -201,6 +231,9 @@ export default {
         let animeId = this.$route.params.animeId;
         this.anime = await Api.Anime.get(animeId);
         this.loading = false;
+        console.dir(this.anime);
+
+        this.$nextTick(this.bindClickHandlers);
     },
     methods: {
         getTitle(preferredLanguages) {
@@ -225,6 +258,38 @@ export default {
             if (date.includes('T')) date = date.substr(0, date.indexOf('T'));
             let parsedDate = new Date(Date.parse(date));
             return parsedDate.toShortFormat();
+        },
+        bindClickHandlers() {
+            let episodes = document.getElementsByClassName('anime-episode');
+            for (let episode of episodes)
+                episode.onclick = () => {
+                    this.showEpisodeDetails(episode.getAttribute('data-no'));
+                };
+
+            let characters = document.getElementsByClassName('anime-character');
+            for (let character of characters) {
+                character.onclick = () => {
+                    this.showCharacterDetails(
+                        character.getAttribute('data-name')
+                    );
+                };
+            }
+        },
+        showEpisodeDetails(no) {
+            for (let episode of this.anime.episodes) {
+                if (episode.episodeNo == no) {
+                    this.selectedEpisode = episode;
+                    break;
+                }
+            }
+        },
+        showCharacterDetails(name) {
+            for (let character of this.anime.characters) {
+                if (character.name == name) {
+                    this.selectedCharacter = character;
+                    break;
+                }
+            }
         },
     },
 };
@@ -260,6 +325,7 @@ h4 {
 }
 .anime-banner {
     background-position: center;
+    background-color: #eeeeee;
     width: 100%;
     height: 350px;
 }
@@ -277,6 +343,7 @@ h4 {
 }
 .anime-poster {
     background-position: center;
+    background-color: #eeeeee;
     width: 255px;
     height: 360px;
     margin-top: -220px;
@@ -319,7 +386,7 @@ h4 {
     margin-bottom: 2rem;
 }
 .anime-trailer-link:hover {
-    transition-duration: .3s;
+    transition-duration: 0.3s;
     opacity: 0.95;
 }
 .anime-trailer-link {
@@ -334,7 +401,7 @@ h4 {
     text-decoration: none;
     font-weight: 700;
     font-size: 25px;
-    transition-duration: .3s;
+    transition-duration: 0.3s;
 }
 
 .anime-block {
@@ -345,6 +412,7 @@ h4 {
     background-size: cover;
     margin: 10px;
     transition-duration: 0.3s;
+    user-select: none;
 }
 .anime-block:hover {
     cursor: pointer;
@@ -386,5 +454,32 @@ button {
 button:hover {
     background: #efefef;
     transition-duration: 0.3s;
+}
+
+.dialog {
+    position: fixed;
+    backdrop-filter: blur(8px) brightness(50%);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+.dialog-content {
+    background-color: white;
+    width: 40%;
+    margin: auto;
+    margin-top: 5rem;
+    padding: 24px;
+    border-radius: 4px;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+    transition-duration: 0.3s;
+}
+.fade-enter-from,
+.fade-leave-to {
+    padding-top: 3%;
+    opacity: 0;
 }
 </style>
