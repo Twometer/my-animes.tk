@@ -25,6 +25,9 @@ export default {
             else
                 document.body.classList.remove('no-scrollbar')
         }
+    },
+    unmounted() {
+        document.body.classList.remove('no-scrollbar')
     }
 };
 </script>
@@ -40,6 +43,7 @@ export default {
     bottom: 0;
     overflow-x: hidden;
     overflow-y: auto;
+    z-index: 1100;
 }
 .dialog-content {
     background-color: white;

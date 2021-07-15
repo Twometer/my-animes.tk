@@ -1,12 +1,11 @@
 <template>
-    <overlay>Homepage :3</overlay>
+    <overlay> This is a registration page </overlay>
 </template>
 
 <script>
 import Overlay from '../components/Overlay.vue';
-
 export default {
-    name: 'Home',
+    name: 'Register',
     components: {
         Overlay,
     },
