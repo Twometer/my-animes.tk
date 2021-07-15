@@ -18,6 +18,14 @@ export default {
         open: Boolean,
         borderless: Boolean,
     },
+    watch: {
+        open: function(newOpen) {
+            if (newOpen)
+                document.body.classList.add('no-scrollbar')
+            else
+                document.body.classList.remove('no-scrollbar')
+        }
+    }
 };
 </script>
 
@@ -30,12 +38,15 @@ export default {
     left: 0;
     right: 0;
     bottom: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 .dialog-content {
     background-color: white;
     width: 40%;
     margin: auto;
     margin-top: 5rem;
+    margin-bottom: 5rem;
     border-radius: 5px;
     box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.3);
 }

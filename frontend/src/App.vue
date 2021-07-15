@@ -62,8 +62,16 @@
     margin: auto;
 }
 
+.raw-text {
+    white-space: pre-wrap;
+}
+
 ::selection {
     background: #dedeff;
+}
+
+.no-scrollbar {
+    overflow-y: hidden;
 }
 </style>
 

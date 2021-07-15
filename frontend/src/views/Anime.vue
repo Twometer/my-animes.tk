@@ -23,7 +23,7 @@
                     <button>Add to list</button>
                 </div>
             </section>
-            <section class="anime-synopsis w-80">
+            <section class="anime-synopsis w-80 raw-text">
                 {{ anime.synopsis }}
             </section>
         </section>
@@ -124,11 +124,11 @@
         </section>
 
         <!-- Character information dialog -->
-        <modal :open="selectedCharacter != null">
-            <img :src="selectedCharacter.pictureUrl" />
+        <modal :open="selectedCharacter != null" class="text-center">
+            <img :src="selectedCharacter.pictureUrl" class="mb-3" />
             <h1>{{ selectedCharacter.name }}</h1>
-            {{ selectedCharacter.description }}
-            <button v-on:click="selectedCharacter = null">Close</button>
+            <p class="raw-text">{{ selectedCharacter.description }}</p>
+            <button v-on:click="selectedCharacter = null" class="m-auto">Close</button>
         </modal>
 
         <!-- Episode information dialog -->
@@ -144,7 +144,7 @@
                     }}: {{ selectedEpisode.title }}
                 </h1>
                 <h2>Aired {{ reformatDate(selectedEpisode.airedOn) }}</h2>
-                <p>{{ selectedEpisode.synopsis }}</p>
+                <p class="raw-text">{{ selectedEpisode.synopsis }}</p>
                 <button v-on:click="selectedEpisode = null">Close</button>
             </div>
         </modal>
