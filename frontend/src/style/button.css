@@ -1,0 +1,16 @@
+button {
+    display: inline-block;
+    border: 1px solid var(--primary-color);
+    background: white;
+    padding: 3px 18px;
+    border-radius: 5px;
+    box-shadow: 0px 1.5px 6px 0px rgba(0, 0, 0, 0.3);
+    font-family: Exo;
+    font-size: 18px;
+    transition-duration: 0.3s;
+    color: var(--text-color);
+}
+button:hover {
+    background: #efefef;
+    transition-duration: 0.3s;
+}

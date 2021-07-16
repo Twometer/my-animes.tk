@@ -304,6 +304,8 @@ export default {
 </script>
 
 <style scoped>
+@import '../style/button.css';
+
 h1 {
     color: var(--primary-color);
     font-weight: 700;
@@ -446,23 +448,6 @@ h4 {
 .anime-character {
     width: 150px;
     height: 230px;
-}
-
-button {
-    display: block;
-    border: 1px solid var(--primary-color);
-    background: white;
-    padding: 3px 18px;
-    border-radius: 5px;
-    box-shadow: 0px 1.5px 6px 0px rgba(0, 0, 0, 0.3);
-    font-family: Exo;
-    font-size: 18px;
-    transition-duration: 0.3s;
-    color: var(--text-color);
-}
-button:hover {
-    background: #efefef;
-    transition-duration: 0.3s;
 }
 
 .episode-detail-thumbnail {
