@@ -1,0 +1,22 @@
+h1 {
+    font-family: 'Unica One', sans-serif;
+    color: var(--primary-color);
+    margin-bottom: 30px;
+}
+
+h2 {
+    margin-bottom: 45px;
+    font-weight: 100;
+}
+
+@media (max-width: 340px) {
+    h1 {
+        font-size: 2rem;
+        margin-bottom: 15px;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+        margin-bottom: 25px;
+    }
+}
