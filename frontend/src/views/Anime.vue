@@ -128,7 +128,9 @@
             <img :src="selectedCharacter.pictureUrl" class="mb-3" />
             <h1>{{ selectedCharacter.name }}</h1>
             <p class="raw-text">{{ selectedCharacter.description }}</p>
-            <button v-on:click="selectedCharacter = null" class="m-auto">Close</button>
+            <button v-on:click="selectedCharacter = null" class="m-auto">
+                Close
+            </button>
         </modal>
 
         <!-- Episode information dialog -->

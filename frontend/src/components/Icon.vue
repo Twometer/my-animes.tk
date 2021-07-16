@@ -1,8 +1,5 @@
 <template>
-    <img
-        :height="size"
-        :src="require(`../assets/icons/${name}.svg`)"
-    />
+    <img :height="size" :src="require(`../assets/icons/${name}.svg`)" />
 </template>
 
 <script>
@@ -10,7 +7,7 @@ export default {
     name: 'Icon',
     props: {
         name: String,
-        size: Number
+        size: Number,
     },
 };
 </script>

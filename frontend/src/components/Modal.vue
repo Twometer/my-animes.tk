@@ -19,16 +19,14 @@ export default {
         borderless: Boolean,
     },
     watch: {
-        open: function(newOpen) {
-            if (newOpen)
-                document.body.classList.add('no-scrollbar')
-            else
-                document.body.classList.remove('no-scrollbar')
-        }
+        open: function (newOpen) {
+            if (newOpen) document.body.classList.add('no-scrollbar');
+            else document.body.classList.remove('no-scrollbar');
+        },
     },
     unmounted() {
-        document.body.classList.remove('no-scrollbar')
-    }
+        document.body.classList.remove('no-scrollbar');
+    },
 };
 </script>
 

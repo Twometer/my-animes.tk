@@ -11,7 +11,7 @@
 export default {
     name: 'FluidImage',
     props: {
-        src: String
+        src: String,
     },
 };
 </script>

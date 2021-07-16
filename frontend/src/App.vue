@@ -15,7 +15,10 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <div class="collapse navbar-collapse justify-content-evenly" id="navbarContent">
+            <div
+                class="collapse navbar-collapse justify-content-evenly"
+                id="navbarContent"
+            >
                 <navbar-search />
                 <ul class="navbar-nav">
                     <li class="nav-item">

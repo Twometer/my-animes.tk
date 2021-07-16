@@ -1,6 +1,6 @@
 <template>
     <div class="nav-search">
-        <icon name="search" size=20 />
+        <icon name="search" size="20" />
         <input type="text" placeholder="Search..." />
     </div>
 </template>

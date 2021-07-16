@@ -46,8 +46,8 @@ const routes = [
         path: '/:catchAll(.*)',
         name: 'Not found',
         component: () => import('../views/NotFound.vue'),
-        props: route => ({ query: route.query.q })
-    }
+        props: (route) => ({ query: route.query.q }),
+    },
 ];
 
 const router = createRouter({
