@@ -158,6 +158,7 @@ import FluidImage from '../components/FluidImage.vue';
 import Modal from '../components/Modal.vue';
 import Icon from '../components/Icon.vue';
 import Api from '../services/api';
+import Utils from '../services/utils';
 export default {
     name: 'Anime',
     components: {
@@ -175,13 +176,13 @@ export default {
     },
     computed: {
         englishTitle() {
-            return this.getTitle(['en', 'en_us', 'en_jp']);
+            return Utils.getTitle(this.anime, ['en', 'en_us', 'en_jp']);
         },
         japaneseTitle() {
-            return this.getTitle(['ja_jp', 'ja', 'en_jp']);
+            return Utils.getTitle(this.anime, ['ja_jp', 'ja', 'en_jp']);
         },
         romajiTitle() {
-            return this.getTitle(['en_jp']);
+            return Utils.getTitle(this.anime, ['en_jp']);
         },
         totalDuration() {
             let totalLength = this.anime.totalLength;
@@ -190,10 +191,10 @@ export default {
                 : (totalLength / 60).toFixed(1) + ' hours';
         },
         airingStartedOn() {
-            return this.reformatDate(this.anime.airingStartedOn);
+            return Utils.reformatDate(this.anime.airingStartedOn);
         },
         airingEndedOn() {
-            return this.reformatDate(this.anime.airingEndedOn);
+            return Utils.reformatDate(this.anime.airingEndedOn);
         },
         airingDuration() {
             let start = this.airingStartedOn;
@@ -218,55 +219,17 @@ export default {
         },
         type() {
             let type = this.anime.type;
-            switch (type) {
-                case 'ona':
-                    return 'Original net animation';
-                case 'ova':
-                    return 'Original video animation';
-                case 'tv':
-                    return 'TV Show';
-                case 'movie':
-                    return 'Movie';
-                case 'music':
-                    return 'Music';
-                case 'special':
-                    return 'Special';
-            }
-            return 'Unknown';
+            return Utils.typeToString(type);
         },
     },
     async mounted() {
         let animeId = this.$route.params.animeId;
         this.anime = await Api.Anime.get(animeId);
         this.loading = false;
-        console.dir(this.anime);
 
         this.$nextTick(this.bindClickHandlers);
     },
     methods: {
-        getTitle(preferredLanguages) {
-            let titles = this.anime.titles;
-
-            function getSingleTitle(langugae) {
-                for (let title of titles) {
-                    if (title.language == langugae) return title.value;
-                }
-                return null;
-            }
-
-            for (let preferredLanguage of preferredLanguages) {
-                let title = getSingleTitle(preferredLanguage);
-                if (title != null) return title;
-            }
-
-            let firstOne = Object.keys(titles)[0];
-            return titles[firstOne];
-        },
-        reformatDate(date) {
-            if (date.includes('T')) date = date.substr(0, date.indexOf('T'));
-            let parsedDate = new Date(Date.parse(date));
-            return parsedDate.toShortFormat();
-        },
         bindClickHandlers() {
             let episodes = document.getElementsByClassName('anime-episode');
             for (let episode of episodes)
@@ -298,6 +261,9 @@ export default {
                     break;
                 }
             }
+        },
+        reformatDate(date) {
+            return Utils.reformatDate(date);
         },
     },
 };
