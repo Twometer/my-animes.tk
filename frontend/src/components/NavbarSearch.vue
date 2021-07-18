@@ -1,16 +1,29 @@
 <template>
-    <div class="nav-search">
+    <form class="nav-search" v-on:submit.prevent="submit">
         <icon name="search" size="20" />
-        <input type="text" placeholder="Search..." />
-    </div>
+        <input type="text" placeholder="Search..." v-model="query" />
+    </form>
 </template>
 
 <script>
 import Icon from './Icon.vue';
 export default {
     name: 'NavbarSearch',
+    data: function () {
+        return {
+            query: this.$route.query.q || '',
+        };
+    },
     components: {
         Icon,
+    },
+    methods: {
+        submit() {
+            this.$router.push({
+                name: 'Search',
+                query: { q: this.query },
+            });
+        },
     },
 };
 </script>

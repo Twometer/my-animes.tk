@@ -1,10 +1,10 @@
 <template>
     <div class="row w-80 mt-5">
         <h1 class="mb-4">Search results for '{{ $route.query.q }}'</h1>
-        <a
+        <router-link
             v-for="result in results"
             :key="result._id"
-            :href="'/anime/' + result._id"
+            :to="'/anime/' + result._id"
         >
             <div class="search-result">
                 <img width="100" :src="result.thumbnailUrl" />
@@ -13,7 +13,7 @@
                     <h2>{{ typeToString(result.type) }}</h2>
                 </div>
             </div>
-        </a>
+        </router-link>
     </div>
 </template>
 
@@ -29,13 +29,13 @@ export default {
         };
     },
     components: {},
-    async mounted() {
-        let query = this.$route.query.q;
-        if (query == null || query == '') return;
-
-        let results = await Api.Search.search(query);
-        this.results = results;
-        console.log(results);
+    mounted() {
+        this.reload();
+    },
+    watch: {
+        '$route.params': function () {
+            this.reload();
+        },
     },
     methods: {
         typeToString(type) {
@@ -43,6 +43,14 @@ export default {
         },
         getTitle(anime) {
             return Utils.getTitle(anime, ['en', 'en_us', 'en_jp', 'ja_jp']);
+        },
+        async reload() {
+            let query = this.$route.query.q;
+            if (query == null || query == '') return;
+
+            let results = await Api.Search.search(query);
+            this.results = results;
+            console.log(results);
         },
     },
 };
@@ -52,6 +60,9 @@ export default {
 a {
     color: black;
     text-decoration: none;
+}
+h1 {
+    font-size: 2rem;
 }
 .search-result {
     display: flex;
@@ -78,7 +89,7 @@ a {
 .search-result-details > h1 {
     color: var(--primary-color);
     font-weight: 500;
-    font-size: 2rem;
+    font-size: 1.75rem;
     margin-bottom: 1rem;
 }
 .search-result-details > h2 {
