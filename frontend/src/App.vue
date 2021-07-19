@@ -76,6 +76,18 @@
 .no-scrollbar {
     overflow-y: hidden;
 }
+
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition-duration: 0.3s;
+}
+a:hover {
+    color: var(--primary-color);
+    border-bottom: 1px solid var(--primary-color);
+    transition-duration: 0.3s;
+}
 </style>
 
 <script>

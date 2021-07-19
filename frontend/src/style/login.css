@@ -9,6 +9,25 @@ h2.login-header {
     font-weight: 100;
 }
 
+.login-form > input {
+    display: block;
+    margin: 3rem 0rem;
+    font-weight: 100;
+    padding: 0.5rem 0;
+    border: 0;
+    outline: 0;
+    border-bottom: 1px solid #aaa;
+    width: 25rem;
+    background: rgba(255, 255, 255, 0);
+}
+
+.login-form > button {
+    margin-top: 1rem;
+    margin-right: 2rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
 @media (max-width: 340px) {
     h1.login-header {
         font-size: 2rem;
