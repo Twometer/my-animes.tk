@@ -50,4 +50,7 @@ export default {
 ::placeholder {
     color: rgba(255, 255, 255, 0.5);
 }
+::selection {
+    background: rgba(255, 255, 255, 0.4);
+}
 </style>

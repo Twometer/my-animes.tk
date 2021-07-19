@@ -15,5 +15,6 @@ export default {
 <style scoped>
 img {
     margin-top: -1px;
+    user-select: none;
 }
 </style>

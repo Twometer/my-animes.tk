@@ -1,23 +1,27 @@
 <template>
     <div class="row w-80 mt-5">
         <h1 class="mb-4">Search results for '{{ $route.query.q }}'</h1>
-        <router-link
-            v-for="result in results"
-            :key="result._id"
-            :to="'/anime/' + result._id"
-        >
-            <div class="search-result">
-                <img width="100" :src="result.thumbnailUrl" />
-                <div class="search-result-details">
-                    <h1>{{ getTitle(result) }}</h1>
-                    <h2>{{ typeToString(result.type) }}</h2>
+        <loader class="m-5" v-if="loading" />
+        <div v-if="!loading">
+            <router-link
+                v-for="result in results"
+                :key="result._id"
+                :to="'/anime/' + result._id"
+            >
+                <div class="search-result">
+                    <img width="100" :src="result.thumbnailUrl" />
+                    <div class="search-result-details">
+                        <h1>{{ getTitle(result) }}</h1>
+                        <h2>{{ typeToString(result.type) }}</h2>
+                    </div>
                 </div>
-            </div>
-        </router-link>
+            </router-link>
+        </div>
     </div>
 </template>
 
 <script>
+import Loader from '../components/Loader.vue';
 import Api from '../services/api';
 import Utils from '../services/utils';
 
@@ -26,9 +30,10 @@ export default {
     data: () => {
         return {
             results: [],
+            loading: true,
         };
     },
-    components: {},
+    components: { Loader },
     mounted() {
         this.reload();
     },
@@ -45,12 +50,16 @@ export default {
             return Utils.getTitle(anime, ['en', 'en_us', 'en_jp', 'ja_jp']);
         },
         async reload() {
+            this.loading = true;
+
             let query = this.$route.query.q;
             if (query == null || query == '') return;
 
             let results = await Api.Search.search(query);
             this.results = results;
             console.log(results);
+
+            this.loading = false;
         },
     },
 };
