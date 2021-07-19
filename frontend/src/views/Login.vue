@@ -9,7 +9,7 @@
                 <input type="password" placeholder="password" />
 
                 <button type="submit">Log in</button>
-                <router-link to="Register">new here?</router-link>
+                <router-link to="register">new here?</router-link>
             </form>
         </backdrop>
     </overlay>
