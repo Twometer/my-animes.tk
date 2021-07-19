@@ -1,8 +1,8 @@
 <template>
     <overlay>
         <backdrop :src="require('@/assets/wallpapers/login.jpg')">
-            <h1>myanimes</h1>
-            <h2>Welcome back!</h2>
+            <h1 class="login-header">myanimes</h1>
+            <h2 class="login-header">Welcome back!</h2>
         </backdrop>
     </overlay>
 </template>
