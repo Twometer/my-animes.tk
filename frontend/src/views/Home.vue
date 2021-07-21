@@ -105,4 +105,7 @@ button {
     margin-left: 1rem;
     margin-right: 1rem;
 }
+a {
+    border-bottom: 0;
+}
 </style>
